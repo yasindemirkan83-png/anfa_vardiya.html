@@ -1,0 +1,52 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  padding: 10px;
+  text-align: center;
+  background-color: #2196f3;
+  color: white;
+}
+
+header input {
+  width: 90%;
+  padding: 8px;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+}
+
+.kart {
+  background: white;
+  margin: 20px;
+  padding: 10px;
+  max-width: 520px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.kart img {
+  width: 500px;
+  height: auto;
+  margin-top: 50px;
+  display: block;
+  object-fit: cover;
+}
+
+.kartInfo {
+  margin-top: 10px;
+  padding: 10px;
+  background: white;
+  font-weight: bold;
+  color: black;
+}

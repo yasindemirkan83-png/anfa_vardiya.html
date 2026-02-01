@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faaliyet Kayıtları</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Faaliyet Kayıtları</h1>
+    <input type="text" id="aramaInput" placeholder="Konu veya tarih ile ara..." />
+  </header>
+  <main id="kartContainer"></main>
+
+  <script src="app.js"></script>
+  <script>
+    // Sayfa yüklenince kartları oluştur
+    document.addEventListener("DOMContentLoaded", () => {
+      filitrele();
+      document.getElementById("aramaInput").addEventListener("input", filitrele);
+    });
+  </script>
+</body>
+</html>
