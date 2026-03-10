@@ -5,17 +5,19 @@
   "display": "standalone",
   "background_color": "#f8f9fc",
   "theme_color": "#4895ef",
-  "description": "Vardiya Takip Sistemi",
+  "description": "Profesyonel Vardiya Takip Sistemi",
   "icons": [
     {
       "src": "vardiya.jpg",
       "sizes": "192x192",
-      "type": "image/jpeg"
+      "type": "image/jpeg",
+      "purpose": "any"
     },
     {
       "src": "vardiya.jpg",
       "sizes": "512x512",
-      "type": "image/jpeg"
+      "type": "image/jpeg",
+      "purpose": "any"
     }
   ]
 }
