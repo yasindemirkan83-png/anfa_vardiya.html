@@ -1,10 +1,11 @@
 {
-  "name": "Vardiya Takip Uygulaması",
+  "name": "Vardiya Takip Sistemi",
   "short_name": "Vardiya",
-  "start_url": "index.html",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f4f7f9",
+  "background_color": "#f8f9fc",
   "theme_color": "#4895ef",
+  "description": "Vardiya Takip Sistemi",
   "icons": [
     {
       "src": "vardiya.png",
