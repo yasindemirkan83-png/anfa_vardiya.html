@@ -1,31 +1,35 @@
-const cacheName = 'vardiya-cache-v1';
-const filesToCache = [
-  '/',
-  '/index.html',
-  '/style.css', // Eğer ayrıysa
-  '/manifest.json'
-];
+// ------------------
+// CUSTOM NOTIFICATION FONKSIYONLARI
+// ------------------
+function showNotification(msg){
+  const notif = document.getElementById('customNotification');
+  document.getElementById('notifText').innerText = msg;
+  notif.style.display='block';
+}
 
-self.addEventListener('install', e=>{
-  e.waitUntil(
-    caches.open(cacheName).then(cache=>cache.addAll(filesToCache))
-  );
-});
+function closeNotification(){
+  document.getElementById('customNotification').style.display='none';
+}
 
-self.addEventListener('fetch', e=>{
-  e.respondWith(
-    caches.match(e.request).then(res=>{
-      return res || fetch(e.request);
-    })
-  );
-  });
-  // service-worker.js
-self.addEventListener('push', e => {
-  const data = e.data.json();
-  self.registration.showNotification(data.title, {
-    body: data.message,
-    icon: '/vardiya.jpg',
-    requireInteraction: true // kullanıcı kapatana kadar açık
-  });
-});
+// ------------------
+// BILDIRIM KONTROLÜ (JSON'dan)
+// ------------------
+async function checkNotification(){
+  try{
+    const res = await fetch('https://kendi-github.github.io/bildirim.json'); // kendi URL’in
+    const data = await res.json();
+    const last = localStorage.getItem('lastNotification')||'';
+    if(data.timestamp !== last){
+      showNotification(`${data.title} - ${data.message}`);
+      localStorage.setItem('lastNotification', data.timestamp);
+    }
+  }catch(e){
+    console.error('Bildirim kontrol hatası', e);
+  }
+}
 
+// İlk açılışta kontrol et
+checkNotification();
+
+// 5 dakikada bir kontrol et
+setInterval(checkNotification, 1000*60*5);
