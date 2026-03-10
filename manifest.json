@@ -8,15 +8,15 @@
   "description": "Profesyonel Vardiya Takip Sistemi",
   "icons": [
     {
-      "src": "vardiya.jpg",
+      "src": "vardiya.png",
       "sizes": "192x192",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "vardiya.jpg",
+      "src": "vardiya.png",
       "sizes": "512x512",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any"
     }
   ]
