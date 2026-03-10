@@ -1,21 +1,20 @@
-const CACHE_NAME = 'vardiya-cache-v1';
+const CACHE_NAME = "vardiya-cache-v1";
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/vardiya192.png',
-  '/vardiya512.png',
-  // CSS, JS dosyaları varsa ekle
+  "./",
+  "./index.html",
+  "./style.css",
+  "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css",
+  "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/vardiya.jpg"
 ];
 
-self.addEventListener('install', e => {
-  e.waitUntil(
+self.addEventListener("install", event => {
+  event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
   );
 });
 
-self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(response => response || fetch(e.request))
+self.addEventListener("fetch", event => {
+  event.respondWith(
+    caches.match(event.request).then(response => response || fetch(event.request))
   );
 });
