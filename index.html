@@ -2,108 +2,86 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vardiya Takip</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<!-- PWA Manifest -->
 <link rel="manifest" href="manifest.json">
-
+<meta name="theme-color" content="#a0c4ff">
 <style>
 :root{
-  --bg-primary: #f0f4f8;
-  --bg-secondary: #ffffff;
-  --bg-tertiary: #e0e7ff;
-  --color-primary: #7f5af0;
-  --color-success: #2dd36f;
-  --color-warning: #ffb400;
-  --color-text: #1a1a2e;
-  --color-day: #ff8aa0;
-  --color-night: #a0c4ff;
-  --color-off: #d3d3d3;
-  --color-holiday: #ffb400;
+  --bg-primary: #f0f4f8; --bg-secondary: #ffffff; --bg-tertiary: #e0e7ff;
+  --color-primary: #7f5af0; --color-success: #2dd36f; --color-warning: #ffb400;
+  --color-text: #1a1a2e; --color-day: #ff8aa0; --color-night: #a0c4ff;
+  --color-off: #d3d3d3; --color-holiday: #ffb400;
 }
+html, body{ height:100%; margin:0; padding:0; font-family:'Segoe UI',system-ui,sans-serif; background: var(--bg-primary); overflow: hidden; }
+body{ display:flex; flex-direction:column; align-items:center; max-width:500px; margin:auto; color:var(--color-text); }
 
-html, body{
-  height:100%;
-  margin:0;
-  padding:0;
-  font-family:'Segoe UI',system-ui,sans-serif;
-  background: var(--bg-primary);
-  overflow: hidden;
+/* Duyuru Kutusu - 5 Saniye Görünür */
+#announcement {
+  display:none; position:fixed; top:20px; width:85%; background: var(--color-primary); 
+  color:white; padding:15px; border-radius:15px; z-index:999; text-align:center;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2); animation: slideDown 0.5s ease;
 }
+@keyframes slideDown { from {top:-100px;} to {top:20px;} }
 
-body{
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-start;
-  align-items:center;
-  max-width:500px;
-  margin:auto;
-  color:var(--color-text);
-}
-
-/* Header ve tüm CSS aynı senin verdiğin kod */
 .header{
   background: linear-gradient(135deg, #ffd6e0, #a0c4ff);
-  padding:15px;
-  border-radius:20px;
-  text-align:center;
-  width:95%;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  flex-shrink:0;
+  padding:15px; border-radius:20px; text-align:center; width:95%; 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); flex-shrink:0; margin-top: 10px;
 }
-.logo-container{display:flex;justify-content:center;gap:12px;margin-bottom:5px}
-.logo-icon{font-size:2.2rem;color:var(--color-primary)}
-.logo-text{font-size:1.6rem;font-weight:800;color:var(--color-primary)}
-#time{font-size:2.2rem;color:var(--color-primary);margin:5px 0}
+#time{font-size:2.2rem;color:var(--color-primary);margin:5px 0; font-weight: 700;}
 #date{font-size:.9rem}
 #todayShift{margin-top:5px;font-size:.95rem;color:var(--color-day); font-weight:700;}
-.main-content{flex:1;width:100%;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;overflow-y:hidden;padding-bottom:10px;}
-.section{background: var(--bg-secondary);padding:15px;border-radius:15px;margin:8px 0;width:90%;box-shadow: 0 2px 8px rgba(0,0,0,0.08);flex-shrink:0;}
-.section-title{color:var(--color-primary);font-size:1.2rem;margin-bottom:10px}
-.vardiya-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.vardiya-btn{background: var(--bg-tertiary);border: none;border-radius:12px;padding:12px;color: var(--color-text);cursor:pointer;font-weight:600;transition: all 0.2s;font-size:0.95rem;}
-.vardiya-btn.active{background: var(--color-primary);color:#fff;}
-.weekdays{display:grid;grid-template-columns:repeat(7,1fr);font-size:.7rem;text-align:center;margin-bottom:4px;color:#888}
+
+.main-content{ flex:1; width:100%; display:flex; flex-direction:column; align-items:center; overflow-y:auto; padding-bottom:80px; }
+.section{
+  background: var(--bg-secondary); padding:15px; border-radius:15px;
+  margin:8px 0; width:90%; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.section-title{color:var(--color-primary);font-size:1.2rem;margin-bottom:10px; font-weight: 700;}
+
+/* İstediğin 2x2 Büyük Buton Düzeni */
+.vardiya-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.vardiya-btn{
+  background: var(--bg-tertiary); border: none; border-radius:15px;
+  padding:20px; color: var(--color-text); cursor:pointer;
+  font-weight:700; transition: all 0.2s; font-size:1rem;
+}
+.vardiya-btn.active{ background: var(--color-primary); color:#fff; transform: scale(1.02); }
+
+.weekdays{ display:grid;grid-template-columns:repeat(7,1fr); font-size:.7rem;text-align:center;margin-bottom:4px;color:#888 }
 .calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-.day{background:var(--bg-tertiary);border-radius:8px;padding:5px;font-size:.85rem;text-align:center;position:relative;transition: transform 0.15s;}
-.day:hover{transform: scale(1.05);}
-.work-day{background:var(--color-day);}
-.work-night{background:var(--color-night);}
+.day{
+  background:var(--bg-tertiary); border-radius:8px; padding:8px 0;
+  font-size:.85rem; text-align:center; transition: transform 0.15s;
+}
+.work-day{background:var(--color-day); color: white;}
+.work-night{background:var(--color-night); color: white;}
 .off{background:var(--color-off);}
 .holiday{outline:2px solid var(--color-holiday);}
-.today{outline:3px solid var(--color-primary); box-shadow:0 0 6px var(--color-primary);}
-.summary{display:flex;justify-content:space-between;margin-top:8px;font-size:0.8rem}
-.summary-value{font-size:1.3rem;font-weight:700; color: var(--color-day);}
-.holiday-box{display:none;margin-top:8px;background:var(--bg-tertiary);border-left:3px solid var(--color-holiday);padding:8px;border-radius:8px;font-size:.8rem}
-.settings-btn{position:fixed;top:15px;right:15px;font-size:1.4rem;color:var(--color-primary);cursor:pointer}
-.settings-panel{display:none;position:fixed;top:60px;right:15px;background:var(--bg-secondary);border-radius:12px;padding:10px;width:220px;z-index:10}
-.settings-panel textarea{width:100%;height:50px;border-radius:8px;border:none;padding:6px;font-size:0.8rem;}
-.settings-panel button{margin-top:6px;width:100%;border:none;border-radius:8px;padding:6px;background:var(--color-primary);color:#fff;font-weight:600;font-size:0.85rem}
-.settings-panel .signature{font-family:'Comic Sans MS', cursive;font-size:0.85rem;margin-bottom:6px;color:#333;text-align:center;}
-.settings-panel .icons{display:flex;gap:15px;justify-content:center;font-size:1.4rem;}
-.settings-panel .icons a{color:#38bdf8;text-decoration:none;transition:0.2s;}
-.settings-panel .icons a:hover{transform:scale(1.2);}
-</style>
+.today{outline:3px solid var(--color-primary); box-shadow:0 0 8px var(--color-primary); font-weight: bold;}
 
+.summary{display:flex;justify-content:space-between;margin-top:12px; border-top: 1px solid #eee; padding-top: 10px;}
+.summary-value{font-size:1.3rem;font-weight:700; color: var(--color-primary);}
+
+.holiday-box{
+  display:none; margin-top:8px; background: #fffdf0;
+  border-left:4px solid var(--color-holiday); padding:10px;
+  border-radius:8px; font-size:.8rem; color: #666;
+}
+
+#installBtn { 
+  display:none; position:fixed; bottom:20px; background:var(--color-success); 
+  color:white; border:none; padding:15px 30px; border-radius:30px; 
+  font-weight:bold; box-shadow:0 6px 15px rgba(0,0,0,0.2); z-index:100;
+}
+</style>
 </head>
 <body>
 
-<div class="settings-btn" onclick="toggleSettings()"><i class="fas fa-cog"></i></div>
-<div class="settings-panel" id="settings">
-  <div class="signature">Bu uygulama sizin için <b>Yasin Demirgan</b> tarafından geliştirilmiştir.</div>
-  <div class="icons">
-    <a href="tel:05375120777"><i class="fas fa-phone"></i></a>
-    <a href="mailto:yasindemirkan83@gmail.com"><i class="fas fa-envelope"></i></a>
-  </div>
-</div>
+<div id="announcement"></div>
 
 <div class="header">
-  <div class="logo-container">
-    <div class="logo-icon"><i class="fas fa-shield-alt"></i></div>
-    <div class="logo-text">Vardiya Takip</div>
-  </div>
   <div id="date"></div>
   <div id="time"></div>
   <div id="todayShift"></div>
@@ -122,150 +100,119 @@ body{
 
   <div class="section">
     <div class="section-title" style="display:flex;justify-content:space-between;align-items:center">
-      <button onclick="prevMonth()">◀</button>
+      <button onclick="prevMonth()" style="border:none; background:none; cursor:pointer; font-size:1.2rem">◀</button>
       <span id="monthTitle"></span>
-      <button onclick="nextMonth()">▶</button>
+      <button onclick="nextMonth()" style="border:none; background:none; cursor:pointer; font-size:1.2rem">▶</button>
     </div>
-
-    <div class="weekdays">
-      <div>Pzt</div><div>Sal</div><div>Çar</div><div>Per</div><div>Cum</div><div>Cts</div><div>Paz</div>
-    </div>
-
+    <div class="weekdays"><div>Pzt</div><div>Sal</div><div>Çar</div><div>Per</div><div>Cum</div><div>Cts</div><div>Paz</div></div>
     <div class="calendar-grid" id="calendar"></div>
-
     <div class="summary">
       <div><div class="summary-value" id="dayCount">0</div>Gündüz</div>
       <div><div class="summary-value" id="nightCount">0</div>Gece</div>
       <div><div class="summary-value" id="offCount">0</div>İzin</div>
     </div>
-
     <div class="holiday-box" id="holidayInfo"></div>
   </div>
 </div>
 
+<button id="installBtn">Uygulamayı Yükle 📲</button>
+
 <script>
-// --- Service Worker register ---
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js')
-    .then(()=>console.log("SW Registered"))
-    .catch(()=>console.log("SW Failed"));
-}
-
-// --- Saat ve tarih ---
-function tick(){
-  const n=new Date();
-  time.innerText=n.toLocaleTimeString('tr-TR');
-  date.innerText=n.toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-}
-setInterval(tick,1000);
-tick();
-
-// --- Vardiya ve takvim ---
 let secilen = localStorage.getItem('secilenVardiya') || 1;
-const BASLANGIC = new Date(Date.UTC(2026,0,1));
-let currentYear = new Date().getFullYear(),
-    currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear(), currentMonth = new Date().getMonth();
 
-const tatiller={
-"1-1":"🎉 Yılbaşı",
-"4-23":"🇹🇷 23 Nisan Ulusal Egemenlik ve Çocuk Bayramı",
-"5-1":"👷 1 Mayıs Emek ve Dayanışma Günü",
-"5-19":"🇹🇷 19 Mayıs Atatürk'ü Anma, Gençlik ve Spor Bayramı",
-"7-15":"🇹🇷 15 Temmuz Demokrasi ve Milli Birlik Günü",
-"8-30":"🇹🇷 30 Ağustos Zafer Bayramı",
-"10-29":"🇹🇷 29 Ekim Cumhuriyet Bayramı",
-"3-19":"🕌 Ramazan Bayramı Arefe",
-"3-20":"🕌 Ramazan Bayramı (1.Gün)",
-"3-21":"🕌 Ramazan Bayramı (2.Gün)",
-"3-22":"🕌 Ramazan Bayramı (3.Gün)",
-"5-26":"🐑 Kurban Bayramı Arefe",
-"5-27":"🐑 Kurban Bayramı (1.Gün)",
-"5-28":"🐑 Kurban Bayramı (2.Gün)",
-"5-29":"🐑 Kurban Bayramı (3.Gün)",
-"5-30":"🐑 Kurban Bayramı (4.Gün)",
-"1-13":"🌙 Regaip Kandili",
-"2-2":"🌙 Miraç Kandili",
-"2-12":"🌙 Berat Kandili",
-"3-9":"🌙 Kadir Gecesi",
-"9-26":"🌙 Mevlid Kandili"
-}
+const tatiller = {
+  "1-1":"🎉 Yılbaşı", "1-13":"🌙 Regaip Kandili", "2-2":"🌙 Miraç Kandili", "2-12":"🌙 Berat Kandili",
+  "3-9":"🌙 Kadir Gecesi", "3-19":"🕌 Ramazan Arefe", "3-20":"🕌 Ramazan B. 1",
+  "3-21":"🕌 Ramazan B. 2", "3-22":"🕌 Ramazan B. 3", "4-23":"🇹🇷 23 Nisan",
+  "5-1":"👷 1 Mayıs", "5-19":"🇹🇷 19 Mayıs", "5-26":"🐑 Kurban Arefe",
+  "5-27":"🐑 Kurban B. 1", "5-28":"🐑 Kurban B. 2", "5-29":"🐑 Kurban B. 3",
+  "5-30":"🐑 Kurban B. 4", "7-15":"🇹🇷 15 Temmuz", "8-30":"🇹🇷 30 Ağustos",
+  "9-26":"🌙 Mevlid Kandili", "10-29":"🇹🇷 29 Ekim"
+};
 
 function vardiya(t){
   const gunFarki=Math.floor((Date.UTC(t.getFullYear(),t.getMonth(),t.getDate()) - Date.UTC(2026,0,1))/86400000)%4;
-  const duzen=[
-    ['gece','izin','izin','gunduz'],
-    ['izin','izin','gunduz','gece'],
-    ['izin','gunduz','gece','izin'],
-    ['gunduz','gece','izin','izin']
-  ];
+  const duzen=[['gece','izin','izin','gunduz'],['izin','izin','gunduz','gece'],['izin','gunduz','gece','izin'],['gunduz','gece','izin','izin']];
   return duzen[(gunFarki+4)%4];
 }
 
-function todayInfo(){
-  const today=new Date();
-  const v=vardiya(today);
-  let g=[],n=[];
-  v.forEach((x,i)=>{
-    if(x==='gunduz') g.push((i+1)+'. Vardiya');
-    if(x==='gece') n.push((i+1)+'. Vardiya');
-  });
-  todayShift.innerText=`Bugün → Gündüz: ${g.join(', ')||'-'} | Gece: ${n.join(', ')||'-'}`;
-}
-
 function draw(){
-  calendar.innerHTML='';
-  holidayInfo.style.display='none';
-  holidayInfo.innerHTML='';
-
+  calendar.innerHTML=''; holidayInfo.style.display='none'; holidayInfo.innerHTML='';
   let g=0,n=0,o=0;
-  const today=new Date();
   const firstDay=(new Date(currentYear,currentMonth,1).getDay()+6)%7;
   const days=new Date(currentYear,currentMonth+1,0).getDate();
-
   monthTitle.innerText=new Date(currentYear,currentMonth).toLocaleDateString('tr-TR',{month:'long',year:'numeric'});
 
-  for(let i=0;i<firstDay;i++){
-    calendar.appendChild(document.createElement('div'));
-  }
-
+  for(let i=0;i<firstDay;i++) calendar.appendChild(document.createElement('div'));
   for(let i=1;i<=days;i++){
     const date=new Date(currentYear,currentMonth,i);
     const v=vardiya(date)[secilen-1];
     const d=document.createElement('div');
     let key=(currentMonth+1)+'-'+i;
     d.className='day '+(v==='gunduz'? 'work-day': v==='gece'? 'work-night': 'off');
-    if(date.toDateString()===today.toDateString()) d.classList.add('today');
+    if(date.toDateString()===new Date().toDateString()) d.classList.add('today');
     if(tatiller[key]){
-      d.classList.add('holiday');
-      holidayInfo.style.display='block';
-      holidayInfo.innerHTML+=tatiller[key]+'<br>';
+      d.classList.add('holiday'); holidayInfo.style.display='block';
+      holidayInfo.innerHTML += `• ${i} ${monthTitle.innerText.split(' ')[0]}: ${tatiller[key]}<br>`;
     }
-    d.innerText=i;
-    calendar.appendChild(d);
-    v==='gunduz'?g++:v==='gece'?n++:o++;
+    d.innerText=i; calendar.appendChild(d);
+    v==='gunduz'?g++:v==='gece'?n++:o++
   }
+  dayCount.innerText=g; nightCount.innerText=n; offCount.innerText=o;
+}
 
-  dayCount.innerText=g;
-  nightCount.innerText=n;
-  offCount.innerText=o;
+function todayInfo(){
+  const v=vardiya(new Date()); let g=[], n=[];
+  v.forEach((x,i)=>{ if(x==='gunduz') g.push(i+1); if(x==='gece') n.push(i+1); });
+  todayShift.innerText=`Bugün → Gündüz: ${g.join(',')} | Gece: ${n.join(',')}`;
+}
+
+async function checkAnnouncements() {
+  try {
+    const res = await fetch('bildirim.json');
+    const data = await res.json();
+    if (data.id !== localStorage.getItem('lastSeenId')) {
+      const box = document.getElementById('announcement');
+      box.innerText = data.mesaj; box.style.display = 'block';
+      setTimeout(() => { box.style.display = 'none'; localStorage.setItem('lastSeenId', data.id); }, 5000);
+    }
+  } catch (e) {}
 }
 
 document.querySelectorAll('.vardiya-btn').forEach(b=>{
+  if(b.dataset.v == secilen) b.classList.add('active');
   b.onclick=()=>{
     document.querySelectorAll('.vardiya-btn').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    secilen=b.dataset.v;
-    localStorage.setItem('secilenVardiya', secilen);
-    draw();
+    b.classList.add('active'); secilen=b.dataset.v;
+    localStorage.setItem('secilenVardiya', secilen); draw();
   }
 });
 
-function nextMonth(){currentMonth++;if(currentMonth>11){currentMonth=0;currentYear++}draw();}
-function prevMonth(){currentMonth--;if(currentMonth<0){currentMonth=11;currentYear--}draw();}
-draw();todayInfo();
+function nextMonth(){currentMonth++;if(currentMonth>11){currentMonth=0;currentYear++}draw()}
+function prevMonth(){currentMonth--;if(currentMonth<0){currentMonth=11;currentYear--}draw()}
+function tick(){
+  const n=new Date(); time.innerText=n.toLocaleTimeString('tr-TR');
+  date.innerText=n.toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+}
 
-function toggleSettings(){settings.style.display=settings.style.display==='block'?'none':'block';}
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault(); deferredPrompt = e;
+  document.getElementById('installBtn').style.display = 'block';
+});
+document.getElementById('installBtn').onclick = async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt(); deferredPrompt = null;
+    document.getElementById('installBtn').style.display = 'none';
+  }
+};
+
+window.addEventListener('load', () => {
+  tick(); setInterval(tick,1000); draw(); todayInfo(); checkAnnouncements();
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+});
 </script>
-
 </body>
 </html>
+
