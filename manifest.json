@@ -8,14 +8,14 @@
   "description": "Vardiya Takip Sistemi",
   "icons": [
     {
-      "src": "vardiya.png",
+      "src": "vardiya.jpg",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "vardiya.png",
+      "src": "vardiya.jpg",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/jpg"
     }
   ]
 }
