@@ -149,8 +149,32 @@ body{
 .install-box button{
   background:#7f5af0; color:white; border:none; padding:12px 20px; border-radius:10px; font-size:16px; cursor:pointer;
 }
+
+/* CUSTOM NOTIFICATION */
+#customNotification{
+  display:none;
+  position:fixed;
+  bottom:20px;
+  left:10%;
+  width:80%;
+  background:#7f5af0;
+  color:white;
+  padding:15px;
+  border-radius:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.2);
+  z-index:9999;
+}
+#customNotification button{
+  float:right;
+  background:white;
+  color:#7f5af0;
+  border:none;
+  padding:4px 8px;
+  border-radius:5px;
+  cursor:pointer;
+}
 </style>
-</head>
+
 <body>
 
 <!-- INSTALL POPUP -->
@@ -161,11 +185,10 @@ body{
   </div>
 </div>
 
-<!-- Ayarlar paneli -->
+<!-- SETTINGS PANEL -->
 <div class="settings-btn" onclick="toggleSettings()">
   <i class="fas fa-cog"></i>
 </div>
-
 <div class="settings-panel" id="settings">
   <div class="signature">
     Bu uygulama sizin için <b>Yasin Demirgan</b> tarafından geliştirilmiştir.
@@ -176,6 +199,7 @@ body{
   </div>
 </div>
 
+<!-- HEADER -->
 <div class="header">
   <div class="logo-container">
     <div class="logo-icon"><i class="fas fa-shield-alt"></i></div>
@@ -186,8 +210,8 @@ body{
   <div id="todayShift"></div>
 </div>
 
+<!-- MAIN CONTENT -->
 <div class="main-content">
-
   <div class="section">
     <div class="section-title">Vardiya Seçimi</div>
     <div class="vardiya-buttons">
@@ -219,7 +243,12 @@ body{
 
     <div class="holiday-box" id="holidayInfo"></div>
   </div>
+</div>
 
+<!-- CUSTOM NOTIFICATION -->
+<div id="customNotification">
+  <span id="notifText"></span>
+  <button onclick="closeNotification()">Kapat</button>
 </div>
 
 <script>
@@ -334,19 +363,25 @@ document.getElementById("installBtn").addEventListener("click", async () => {
 });
 
 // ------------------
-// BILDIRIM KONTROLÜ
+// CUSTOM NOTIFICATION
 // ------------------
-async function checkNotification(){
-  if(!('Notification' in window)) return;
-  const perm = await Notification.requestPermission();
-  if(perm!=='granted') return;
+function showNotification(msg){
+  const notif = document.getElementById('customNotification');
+  document.getElementById('notifText').innerText = msg;
+  notif.style.display='block';
+}
 
+function closeNotification(){
+  document.getElementById('customNotification').style.display='none';
+}
+
+async function checkNotification(){
   try{
     const res = await fetch('https://kendi-github.github.io/bildirim.json'); // kendi URL’in
     const data = await res.json();
     const last = localStorage.getItem('lastNotification')||'';
     if(data.timestamp !== last){
-      new Notification(data.title,{body:data.message});
+      showNotification(`${data.title} - ${data.message}`);
       localStorage.setItem('lastNotification', data.timestamp);
     }
   }catch(e){
@@ -354,10 +389,9 @@ async function checkNotification(){
   }
 }
 
-// Açılır açılmaz kontrol et
+// Açılır açılmaz kontrol
 checkNotification();
-
-// 5 dakikada bir kontrol et
+// 5 dakikada bir kontrol
 setInterval(checkNotification, 1000*60*5);
 
 </script>
