@@ -150,7 +150,6 @@ body{
   background:#7f5af0; color:white; border:none; padding:12px 20px; border-radius:10px; font-size:16px; cursor:pointer;
 }
 </style>
-
 </head>
 <body>
 
@@ -224,12 +223,16 @@ body{
 </div>
 
 <script>
+// ------------------
 // SERVICE WORKER
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js');
+// ------------------
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('service-worker.js').then(()=>console.log('SW registered'));
 }
 
-// LOCAL STORAGE
+// ------------------
+// VARDİYA SISTEMI
+// ------------------
 let secilen = localStorage.getItem('secilenVardiya') || 1;
 let currentYear = new Date().getFullYear();
 let currentMonth = new Date().getMonth();
@@ -312,15 +315,15 @@ function toggleSettings(){
 setInterval(tick,1000);
 tick();draw();todayInfo();
 
+// ------------------
 // INSTALL POPUP
+// ------------------
 let deferredPrompt;
-
 window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
   document.getElementById("installPopup").style.display="flex";
 });
-
 document.getElementById("installBtn").addEventListener("click", async () => {
   if(!deferredPrompt) return;
   deferredPrompt.prompt();
@@ -329,7 +332,34 @@ document.getElementById("installBtn").addEventListener("click", async () => {
   deferredPrompt = null;
   document.getElementById("installPopup").style.display="none";
 });
-</script>
 
+// ------------------
+// BILDIRIM KONTROLÜ
+// ------------------
+async function checkNotification(){
+  if(!('Notification' in window)) return;
+  const perm = await Notification.requestPermission();
+  if(perm!=='granted') return;
+
+  try{
+    const res = await fetch('https://kendi-github.github.io/bildirim.json'); // kendi URL’in
+    const data = await res.json();
+    const last = localStorage.getItem('lastNotification')||'';
+    if(data.timestamp !== last){
+      new Notification(data.title,{body:data.message});
+      localStorage.setItem('lastNotification', data.timestamp);
+    }
+  }catch(e){
+    console.error('Bildirim kontrol hatası', e);
+  }
+}
+
+// Açılır açılmaz kontrol et
+checkNotification();
+
+// 5 dakikada bir kontrol et
+setInterval(checkNotification, 1000*60*5);
+
+</script>
 </body>
 </html>
