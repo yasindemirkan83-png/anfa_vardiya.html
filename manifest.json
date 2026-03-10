@@ -1,18 +1,19 @@
 {
-  "name": "Vardiya Takip",
+  "name": "Vardiya Takip Sistemi",
   "short_name": "Vardiya",
-  "start_url": "./index.html",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#f0f4f8",
   "theme_color": "#7f5af0",
+  "description": "4'lü vardiya sistemini takip etmenizi sağlar.",
   "icons": [
     {
-      "src": "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/vardiya.jpg",
+      "src": "https://cdn-icons-png.flaticon.com/512/2370/2370264.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/vardiya.jpg",
+      "src": "https://cdn-icons-png.flaticon.com/512/2370/2370264.png",
       "sizes": "512x512",
       "type": "image/png"
     }
