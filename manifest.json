@@ -1,12 +1,20 @@
 {
-"name": "Vardiya Takip",
-"short_name": "Vardiya",
-"start_url": "./index.html",
-"display": "standalone",
-"background_color": "#f0f4f8",
-"theme_color": "#7f5af0",
-"icons": [
-  {"src":"vardiya.jpg","sizes":"192x192","type":"image/jpeg"},
-  {"src":"vardiya.jpg","sizes":"512x512","type":"image/jpeg"}
-]
+  "name": "Vardiya Takip",
+  "short_name": "Vardiya",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#f0f4f8",
+  "theme_color": "#7f5af0",
+  "icons": [
+    {
+      "src": "vardiya.jpg",
+      "sizes": "192x192",
+      "type": "image/jpg"
+    },
+    {
+      "src": "vardiya.jpg",
+      "sizes": "512x512",
+      "type": "image/jpg"
+    }
+  ]
 }
