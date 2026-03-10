@@ -1,9 +1,9 @@
-const CACHE_NAME = 'vardiya-v2';
+const CACHE_NAME = 'vardiya-v4';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './vardiya.png'
+  './vardiya.jpg'
 ];
 
 self.addEventListener('install', (e) => {
@@ -13,3 +13,4 @@ self.addEventListener('install', (e) => {
 self.addEventListener('fetch', (e) => {
   e.respondWith(caches.match(e.request).then(res => res || fetch(e.request)));
 });
+
