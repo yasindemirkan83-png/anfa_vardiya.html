@@ -6,9 +6,6 @@
 <title>Vardiya Takip</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="vardiya.jpg" type="image/jpg">
-
 <style>
 :root{
   --bg-primary: #f0f4f8;
@@ -18,64 +15,165 @@
   --color-success: #2dd36f;
   --color-warning: #ffb400;
   --color-text: #1a1a2e;
-  --color-day: #ff8aa0;  
+  --color-day: #ff8aa0;   /* Gündüz uyumlu kırmızı-pembe ton */
   --color-night: #a0c4ff;
   --color-off: #d3d3d3;
   --color-holiday: #ffb400;
 }
 
-html, body{height:100%;margin:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg-primary);overflow:hidden;}
-body{display:flex;flex-direction:column;justify-content:flex-start;align-items:center;max-width:500px;margin:auto;color:var(--color-text);}
+html, body{
+  height:100%;
+  margin:0;
+  padding:0;
+  font-family:'Segoe UI',system-ui,sans-serif;
+  background: var(--bg-primary);
+  overflow: hidden; /* Tek ekran scroll yok */
+}
 
-/* HEADER */
-.header{background:linear-gradient(135deg,#ffd6e0,#a0c4ff);padding:15px;border-radius:20px;text-align:center;width:95%;box-shadow:0 4px 12px rgba(0,0,0,0.1);flex-shrink:0;}
-.logo-container{display:flex;justify-content:center;gap:12px;margin-bottom:5px;}
-.logo-icon{font-size:2.2rem;color:var(--color-primary);}
-.logo-text{font-size:1.6rem;font-weight:800;color:var(--color-primary);}
-#time{font-size:2.2rem;color:var(--color-primary);margin:5px 0;}
-#date{font-size:.9rem;}
-#todayShift{margin-top:5px;font-size:.95rem;color:var(--color-day);font-weight:700;}
+body{
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:center;
+  max-width:500px;
+  margin:auto;
+  color:var(--color-text);
+}
 
-/* MAIN */
-.main-content{flex:1;width:100%;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;overflow-y:hidden;padding-bottom:10px;}
-.section{background:var(--bg-secondary);padding:15px;border-radius:15px;margin:8px 0;width:90%;box-shadow:0 2px 8px rgba(0,0,0,0.08);flex-shrink:0;}
-.section-title{color:var(--color-primary);font-size:1.2rem;margin-bottom:10px;}
-.vardiya-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
-.vardiya-btn{background:var(--bg-tertiary);border:none;border-radius:12px;padding:12px;color:var(--color-text);cursor:pointer;font-weight:600;transition:all 0.2s;font-size:0.95rem;}
-.vardiya-btn.active{background:var(--color-primary);color:#fff;}
-.weekdays{display:grid;grid-template-columns:repeat(7,1fr);font-size:.7rem;text-align:center;margin-bottom:4px;color:#888;}
-.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
-.day{background:var(--bg-tertiary);border-radius:8px;padding:5px;font-size:.85rem;text-align:center;position:relative;transition:transform 0.15s;}
-.day:hover{transform:scale(1.05);}
+.header{
+  background: linear-gradient(135deg, #ffd6e0, #a0c4ff);
+  padding:15px;
+  border-radius:20px;
+  text-align:center;
+  width:95%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  flex-shrink:0;
+}
+
+.logo-container{display:flex;justify-content:center;gap:12px;margin-bottom:5px}
+.logo-icon{font-size:2.2rem;color:var(--color-primary)}
+.logo-text{font-size:1.6rem;font-weight:800;color:var(--color-primary)}
+#time{font-size:2.2rem;color:var(--color-primary);margin:5px 0}
+#date{font-size:.9rem}
+#todayShift{margin-top:5px;font-size:.95rem;color:var(--color-day); font-weight:700;}
+
+.main-content{
+  flex:1;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:center;
+  overflow-y:hidden;
+  padding-bottom:10px;
+}
+
+.section{
+  background: var(--bg-secondary);
+  padding:15px;
+  border-radius:15px;
+  margin:8px 0;
+  width:90%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  flex-shrink:0;
+}
+.section-title{color:var(--color-primary);font-size:1.2rem;margin-bottom:10px}
+
+.vardiya-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.vardiya-btn{
+  background: var(--bg-tertiary);
+  border: none;
+  border-radius:12px;
+  padding:12px;
+  color: var(--color-text);
+  cursor:pointer;
+  font-weight:600;
+  transition: all 0.2s;
+  font-size:0.95rem;
+}
+.vardiya-btn.active{
+  background: var(--color-primary);
+  color:#fff;
+}
+
+.weekdays{
+  display:grid;grid-template-columns:repeat(7,1fr);
+  font-size:.7rem;text-align:center;margin-bottom:4px;color:#888
+}
+
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.day{
+  background:var(--bg-tertiary);
+  border-radius:8px;
+  padding:5px;
+  font-size:.85rem;
+  text-align:center;
+  position:relative;
+  transition: transform 0.15s;
+}
+.day:hover{transform: scale(1.05);}
 .work-day{background:var(--color-day);}
 .work-night{background:var(--color-night);}
 .off{background:var(--color-off);}
 .holiday{outline:2px solid var(--color-holiday);}
-.today{outline:2px solid var(--color-primary);box-shadow:0 0 6px var(--color-primary);}
-.summary{display:flex;justify-content:space-between;margin-top:8px;font-size:0.8rem;}
-.summary-value{font-size:1.3rem;font-weight:700;color:var(--color-day);}
-.holiday-box{display:none;margin-top:8px;background:var(--bg-tertiary);border-left:3px solid var(--color-holiday);padding:8px;border-radius:8px;font-size:.8rem;}
-.settings-btn{position:fixed;top:15px;right:15px;font-size:1.4rem;color:var(--color-primary);cursor:pointer;}
-.settings-panel{display:none;position:fixed;top:60px;right:15px;background:var(--bg-secondary);border-radius:12px;padding:10px;width:220px;z-index:10;}
-.settings-panel .signature{font-family:'Comic Sans MS', cursive;font-size:0.85rem;margin-bottom:6px;color:#333;text-align:center;}
+.today{outline:2px solid var(--color-primary);box-shadow:0 0 6px var(--color-primary)}
+
+.summary{display:flex;justify-content:space-between;margin-top:8px;font-size:0.8rem}
+.summary-value{font-size:1.3rem;font-weight:700; color: var(--color-day);} /* Gündüz kısmı kırmızı uyumlu */
+
+.holiday-box{
+  display:none;
+  margin-top:8px;
+  background:var(--bg-tertiary);
+  border-left:3px solid var(--color-holiday);
+  padding:8px;
+  border-radius:8px;
+  font-size:.8rem
+}
+
+.settings-btn{
+  position:fixed;top:15px;right:15px;
+  font-size:1.4rem;color:var(--color-primary);cursor:pointer
+}
+
+.settings-panel{
+  display:none;
+  position:fixed;
+  top:60px;right:15px;
+  background:var(--bg-secondary);
+  border-radius:12px;
+  padding:10px;
+  width:220px;
+  z-index:10
+}
+.settings-panel textarea{
+  width:100%;height:50px;
+  border-radius:8px;
+  border:none;padding:6px;
+  font-size:0.8rem;
+}
+.settings-panel button{
+  margin-top:6px;width:100%;
+  border:none;border-radius:8px;
+  padding:6px;
+  background:var(--color-primary);color:#fff;font-weight:600;font-size:0.85rem
+}
+.settings-panel .signature{
+  font-family:'Comic Sans MS', cursive;
+  font-size:0.85rem;
+  margin-bottom:6px;
+  color:#333;
+  text-align:center;
+}
 .settings-panel .icons{display:flex;gap:15px;justify-content:center;font-size:1.4rem;}
 .settings-panel .icons a{color:#38bdf8;text-decoration:none;transition:0.2s;}
 .settings-panel .icons a:hover{transform:scale(1.2);}
-#installPopup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:none;justify-content:center;align-items:center;z-index:9999;}
-.install-box{background:white;padding:25px;border-radius:15px;text-align:center;width:260px;box-shadow:0 5px 20px rgba(0,0,0,0.3);}
-.install-box h2{font-size:18px;margin-bottom:15px;}
-.install-box button{background:#7f5af0;color:white;border:none;padding:12px 20px;border-radius:10px;font-size:16px;cursor:pointer;}
 </style>
+
 </head>
 <body>
 
-<div id="installPopup">
-  <div class="install-box">
-    <h2>📱 Uygulamayı yüklemek ister misiniz?</h2>
-    <button id="installBtn">Uygulamayı Yükle</button>
-  </div>
-</div>
-
+<!-- Ayarlar paneli -->
 <div class="settings-btn" onclick="toggleSettings()">
   <i class="fas fa-cog"></i>
 </div>
@@ -137,114 +235,136 @@ body{display:flex;flex-direction:column;justify-content:flex-start;align-items:c
 </div>
 
 <script>
-// ------------------ SERVICE WORKER ------------------
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('service-worker.js').then(()=>console.log('SW registered'));
+// Lokal vardiya kaydı
+let secilen = localStorage.getItem('secilenVardiya') || 1;
+
+// Başlangıç referansı
+const BASLANGIC = new Date(Date.UTC(2026,0,1));
+let currentYear = new Date().getFullYear(),
+    currentMonth = new Date().getMonth();
+
+const tatiller={
+"1-1":"🎉 Yılbaşı",
+"4-23":"🇹🇷 23 Nisan Ulusal Egemenlik ve Çocuk Bayramı",
+"5-1":"👷 1 Mayıs Emek ve Dayanışma Günü",
+"5-19":"🇹🇷 19 Mayıs Atatürk'ü Anma, Gençlik ve Spor Bayramı",
+"7-15":"🇹🇷 15 Temmuz Demokrasi ve Milli Birlik Günü",
+"8-30":"🇹🇷 30 Ağustos Zafer Bayramı",
+"10-29":"🇹🇷 29 Ekim Cumhuriyet Bayramı",
+"3-19":"🕌 Ramazan Bayramı Arefe",
+"3-20":"🕌 Ramazan Bayramı (1.Gün)",
+"3-21":"🕌 Ramazan Bayramı (2.Gün)",
+"3-22":"🕌 Ramazan Bayramı (3.Gün)",
+"5-26":"🐑 Kurban Bayramı Arefe",
+"5-27":"🐑 Kurban Bayramı (1.Gün)",
+"5-28":"🐑 Kurban Bayramı (2.Gün)",
+"5-29":"🐑 Kurban Bayramı (3.Gün)",
+"5-30":"🐑 Kurban Bayramı (4.Gün)",
+"1-13":"🌙 Regaip Kandili",
+"2-2":"🌙 Miraç Kandili",
+"2-12":"🌙 Berat Kandili",
+"3-9":"🌙 Kadir Gecesi",
+"9-26":"🌙 Mevlid Kandili"
 }
 
-// ------------------ VARDIYA ------------------
-let secilen = localStorage.getItem('secilenVardiya') || 1;
-let currentYear = new Date().getFullYear();
-let currentMonth = new Date().getMonth();
-const tatiller={"1-1":"🎉 Yılbaşı","4-23":"🇹🇷 23 Nisan","5-1":"👷 1 Mayıs","5-19":"🇹🇷 19 Mayıs","7-15":"🇹🇷 15 Temmuz","8-30":"🇹🇷 30 Ağustos","10-29":"🇹🇷 29 Ekim"};
-
 function vardiya(t){
-  const gunFarki = Math.floor((Date.UTC(t.getFullYear(),t.getMonth(),t.getDate())-Date.UTC(2026,0,1))/86400000)%4;
-  const duzen=[['gece','izin','izin','gunduz'],['izin','izin','gunduz','gece'],['izin','gunduz','gece','izin'],['gunduz','gece','izin','izin']];
-  return duzen[(gunFarki+4)%4];
+const gunFarki=Math.floor(
+(Date.UTC(t.getFullYear(),t.getMonth(),t.getDate()) -
+ Date.UTC(2026,0,1)) / 86400000
+) % 4
+
+const duzen=[
+['gece','izin','izin','gunduz'],  
+['izin','izin','gunduz','gece'],   
+['izin','gunduz','gece','izin'],   
+['gunduz','gece','izin','izin']    
+]
+
+return duzen[(gunFarki+4)%4]
 }
 
 function todayInfo(){
-  const today = new Date();
-  const v = vardiya(today);
-  let g=[], n=[];
-  v.forEach((x,i)=>{if(x==='gunduz') g.push((i+1)+'. Vardiya'); if(x==='gece') n.push((i+1)+'. Vardiya');});
-  todayShift.innerText=`Bugün → Gündüz: ${g.join(',')||'-'} | Gece: ${n.join(',')||'-'}`;
+const today=new Date()
+const v=vardiya(today)
+let g=[],n=[]
+v.forEach((x,i)=>{
+if(x==='gunduz') g.push((i+1)+'. Vardiya')
+if(x==='gece') n.push((i+1)+'. Vardiya')
+})
+todayShift.innerText=`Bugün → Gündüz: ${g.join(', ')||'-'} | Gece: ${n.join(', ')||'-'}`
 }
 
 function draw(){
-  calendar.innerHTML=''; holidayInfo.style.display='none'; holidayInfo.innerHTML='';
-  let g=0,n=0,o=0;
-  const today=new Date();
-  const firstDay=(new Date(currentYear,currentMonth,1).getDay()+6)%7;
-  const days=new Date(currentYear,currentMonth+1,0).getDate();
-  monthTitle.innerText=new Date(currentYear,currentMonth).toLocaleDateString('tr-TR',{month:'long',year:'numeric'});
-  for(let i=0;i<firstDay;i++) calendar.appendChild(document.createElement('div'));
-  for(let i=1;i<=days;i++){
-    const date=new Date(currentYear,currentMonth,i);
-    const v=vardiya(date)[secilen-1];
-    const d=document.createElement('div');
-    let key=(currentMonth+1)+'-'+i;
-    d.className='day '+(v==='gunduz'? 'work-day': v==='gece'? 'work-night': 'off');
-    if(date.toDateString()===today.toDateString()) d.classList.add('today');
-    if(tatiller[key]){d.classList.add('holiday'); holidayInfo.style.display='block'; holidayInfo.innerHTML+=tatiller[key]+'<br>';}
-    d.innerText=i;
-    calendar.appendChild(d);
-    v==='gunduz'?g++:v==='gece'?n++:o++;
-  }
-  dayCount.innerText=g; nightCount.innerText=n; offCount.innerText=o;
+calendar.innerHTML=''
+holidayInfo.style.display='none'
+holidayInfo.innerHTML=''
+
+let g=0,n=0,o=0
+const today=new Date()
+const firstDay=(new Date(currentYear,currentMonth,1).getDay()+6)%7
+const days=new Date(currentYear,currentMonth+1,0).getDate()
+
+monthTitle.innerText=new Date(currentYear,currentMonth)
+.toLocaleDateString('tr-TR',{month:'long',year:'numeric'})
+
+for(let i=0;i<firstDay;i++){
+calendar.appendChild(document.createElement('div'))
+}
+
+for(let i=1;i<=days;i++){
+const date=new Date(currentYear,currentMonth,i)
+const v=vardiya(date)[secilen-1]
+const d=document.createElement('div')
+let key=(currentMonth+1)+'-'+i
+
+d.className='day '+(v==='gunduz'? 'work-day': v==='gece'? 'work-night': 'off')
+
+if(date.toDateString()===today.toDateString()){
+d.classList.add('today')
+}
+
+if(tatiller[key]){
+d.classList.add('holiday')
+holidayInfo.style.display='block'
+holidayInfo.innerHTML+=tatiller[key]+'<br>'
+}
+
+d.innerText=i
+calendar.appendChild(d)
+
+v==='gunduz'?g++:v==='gece'?n++:o++
+}
+
+dayCount.innerText=g
+nightCount.innerText=n
+offCount.innerText=o
 }
 
 document.querySelectorAll('.vardiya-btn').forEach(b=>{
-  b.onclick=()=>{
-    document.querySelectorAll('.vardiya-btn').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    secilen=b.dataset.v;
-    localStorage.setItem('secilenVardiya', secilen);
-    draw();
-  }
+b.onclick=()=>{
+document.querySelectorAll('.vardiya-btn').forEach(x=>x.classList.remove('active'))
+b.classList.add('active')
+secilen=b.dataset.v
+localStorage.setItem('secilenVardiya', secilen)
+draw()
+}
 })
 
-function nextMonth(){currentMonth++;if(currentMonth>11){currentMonth=0;currentYear++;}draw();}
-function prevMonth(){currentMonth--;if(currentMonth<0){currentMonth=11;currentYear--;}draw();}
+function nextMonth(){currentMonth++;if(currentMonth>11){currentMonth=0;currentYear++}draw()}
+function prevMonth(){currentMonth--;if(currentMonth<0){currentMonth=11;currentYear--}draw()}
 
 function tick(){
-  const n=new Date();
-  time.innerText=n.toLocaleTimeString('tr-TR');
-  date.innerText=n.toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+const n=new Date()
+time.innerText=n.toLocaleTimeString('tr-TR')
+date.innerText=n.toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long',year:'numeric'})
 }
 
-function toggleSettings(){settings.style.display=settings.style.display==='block'?'none':'block';}
-
-setInterval(tick,1000);
-tick(); draw(); todayInfo();
-
-// ------------------ INSTALL POPUP ------------------
-let deferredPrompt;
-window.addEventListener("beforeinstallprompt", (e) => {e.preventDefault(); deferredPrompt = e; document.getElementById("installPopup").style.display="flex";});
-document.getElementById("installBtn").addEventListener("click", async () => {if(!deferredPrompt) return; deferredPrompt.prompt(); deferredPrompt.userChoice.then(()=>{deferredPrompt=null; document.getElementById("installPopup").style.display="none";});});
-
-// ------------------ BİLDİRİM ------------------
-const defaultNotification = {title:"Hoşgeldiniz",message:"Vardiya Takip uygulamasına hoşgeldiniz!",timestamp:"2026-03-10T00:00:00Z"};
-
-async function showNotification(data){
-  if(!('Notification' in window)) return;
-  const perm = await Notification.requestPermission();
-  if(perm!=='granted') return;
-  new Notification(data.title,{body:data.message});
+function toggleSettings(){
+settings.style.display=settings.style.display==='block'?'none':'block'
 }
-
-async function checkNotification(){
-  let data;
-  try{
-    const res = await fetch('https://yasindemirkan83-png.github.io/bildirim.json');
-    data = await res.json();
-    localStorage.setItem('vardiyaData', JSON.stringify(data));
-  }catch(e){
-    data = JSON.parse(localStorage.getItem('vardiyaData')) || defaultNotification;
-  }
-
-  const last = localStorage.getItem('lastNotification')||'';
-  if(data.timestamp !== last){
-    showNotification(data);
-    localStorage.setItem('lastNotification', data.timestamp);
-  }
-}
-
-// İlk açılış ve 5 dakikada bir
-checkNotification();
-setInterval(checkNotification,1000*60*5);
-
+setInterval(tick,1000)
+tick();draw();todayInfo()
 </script>
+
 </body>
 </html>
