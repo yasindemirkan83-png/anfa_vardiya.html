@@ -18,4 +18,14 @@ self.addEventListener('fetch', e=>{
       return res || fetch(e.request);
     })
   );
+  });
+  // service-worker.js
+self.addEventListener('push', e => {
+  const data = e.data.json();
+  self.registration.showNotification(data.title, {
+    body: data.message,
+    icon: '/vardiya.jpg',
+    requireInteraction: true // kullanıcı kapatana kadar açık
+  });
 });
+
