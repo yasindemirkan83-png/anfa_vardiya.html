@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vardiya Takip</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
-/* --- Senin CSS --- */
 :root{
   --bg-primary: #f0f4f8;
   --bg-secondary: #ffffff;
@@ -21,44 +21,49 @@
   --color-off: #d3d3d3;
   --color-holiday: #ffb400;
 }
-/* --- Body ve genel --- */
-html, body{height:100%;margin:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif;background: var(--bg-primary);overflow:hidden;}
-body{display:flex;flex-direction:column;justify-content:flex-start;align-items:center;max-width:500px;margin:auto;color:var(--color-text);}
-.header{background: linear-gradient(135deg, #ffd6e0, #a0c4ff);padding:15px;border-radius:20px;text-align:center;width:95%;box-shadow: 0 4px 12px rgba(0,0,0,0.1);flex-shrink:0;}
+
+html,body{height:100%;margin:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg-primary);overflow:hidden;}
+body{display:flex;flex-direction:column;align-items:center;max-width:500px;margin:auto;color:var(--color-text);}
+
+.header{background:linear-gradient(135deg,#ffd6e0,#a0c4ff);padding:15px;border-radius:20px;text-align:center;width:95%;box-shadow:0 4px 12px rgba(0,0,0,0.1);flex-shrink:0;}
 .logo-container{display:flex;justify-content:center;gap:12px;margin-bottom:5px}
 .logo-icon{font-size:2.2rem;color:var(--color-primary)}
 .logo-text{font-size:1.6rem;font-weight:800;color:var(--color-primary)}
 #time{font-size:2.2rem;color:var(--color-primary);margin:5px 0}
 #date{font-size:.9rem}
-#todayShift{margin-top:5px;font-size:.95rem;color:var(--color-day); font-weight:700;}
-.main-content{flex:1;width:100%;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;overflow-y:hidden;padding-bottom:10px;}
-.section{background: var(--bg-secondary);padding:15px;border-radius:15px;margin:8px 0;width:90%;box-shadow: 0 2px 8px rgba(0,0,0,0.08);flex-shrink:0;}
+#todayShift{margin-top:5px;font-size:.95rem;color:var(--color-day);font-weight:700;}
+
+.main-content{flex:1;width:100%;display:flex;flex-direction:column;align-items:center;overflow-y:hidden;padding-bottom:10px;}
+.section{background:var(--bg-secondary);padding:15px;border-radius:15px;margin:8px 0;width:90%;box-shadow:0 2px 8px rgba(0,0,0,0.08);flex-shrink:0;}
 .section-title{color:var(--color-primary);font-size:1.2rem;margin-bottom:10px}
+
 .vardiya-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.vardiya-btn{background: var(--bg-tertiary);border: none;border-radius:12px;padding:12px;color: var(--color-text);cursor:pointer;font-weight:600;transition: all 0.2s;font-size:0.95rem;}
-.vardiya-btn.active{background: var(--color-primary);color:#fff;}
+.vardiya-btn{background:var(--bg-tertiary);border:none;border-radius:12px;padding:12px;color:var(--color-text);cursor:pointer;font-weight:600;transition:all 0.2s;font-size:0.95rem;}
+.vardiya-btn.active{background:var(--color-primary);color:#fff;}
+
 .weekdays{display:grid;grid-template-columns:repeat(7,1fr);font-size:.7rem;text-align:center;margin-bottom:4px;color:#888}
 .calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-.day{background:var(--bg-tertiary);border-radius:8px;padding:5px;font-size:.85rem;text-align:center;position:relative;transition: transform 0.15s;}
-.day:hover{transform: scale(1.05);}
+.day{background:var(--bg-tertiary);border-radius:8px;padding:5px;font-size:.85rem;text-align:center;position:relative;transition:transform 0.15s;}
+.day:hover{transform:scale(1.05);}
 .work-day{background:var(--color-day);}
 .work-night{background:var(--color-night);}
 .off{background:var(--color-off);}
 .holiday{outline:2px solid var(--color-holiday);}
 .today{outline:3px solid var(--color-primary);box-shadow:0 0 6px var(--color-primary)}
+
 .summary{display:flex;justify-content:space-between;margin-top:8px;font-size:0.8rem}
-.summary-value{font-size:1.3rem;font-weight:700; color: var(--color-day);}
+.summary-value{font-size:1.3rem;font-weight:700;color:var(--color-day);}
 .holiday-box{display:none;margin-top:8px;background:var(--bg-tertiary);border-left:3px solid var(--color-holiday);padding:8px;border-radius:8px;font-size:.8rem}
+
 .settings-btn{position:fixed;top:15px;right:15px;font-size:1.4rem;color:var(--color-primary);cursor:pointer}
-.settings-panel{display:none;position:fixed;top:60px;right:15px;background:var(--bg-secondary);border-radius:12px;padding:10px;width:220px;z-index:10}
-.settings-panel textarea{width:100%;height:50px;border-radius:8px;border:none;padding:6px;font-size:0.8rem;}
-.settings-panel button{margin-top:6px;width:100%;border:none;border-radius:8px;padding:6px;background:var(--color-primary);color:#fff;font-weight:600;font-size:0.85rem}
-.settings-panel .signature{font-family:'Comic Sans MS', cursive;font-size:0.85rem;margin-bottom:6px;color:#333;text-align:center;}
+.settings-panel{display:none;position:fixed;top:60px;right:15px;background:var(--bg-secondary);border-radius:12px;padding:10px;width:220px;z-index:10;}
+.settings-panel .signature{font-family:'Comic Sans MS',cursive;font-size:0.85rem;margin-bottom:6px;color:#333;text-align:center;}
 .settings-panel .icons{display:flex;gap:15px;justify-content:center;font-size:1.4rem;}
 .settings-panel .icons a{color:#38bdf8;text-decoration:none;transition:0.2s;}
 .settings-panel .icons a:hover{transform:scale(1.2);}
 </style>
 </head>
+
 <body>
 
 <div class="settings-btn" onclick="toggleSettings()"><i class="fas fa-cog"></i></div>
@@ -81,6 +86,7 @@ body{display:flex;flex-direction:column;justify-content:flex-start;align-items:c
 </div>
 
 <div class="main-content">
+
   <div class="section">
     <div class="section-title">Vardiya Seçimi</div>
     <div class="vardiya-buttons">
@@ -112,77 +118,98 @@ body{display:flex;flex-direction:column;justify-content:flex-start;align-items:c
 
     <div class="holiday-box" id="holidayInfo"></div>
   </div>
+
 </div>
 
 <script>
-// Vardiya & Takvim
 let secilen = localStorage.getItem('secilenVardiya') || 1;
-const BASLANGIC = new Date(Date.UTC(2026,0,1));
 let currentYear = new Date().getFullYear(), currentMonth = new Date().getMonth();
+let tatiller = {};
 
-const tatiller={
-"1-1":"🎉 Yılbaşı","4-23":"🇹🇷 23 Nisan","5-1":"👷 1 Mayıs","5-19":"🇹🇷 19 Mayıs",
-"7-15":"🇹🇷 15 Temmuz","8-30":"🇹🇷 30 Ağustos","10-29":"🇹🇷 29 Ekim",
-"3-19":"🕌 Ramazan Bayramı Arefe","3-20":"🕌 Ramazan Bayramı (1.Gün)","3-21":"🕌 Ramazan Bayramı (2.Gün)","3-22":"🕌 Ramazan Bayramı (3.Gün)",
-"5-26":"🐑 Kurban Bayramı Arefe","5-27":"🐑 Kurban Bayramı (1.Gün)","5-28":"🐑 Kurban Bayramı (2.Gün)","5-29":"🐑 Kurban Bayramı (3.Gün)","5-30":"🐑 Kurban Bayramı (4.Gün)",
-"1-13":"🌙 Regaip Kandili","2-2":"🌙 Miraç Kandili","2-12":"🌙 Berat Kandili","3-9":"🌙 Kadir Gecesi","9-26":"🌙 Mevlid Kandili"
+async function loadData() {
+  try {
+    const res = await fetch('https://yasindemirkan83-png.github.io/anfa_vardiya.json');
+    const data = await res.json();
+    tatiller = data.tatiller;
+    draw();
+    todayInfo();
+    checkNotification(data.notifications);
+  } catch(e){
+    console.log('Veri çekilemedi:', e);
+  }
 }
 
 function vardiya(t){
-const gunFarki=Math.floor((Date.UTC(t.getFullYear(),t.getMonth(),t.getDate()) - Date.UTC(2026,0,1))/86400000) %4;
-const duzen=[['gece','izin','izin','gunduz'],['izin','izin','gunduz','gece'],['izin','gunduz','gece','izin'],['gunduz','gece','izin','izin']];
-return duzen[(gunFarki+4)%4]
+  const gunFarki=Math.floor((Date.UTC(t.getFullYear(),t.getMonth(),t.getDate())-Date.UTC(2026,0,1))/86400000)%4;
+  const duzen=[['gece','izin','izin','gunduz'],['izin','izin','gunduz','gece'],['izin','gunduz','gece','izin'],['gunduz','gece','izin','izin']];
+  return duzen[(gunFarki+4)%4];
 }
 
 function todayInfo(){
-const today=new Date(),v=vardiya(today),g=[],n=[];
-v.forEach((x,i)=>{if(x==='gunduz')g.push((i+1)+'. Vardiya');if(x==='gece')n.push((i+1)+'. Vardiya');});
-todayShift.innerText=`Bugün → Gündüz: ${g.join(', ')||'-'} | Gece: ${n.join(', ')||'-'}`;
+  const today=new Date(), v=vardiya(today);
+  let g=[],n=[];
+  v.forEach((x,i)=>{if(x==='gunduz') g.push((i+1)+'. Vardiya'); if(x==='gece') n.push((i+1)+'. Vardiya');});
+  todayShift.innerText=`Bugün → Gündüz: ${g.join(', ')||'-'} | Gece: ${n.join(', ')||'-'}`;
 }
 
 function draw(){
-calendar.innerHTML='';holidayInfo.style.display='none';holidayInfo.innerHTML='';
-let g=0,n=0,o=0;const today=new Date();const firstDay=(new Date(currentYear,currentMonth,1).getDay()+6)%7;const days=new Date(currentYear,currentMonth+1,0).getDate();
-monthTitle.innerText=new Date(currentYear,currentMonth).toLocaleDateString('tr-TR',{month:'long',year:'numeric'});
-for(let i=0;i<firstDay;i++){calendar.appendChild(document.createElement('div'))}
-for(let i=1;i<=days;i++){
-const date=new Date(currentYear,currentMonth,i),v=vardiya(date)[secilen-1],d=document.createElement('div'),key=(currentMonth+1)+'-'+i;
-d.className='day '+(v==='gunduz'? 'work-day': v==='gece'? 'work-night':'off');
-if(date.toDateString()===today.toDateString()) d.classList.add('today');
-if(tatiller[key]){d.classList.add('holiday');holidayInfo.style.display='block';holidayInfo.innerHTML+=tatiller[key]+'<br>';}
-d.innerText=i;calendar.appendChild(d);
-v==='gunduz'?g++:v==='gece'?n++:o++;
+  const calendar=document.getElementById('calendar'), holidayInfo=document.getElementById('holidayInfo');
+  calendar.innerHTML=''; holidayInfo.style.display='none'; holidayInfo.innerHTML='';
+  let g=0,n=0,o=0;
+  const today=new Date();
+  const firstDay=(new Date(currentYear,currentMonth,1).getDay()+6)%7;
+  const days=new Date(currentYear,currentMonth+1,0).getDate();
+  monthTitle.innerText=new Date(currentYear,currentMonth).toLocaleDateString('tr-TR',{month:'long',year:'numeric'});
+  for(let i=0;i<firstDay;i++){calendar.appendChild(document.createElement('div'))}
+  for(let i=1;i<=days;i++){
+    const date=new Date(currentYear,currentMonth,i),v=vardiya(date),d=document.createElement('div'),key=(currentMonth+1)+'-'+i;
+    d.className='day '+(v[secilen-1]==='gunduz'?'work-day':v[secilen-1]==='gece'?'work-night':'off');
+    if(date.toDateString()===today.toDateString()) d.classList.add('today');
+    if(tatiller[key]){d.classList.add('holiday'); holidayInfo.style.display='block'; holidayInfo.innerHTML+=tatiller[key]+'<br>';}
+    d.innerText=i; calendar.appendChild(d);
+    v[secilen-1]==='gunduz'?g++:v[secilen-1]==='gece'?n++:o++;
+  }
+  dayCount.innerText=g; nightCount.innerText=n; offCount.innerText=o;
 }
-dayCount.innerText=g;nightCount.innerText=n;offCount.innerText=o;
+
+document.querySelectorAll('.vardiya-btn').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('.vardiya-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    secilen=b.dataset.v;
+    localStorage.setItem('secilenVardiya', secilen);
+    draw();
+  }
+});
+
+function nextMonth(){currentMonth++;if(currentMonth>11){currentMonth=0;currentYear++}draw();}
+function prevMonth(){currentMonth--;if(currentMonth<0){currentMonth=11;currentYear--}draw();}
+
+function tick(){
+  const n=new Date();
+  time.innerText=n.toLocaleTimeString('tr-TR');
+  date.innerText=n.toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 }
 
-document.querySelectorAll('.vardiya-btn').forEach(b=>{b.onclick=()=>{document.querySelectorAll('.vardiya-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');secilen=b.dataset.v;localStorage.setItem('secilenVardiya', secilen);draw()}})
+function toggleSettings(){settings.style.display=settings.style.display==='block'?'none':'block';}
 
-function nextMonth(){currentMonth++;if(currentMonth>11){currentMonth=0;currentYear++}draw()}
-function prevMonth(){currentMonth--;if(currentMonth<0){currentMonth=11;currentYear--}draw()}
+async function checkNotification(list){
+  try{
+    const last = localStorage.getItem('lastNotification')||'';
+    if(!list) return;
+    list.forEach(n=>{
+      if(n.timestamp!=last && Notification.permission==='granted'){
+        new Notification(n.title,{body:n.message});
+        localStorage.setItem('lastNotification', n.timestamp);
+      }
+    })
+  }catch(e){console.log('Bildirim hatası',e)}
+}
 
-function tick(){const n=new Date();time.innerText=n.toLocaleTimeString('tr-TR');date.innerText=n.toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});}
-function toggleSettings(){settings.style.display=settings.style.display==='block'?'none':'block'}
-setInterval(tick,1000);tick();draw();todayInfo();
-
-/* --- PWA Service Worker --- */
 if('serviceWorker' in navigator){navigator.serviceWorker.register('service-worker.js').catch(()=>{});}
-
-/* --- Bildirim sistemi --- */
 Notification.requestPermission();
-async function checkNotification(){
-try{
-const res=await fetch("https://yasindemirkan83-png.github.io/anfa_vardiya.html/bildirim.json");
-const data=await res.json();
-let last=localStorage.getItem("lastNotification")||"";
-if(data.timestamp!==last && Notification.permission==="granted"){
-new Notification(data.title,{body:data.message,icon:'https://yasindemirkan83-png.github.io/anfa_vardiya.html/icon.png'});
-localStorage.setItem("lastNotification",data.timestamp);}
-}catch(e){console.log("bildirim hatası",e);}
-}
-setInterval(checkNotification,300000);
-checkNotification();
+setInterval(tick,1000); tick();
+loadData();
 </script>
-
 </body>
 </html>
