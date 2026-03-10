@@ -6,78 +6,75 @@
 <title>Vardiya Takip</title>
 <link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-<meta name="theme-color" content="#9bafc2">
+<meta name="theme-color" content="#4895ef">
 <style>
 :root{
-  /* Mat ve Göze Hitap Eden Pastel Renkler */
-  --p-bg: #f4f7f9;
-  --p-header: #9bafc2; /* Dingin Mavi-Gri */
-  --p-accent: #8e94f2; /* Yumuşak Mor */
-  --p-day: #f2a6b3;    /* Toz Pembe */
-  --p-night: #97c1e7;  /* Gök Mavisi */
-  --p-off: #dfe6e9;    /* Açık Gri */
-  --p-text: #4a4e69;   /* Koyu Gri-Mavi (Okunabilirlik için) */
-  --p-holiday: #f8d5a3; /* Soft Turuncu */
+  --p-bg: #f8f9fc;
+  --p-header: #4895ef; /* Daha Canlı Mavi */
+  --p-accent: #7209b7; /* Canlı Mor */
+  --p-day: #f72585;    /* Canlı Pembe */
+  --p-night: #4cc9f0;  /* Parlak Gök Mavisi */
+  --p-off: #e0e1dd;    
+  --p-text: #2b2d42;   
+  --p-holiday: #fb8500; /* Belirgin Turuncu */
 }
 html, body{ height:100%; margin:0; padding:0; font-family:'Poppins', sans-serif; background: var(--p-bg); color: var(--p-text); overflow: hidden; }
 body{ display:flex; flex-direction:column; align-items:center; max-width:500px; margin:auto; }
 
-/* Header - Yumuşak Gradyan */
 .header{ 
-  background: linear-gradient(135deg, #a8dadc, #9bafc2); 
-  padding:25px 15px; border-radius:0 0 30px 30px; text-align:center; width:100%; 
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05); flex-shrink:0; position:relative;
+  background: linear-gradient(135deg, #4cc9f0, #4895ef); 
+  padding:30px 15px; border-radius:0 0 35px 35px; text-align:center; width:100%; 
+  box-shadow: 0 10px 20px rgba(72, 149, 239, 0.2); flex-shrink:0; position:relative;
 }
-#time{font-size:2.6rem; color:white; margin:0; font-weight:600; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);}
-#date{font-size:.85rem; color:white; opacity:0.9;}
-#todayShift{margin-top:10px; font-size:.8rem; background:rgba(255,255,255,0.3); padding:5px 15px; border-radius:15px; color:white; display:inline-block;}
+#time{font-size:2.8rem; color:white; margin:0; font-weight:600; letter-spacing: -1px;}
+#date{font-size:.9rem; color:white; opacity:0.95;}
+#todayShift{margin-top:12px; font-size:.85rem; background:rgba(255,255,255,0.25); padding:6px 18px; border-radius:20px; color:white; display:inline-block; backdrop-filter: blur(5px);}
 
-/* Ayar İkonu */
-.settings-btn { position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.4); border: none; border-radius: 50%; width: 38px; height: 38px; color: white; font-size: 1.1rem; cursor: pointer; }
+.settings-btn { position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.3); border: none; border-radius: 50%; width: 40px; height: 40px; color: white; font-size: 1.2rem; cursor: pointer; transition: 0.3s; }
+.settings-btn:active { transform: scale(0.9); }
 
-/* İçerik Alanı */
-.main-content{ flex:1; width:100%; display:flex; flex-direction:column; align-items:center; overflow-y:auto; padding: 15px 0 100px 0; }
-.section{ background: white; padding:20px; border-radius:22px; margin-bottom:15px; width:88%; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
-.section-title{ color: var(--p-header); font-size:1rem; margin-bottom:15px; font-weight:600; text-align:center; text-transform: uppercase; letter-spacing: 1px;}
+.main-content{ flex:1; width:100%; display:flex; flex-direction:column; align-items:center; overflow-y:auto; padding: 20px 0 100px 0; }
+.section{ background: white; padding:20px; border-radius:25px; margin-bottom:15px; width:88%; box-shadow: 0 8px 24px rgba(0,0,0,0.05); }
+.section-title{ color: var(--p-header); font-size:0.9rem; margin-bottom:15px; font-weight:600; text-align:center; text-transform: uppercase; letter-spacing: 1.5px;}
 
-/* Vardiya Butonları */
-.vardiya-buttons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.vardiya-buttons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 .vardiya-btn {
-  background: var(--p-off); border: none; border-radius: 15px; padding: 18px 5px;
+  background: #f1f3f5; border: 2px solid transparent; border-radius: 18px; padding: 15px 5px;
   cursor: pointer; font-weight: 600; font-size: 0.95rem; color: var(--p-text); transition: 0.3s;
 }
-.vardiya-btn.active { background: var(--p-accent); color: white; box-shadow: 0 5px 12px rgba(142, 148, 242, 0.3); }
+.vardiya-btn.active { background: white; border-color: var(--p-accent); color: var(--p-accent); box-shadow: 0 5px 15px rgba(114, 9, 183, 0.15); }
 
-/* Takvim */
-.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
-.day{ border-radius:10px; padding:10px 0; font-size:.85rem; text-align:center; font-weight: 600; background: #f8f9fa; color: #636e72; }
-.work-day{background: var(--p-day) !important; color:white !important;}
-.work-night{background: var(--p-night) !important; color:white !important;}
-.off{background: var(--p-off); color: #b2bec3;}
-.today{ border: 2px solid var(--p-accent); background: white; color: var(--p-accent); }
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.day{ border-radius:12px; padding:12px 0; font-size:.85rem; text-align:center; font-weight: 600; background: #f8f9fa; color: #adb5bd; transition: 0.2s; }
+.work-day{background: var(--p-day) !important; color:white !important; box-shadow: 0 4px 10px rgba(247, 37, 133, 0.2);}
+.work-night{background: var(--p-night) !important; color:white !important; box-shadow: 0 4px 10px rgba(76, 201, 240, 0.2);}
+.off{background: #f1f3f5; color: #adb5bd;}
+.today{ border: 2px solid var(--p-accent); color: var(--p-accent); position: relative;}
+.today::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--p-accent); border-radius: 50%; }
 .holiday-mark{ border-bottom: 3px solid var(--p-holiday); }
 
-/* Tatil Kartı */
-.holiday-card { background: #fffcf0; border-left: 4px solid var(--p-holiday); padding: 15px; border-radius: 15px; width: 88%; margin-bottom: 20px; display: none; }
-.holiday-item { font-size: 0.8rem; margin-bottom: 4px; color: #7f8c8d; }
-.holiday-item b { color: #d35400; }
+.holiday-card { background: #fff9f0; border-left: 5px solid var(--p-holiday); padding: 15px; border-radius: 18px; width: 88%; margin-bottom: 20px; display: none; }
+.holiday-item { font-size: 0.85rem; margin-bottom: 5px; color: #5d4037; }
 
-/* Popup Ayarlar */
-.overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:2000; align-items:center; justify-content:center; backdrop-filter: blur(3px); }
-.popup { background: white; width: 80%; max-width: 320px; border-radius: 25px; padding: 25px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
-.qr-code { width: 140px; height: 140px; margin: 15px auto; display: block; border: 1px solid #eee; padding: 5px; border-radius: 10px; }
-.handwritten { font-family: 'Dancing Script', cursive; font-size: 1.2rem; color: var(--p-accent); margin: 15px 0; }
+.overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:2000; align-items:center; justify-content:center; backdrop-filter: blur(8px); }
+.popup { background: white; width: 85%; max-width: 340px; border-radius: 30px; padding: 30px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+.qr-code { width: 150px; height: 150px; margin: 15px auto; display: block; border-radius: 15px; }
+.handwritten { font-family: 'Dancing Script', cursive; font-size: 1.3rem; color: var(--p-accent); margin: 20px 0; }
 
-.social-icons { display: flex; justify-content: center; gap: 25px; margin-top: 20px; }
-.social-icons a { text-decoration: none; font-size: 1.6rem; filter: grayscale(0.2); transition: 0.3s; }
-.social-icons a:hover { filter: grayscale(0); transform: translateY(-3px); }
+.social-icons { display: flex; justify-content: center; gap: 30px; margin-top: 25px; }
+.social-icons a { text-decoration: none; font-size: 1.8rem; transition: 0.3s; }
 
-#announcement { display:none; position:fixed; top:10px; width:80%; background: var(--p-accent); color:white; padding:12px; border-radius:15px; z-index:3000; text-align:center; font-size: 0.9rem; }
+#announcement { 
+    display:none; position:fixed; bottom:20px; width:85%; background: var(--p-accent); 
+    color:white; padding:15px; border-radius:20px; z-index:3000; text-align:center; 
+    font-size: 0.9rem; font-weight:600; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    cursor: pointer;
+}
 </style>
 </head>
 <body>
 
-<div id="announcement"></div>
+<div id="announcement" onclick="installPWA()">📲 Uygulamayı Ana Ekrana Ekle</div>
 
 <div class="header">
   <button class="settings-btn" onclick="openPopup()">⚙️</button>
@@ -88,7 +85,7 @@ body{ display:flex; flex-direction:column; align-items:center; max-width:500px; 
 
 <div class="main-content">
   <div class="section">
-    <div class="section-title">Vardiya Seçimi</div>
+    <div class="section-title">Vardiya Grubunu Seç</div>
     <div class="vardiya-buttons">
       <button class="vardiya-btn" data-v="1">1. Vardiya</button>
       <button class="vardiya-btn" data-v="2">2. Vardiya</button>
@@ -98,16 +95,16 @@ body{ display:flex; flex-direction:column; align-items:center; max-width:500px; 
   </div>
 
   <div class="section">
-    <div style="display:flex;justify-content:space-between;align-items:center; margin-bottom: 12px;">
-      <button onclick="prevMonth()" style="border:none;background:none;font-size:1.2rem;color:var(--p-header);cursor:pointer">◀</button>
-      <span id="monthTitle" style="font-weight:600; font-size: 0.95rem; color: var(--p-header);"></span>
-      <button onclick="nextMonth()" style="border:none;background:none;font-size:1.2rem;color:var(--p-header);cursor:pointer">▶</button>
+    <div style="display:flex;justify-content:space-between;align-items:center; margin-bottom: 15px;">
+      <button onclick="prevMonth()" style="border:none;background:none;font-size:1.4rem;color:var(--p-header);cursor:pointer">❮</button>
+      <span id="monthTitle" style="font-weight:600; font-size: 1rem; color: var(--p-header);"></span>
+      <button onclick="nextMonth()" style="border:none;background:none;font-size:1.4rem;color:var(--p-header);cursor:pointer">❯</button>
     </div>
     <div class="calendar-grid" id="calendar"></div>
   </div>
 
   <div class="holiday-card" id="holidayCard">
-    <div style="font-weight: 600; color: #d35400; margin-bottom: 8px; font-size: 0.85rem;">📍 Önemli Günler</div>
+    <div style="font-weight: 600; color: var(--p-holiday); margin-bottom: 10px; font-size: 0.9rem;">📍 Önemli Günler</div>
     <div id="holidayList"></div>
   </div>
 </div>
@@ -115,7 +112,7 @@ body{ display:flex; flex-direction:column; align-items:center; max-width:500px; 
 <div class="overlay" id="overlay">
   <div class="popup">
     <h4 style="margin:0; color: var(--p-header);">Uygulama Bilgisi</h4>
-    <img src="karekod.png" class="qr-code" alt="Karekod Bekleniyor"> 
+    <img src="karekod.png" class="qr-code" alt="Karekod"> 
     
     <div class="handwritten">
       Bu uygulama sizin için Yasin Demirgan tarafından geliştirilmiştir.
@@ -127,13 +124,35 @@ body{ display:flex; flex-direction:column; align-items:center; max-width:500px; 
       <a href="mailto:yasindemirkan83@gmail.com">✉️</a>
     </div>
 
-    <button onclick="closePopup()" style="margin-top:20px; width: 100%; padding:10px; border:none; border-radius:12px; background: var(--p-off); color:var(--p-text); font-weight:600; cursor:pointer;">Kapat</button>
+    <button onclick="closePopup()" style="margin-top:25px; width: 100%; padding:12px; border:none; border-radius:15px; background: #eee; color:var(--p-text); font-weight:600; cursor:pointer;">Kapat</button>
   </div>
 </div>
 
 <script>
 let secilen = localStorage.getItem('secilenVardiya') || 1;
 let currentYear = new Date().getFullYear(), currentMonth = new Date().getMonth();
+let deferredPrompt;
+
+// PWA Yükleme Mantığı
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('announcement').style.display = 'block';
+});
+
+async function installPWA() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') document.getElementById('announcement').style.display = 'none';
+    deferredPrompt = null;
+  }
+}
+
+// Bildirim İzni
+if (Notification.permission !== 'granted') {
+    Notification.requestPermission();
+}
 
 const tatiller = {
   "1-1":"🎉 Yılbaşı", "1-13":"🌙 Regaip Kandili", "2-2":"🌙 Miraç Kandili", "2-12":"🌙 Berat Kandili",
@@ -152,6 +171,7 @@ function vardiya(t){
 }
 
 function draw(){
+  const calendar = document.getElementById('calendar');
   calendar.innerHTML=''; 
   const card = document.getElementById('holidayCard');
   const list = document.getElementById('holidayList');
@@ -159,6 +179,7 @@ function draw(){
 
   const firstDay=(new Date(currentYear,currentMonth,1).getDay()+6)%7;
   const days=new Date(currentYear,currentMonth+1,0).getDate();
+  const monthTitle = document.getElementById('monthTitle');
   monthTitle.innerText=new Date(currentYear,currentMonth).toLocaleDateString('tr-TR',{month:'long',year:'numeric'});
 
   for(let i=0;i<firstDay;i++) calendar.appendChild(document.createElement('div'));
@@ -186,7 +207,7 @@ function draw(){
 function updateToday() {
   const v = vardiya(new Date()); let g=[], n=[];
   v.forEach((x,i)=>{ if(x==='gunduz') g.push(i+1); if(x==='gece') n.push(i+1); });
-  todayShift.innerText = `Bugün → Gündüz: ${g.join(',')} | Gece: ${n.join(',')}`;
+  document.getElementById('todayShift').innerText = `Bugün → Gündüz: ${g.join(',')} | Gece: ${n.join(',')}`;
 }
 
 function openPopup() { document.getElementById('overlay').style.display = 'flex'; }
@@ -204,8 +225,9 @@ document.querySelectorAll('.vardiya-btn').forEach(b=>{
 function nextMonth(){currentMonth++;if(currentMonth>11){currentMonth=0;currentYear++}draw()}
 function prevMonth(){currentMonth--;if(currentMonth<0){currentMonth=11;currentYear--}draw()}
 function tick(){
-  const n=new Date(); time.innerText=n.toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'});
-  date.innerText=n.toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long'});
+  const n=new Date(); 
+  document.getElementById('time').innerText=n.toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'});
+  document.getElementById('date').innerText=n.toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long'});
 }
 
 window.onload=()=>{ tick(); setInterval(tick,1000); draw(); };
