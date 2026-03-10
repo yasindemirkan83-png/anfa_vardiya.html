@@ -1,9 +1,9 @@
-const CACHE_NAME = 'vardiya-vfinal';
+const CACHE_NAME = 'vardiya-pwa-v1';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './vardiya.jpg'
+  './vardiya.png'
 ];
 
 self.addEventListener('install', (e) => {
