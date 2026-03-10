@@ -21,6 +21,7 @@ body{ display:flex; flex-direction:column; align-items:center; max-width:500px; 
   display:none; position:fixed; top:20px; width:85%; background: var(--color-primary); 
   color:white; padding:15px; border-radius:15px; z-index:999; text-align:center;
   box-shadow: 0 10px 20px rgba(0,0,0,0.2); animation: slideDown 0.5s ease;
+  font-weight: bold; font-size: 0.95rem;
 }
 @keyframes slideDown { from {top:-100px;} to {top:20px;} }
 
@@ -40,7 +41,7 @@ body{ display:flex; flex-direction:column; align-items:center; max-width:500px; 
 }
 .section-title{color:var(--color-primary);font-size:1.2rem;margin-bottom:10px; font-weight: 700;}
 
-/* İstediğin 2x2 Büyük Buton Düzeni */
+/* 2x2 Büyük Buton Düzeni */
 .vardiya-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .vardiya-btn{
   background: var(--bg-tertiary); border: none; border-radius:15px;
@@ -100,9 +101,9 @@ body{ display:flex; flex-direction:column; align-items:center; max-width:500px; 
 
   <div class="section">
     <div class="section-title" style="display:flex;justify-content:space-between;align-items:center">
-      <button onclick="prevMonth()" style="border:none; background:none; cursor:pointer; font-size:1.2rem">◀</button>
+      <button onclick="prevMonth()" style="border:none; background:none; cursor:pointer; font-size:1.2rem; color:var(--color-primary)">◀</button>
       <span id="monthTitle"></span>
-      <button onclick="nextMonth()" style="border:none; background:none; cursor:pointer; font-size:1.2rem">▶</button>
+      <button onclick="nextMonth()" style="border:none; background:none; cursor:pointer; font-size:1.2rem; color:var(--color-primary)">▶</button>
     </div>
     <div class="weekdays"><div>Pzt</div><div>Sal</div><div>Çar</div><div>Per</div><div>Cum</div><div>Cts</div><div>Paz</div></div>
     <div class="calendar-grid" id="calendar"></div>
@@ -125,10 +126,10 @@ const tatiller = {
   "1-1":"🎉 Yılbaşı", "1-13":"🌙 Regaip Kandili", "2-2":"🌙 Miraç Kandili", "2-12":"🌙 Berat Kandili",
   "3-9":"🌙 Kadir Gecesi", "3-19":"🕌 Ramazan Arefe", "3-20":"🕌 Ramazan B. 1",
   "3-21":"🕌 Ramazan B. 2", "3-22":"🕌 Ramazan B. 3", "4-23":"🇹🇷 23 Nisan",
-  "5-1":"👷 1 Mayıs", "5-19":"🇹🇷 19 Mayıs", "5-26":"🐑 Kurban Arefe",
+  "5-1":"👷 1 Mayıs Emek", "5-19":"🇹🇷 19 Mayıs Gençlik", "5-26":"🐑 Kurban Arefe",
   "5-27":"🐑 Kurban B. 1", "5-28":"🐑 Kurban B. 2", "5-29":"🐑 Kurban B. 3",
-  "5-30":"🐑 Kurban B. 4", "7-15":"🇹🇷 15 Temmuz", "8-30":"🇹🇷 30 Ağustos",
-  "9-26":"🌙 Mevlid Kandili", "10-29":"🇹🇷 29 Ekim"
+  "5-30":"🐑 Kurban B. 4", "7-15":"🇹🇷 15 Temmuz Demokrasi B.", "8-30":"🇹🇷 30 Ağustos Zafer B.",
+  "9-26":"🌙 Mevlid Kandili", "10-29":"🇹🇷 29 Ekim Cumhuriyet B."
 };
 
 function vardiya(t){
@@ -168,16 +169,27 @@ function todayInfo(){
   todayShift.innerText=`Bugün → Gündüz: ${g.join(',')} | Gece: ${n.join(',')}`;
 }
 
+// Dünyanın En Tatlı Duyuru Kontrolcüsü 💖
 async function checkAnnouncements() {
   try {
-    const res = await fetch('bildirim.json');
+    // Önbelleği atlatmak için rastgele sayı ekliyoruz
+    const res = await fetch(`bildirim.json?nocache=${new Date().getTime()}`);
+    if (!res.ok) throw new Error('Bildirim dosyası bulunamadı.');
     const data = await res.json();
-    if (data.id !== localStorage.getItem('lastSeenId')) {
+    
+    // HATA DÜZELTME: id kontrolü yapıyoruz, undefined sorunu kalktı!
+    if (data.id && data.id !== localStorage.getItem('lastSeenAnnouncementId')) {
       const box = document.getElementById('announcement');
-      box.innerText = data.mesaj; box.style.display = 'block';
-      setTimeout(() => { box.style.display = 'none'; localStorage.setItem('lastSeenId', data.id); }, 5000);
+      box.innerText = data.mesaj || "Yeni bir duyuru var!"; // Mesaj boşsa yedek yazı
+      box.style.display = 'block';
+      
+      // 5 saniye sonra kapat ve bir daha gösterme
+      setTimeout(() => { 
+        box.style.display = 'none'; 
+        localStorage.setItem('lastSeenAnnouncementId', data.id); 
+      }, 5000);
     }
-  } catch (e) {}
+  } catch (e) { console.warn("Duyuru çekilemedi:", e.message); }
 }
 
 document.querySelectorAll('.vardiya-btn').forEach(b=>{
@@ -208,11 +220,18 @@ document.getElementById('installBtn').onclick = async () => {
   }
 };
 
+// Sayfa yüklendiğinde her şeyi başlat
 window.addEventListener('load', () => {
-  tick(); setInterval(tick,1000); draw(); todayInfo(); checkAnnouncements();
-  if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+  tick(); setInterval(tick,1000); draw(); todayInfo();
+  if('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+    // Service Worker yüklendikten kısa süre sonra duyuru kontrol et
+    setTimeout(checkAnnouncements, 2000); 
+  } else {
+    // Service worker yoksa direkt kontrol et
+    checkAnnouncements(); 
+  }
 });
 </script>
 </body>
 </html>
-
