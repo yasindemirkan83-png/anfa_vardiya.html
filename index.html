@@ -6,7 +6,6 @@
 <title>Vardiya Takip</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<!-- PWA Manifest -->
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="vardiya.jpg" type="image/jpg">
 
@@ -25,159 +24,51 @@
   --color-holiday: #ffb400;
 }
 
-html, body{
-  height:100%;
-  margin:0;
-  padding:0;
-  font-family:'Segoe UI',system-ui,sans-serif;
-  background: var(--bg-primary);
-  overflow: hidden;
-}
-
-body{
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-start;
-  align-items:center;
-  max-width:500px;
-  margin:auto;
-  color:var(--color-text);
-}
+html, body{height:100%;margin:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg-primary);overflow:hidden;}
+body{display:flex;flex-direction:column;justify-content:flex-start;align-items:center;max-width:500px;margin:auto;color:var(--color-text);}
 
 /* HEADER */
-.header{
-  background: linear-gradient(135deg, #ffd6e0, #a0c4ff);
-  padding:15px;
-  border-radius:20px;
-  text-align:center;
-  width:95%;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  flex-shrink:0;
-}
-.logo-container{display:flex;justify-content:center;gap:12px;margin-bottom:5px}
-.logo-icon{font-size:2.2rem;color:var(--color-primary)}
-.logo-text{font-size:1.6rem;font-weight:800;color:var(--color-primary)}
-#time{font-size:2.2rem;color:var(--color-primary);margin:5px 0}
-#date{font-size:.9rem}
-#todayShift{margin-top:5px;font-size:.95rem;color:var(--color-day); font-weight:700;}
+.header{background:linear-gradient(135deg,#ffd6e0,#a0c4ff);padding:15px;border-radius:20px;text-align:center;width:95%;box-shadow:0 4px 12px rgba(0,0,0,0.1);flex-shrink:0;}
+.logo-container{display:flex;justify-content:center;gap:12px;margin-bottom:5px;}
+.logo-icon{font-size:2.2rem;color:var(--color-primary);}
+.logo-text{font-size:1.6rem;font-weight:800;color:var(--color-primary);}
+#time{font-size:2.2rem;color:var(--color-primary);margin:5px 0;}
+#date{font-size:.9rem;}
+#todayShift{margin-top:5px;font-size:.95rem;color:var(--color-day);font-weight:700;}
 
 /* MAIN */
-.main-content{
-  flex:1;
-  width:100%;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-start;
-  align-items:center;
-  overflow-y:hidden;
-  padding-bottom:10px;
-}
-.section{
-  background: var(--bg-secondary);
-  padding:15px;
-  border-radius:15px;
-  margin:8px 0;
-  width:90%;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  flex-shrink:0;
-}
-.section-title{color:var(--color-primary);font-size:1.2rem;margin-bottom:10px}
-
-.vardiya-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.vardiya-btn{
-  background: var(--bg-tertiary);
-  border: none;
-  border-radius:12px;
-  padding:12px;
-  color: var(--color-text);
-  cursor:pointer;
-  font-weight:600;
-  transition: all 0.2s;
-  font-size:0.95rem;
-}
-.vardiya-btn.active{
-  background: var(--color-primary);
-  color:#fff;
-}
-
-.weekdays{
-  display:grid;grid-template-columns:repeat(7,1fr);
-  font-size:.7rem;text-align:center;margin-bottom:4px;color:#888
-}
-.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-.day{
-  background:var(--bg-tertiary);
-  border-radius:8px;
-  padding:5px;
-  font-size:.85rem;
-  text-align:center;
-  position:relative;
-  transition: transform 0.15s;
-}
-.day:hover{transform: scale(1.05);}
+.main-content{flex:1;width:100%;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;overflow-y:hidden;padding-bottom:10px;}
+.section{background:var(--bg-secondary);padding:15px;border-radius:15px;margin:8px 0;width:90%;box-shadow:0 2px 8px rgba(0,0,0,0.08);flex-shrink:0;}
+.section-title{color:var(--color-primary);font-size:1.2rem;margin-bottom:10px;}
+.vardiya-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.vardiya-btn{background:var(--bg-tertiary);border:none;border-radius:12px;padding:12px;color:var(--color-text);cursor:pointer;font-weight:600;transition:all 0.2s;font-size:0.95rem;}
+.vardiya-btn.active{background:var(--color-primary);color:#fff;}
+.weekdays{display:grid;grid-template-columns:repeat(7,1fr);font-size:.7rem;text-align:center;margin-bottom:4px;color:#888;}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.day{background:var(--bg-tertiary);border-radius:8px;padding:5px;font-size:.85rem;text-align:center;position:relative;transition:transform 0.15s;}
+.day:hover{transform:scale(1.05);}
 .work-day{background:var(--color-day);}
 .work-night{background:var(--color-night);}
 .off{background:var(--color-off);}
 .holiday{outline:2px solid var(--color-holiday);}
-.today{outline:2px solid var(--color-primary);box-shadow:0 0 6px var(--color-primary)}
-
-.summary{display:flex;justify-content:space-between;margin-top:8px;font-size:0.8rem}
-.summary-value{font-size:1.3rem;font-weight:700; color: var(--color-day);}
-.holiday-box{display:none;margin-top:8px;background:var(--bg-tertiary);border-left:3px solid var(--color-holiday);padding:8px;border-radius:8px;font-size:.8rem}
-
-/* SETTINGS */
-.settings-btn{position:fixed;top:15px;right:15px;font-size:1.4rem;color:var(--color-primary);cursor:pointer}
-.settings-panel{display:none;position:fixed;top:60px;right:15px;background:var(--bg-secondary);border-radius:12px;padding:10px;width:220px;z-index:10}
-.settings-panel textarea{width:100%;height:50px;border-radius:8px;border:none;padding:6px;font-size:0.8rem;}
-.settings-panel button{margin-top:6px;width:100%;border:none;border-radius:8px;padding:6px;background:var(--color-primary);color:#fff;font-weight:600;font-size:0.85rem}
+.today{outline:2px solid var(--color-primary);box-shadow:0 0 6px var(--color-primary);}
+.summary{display:flex;justify-content:space-between;margin-top:8px;font-size:0.8rem;}
+.summary-value{font-size:1.3rem;font-weight:700;color:var(--color-day);}
+.holiday-box{display:none;margin-top:8px;background:var(--bg-tertiary);border-left:3px solid var(--color-holiday);padding:8px;border-radius:8px;font-size:.8rem;}
+.settings-btn{position:fixed;top:15px;right:15px;font-size:1.4rem;color:var(--color-primary);cursor:pointer;}
+.settings-panel{display:none;position:fixed;top:60px;right:15px;background:var(--bg-secondary);border-radius:12px;padding:10px;width:220px;z-index:10;}
 .settings-panel .signature{font-family:'Comic Sans MS', cursive;font-size:0.85rem;margin-bottom:6px;color:#333;text-align:center;}
 .settings-panel .icons{display:flex;gap:15px;justify-content:center;font-size:1.4rem;}
 .settings-panel .icons a{color:#38bdf8;text-decoration:none;transition:0.2s;}
 .settings-panel .icons a:hover{transform:scale(1.2);}
-
-/* INSTALL POPUP */
-#installPopup{
-  position:fixed; top:0; left:0; width:100%; height:100%;
-  background:rgba(0,0,0,0.6);
-  display:none; justify-content:center; align-items:center; z-index:9999;
-}
-.install-box{
-  background:white; padding:25px; border-radius:15px;
-  text-align:center; width:260px; box-shadow:0 5px 20px rgba(0,0,0,0.3);
-}
-.install-box h2{font-size:18px; margin-bottom:15px;}
-.install-box button{
-  background:#7f5af0; color:white; border:none; padding:12px 20px; border-radius:10px; font-size:16px; cursor:pointer;
-}
-
-/* CUSTOM NOTIFICATION */
-#customNotification{
-  display:none;
-  position:fixed;
-  bottom:20px;
-  left:10%;
-  width:80%;
-  background:#7f5af0;
-  color:white;
-  padding:15px;
-  border-radius:12px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.2);
-  z-index:9999;
-}
-#customNotification button{
-  float:right;
-  background:white;
-  color:#7f5af0;
-  border:none;
-  padding:4px 8px;
-  border-radius:5px;
-  cursor:pointer;
-}
+#installPopup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:none;justify-content:center;align-items:center;z-index:9999;}
+.install-box{background:white;padding:25px;border-radius:15px;text-align:center;width:260px;box-shadow:0 5px 20px rgba(0,0,0,0.3);}
+.install-box h2{font-size:18px;margin-bottom:15px;}
+.install-box button{background:#7f5af0;color:white;border:none;padding:12px 20px;border-radius:10px;font-size:16px;cursor:pointer;}
 </style>
-
+</head>
 <body>
 
-<!-- INSTALL POPUP -->
 <div id="installPopup">
   <div class="install-box">
     <h2>📱 Uygulamayı yüklemek ister misiniz?</h2>
@@ -185,10 +76,10 @@ body{
   </div>
 </div>
 
-<!-- SETTINGS PANEL -->
 <div class="settings-btn" onclick="toggleSettings()">
   <i class="fas fa-cog"></i>
 </div>
+
 <div class="settings-panel" id="settings">
   <div class="signature">
     Bu uygulama sizin için <b>Yasin Demirgan</b> tarafından geliştirilmiştir.
@@ -199,7 +90,6 @@ body{
   </div>
 </div>
 
-<!-- HEADER -->
 <div class="header">
   <div class="logo-container">
     <div class="logo-icon"><i class="fas fa-shield-alt"></i></div>
@@ -210,8 +100,8 @@ body{
   <div id="todayShift"></div>
 </div>
 
-<!-- MAIN CONTENT -->
 <div class="main-content">
+
   <div class="section">
     <div class="section-title">Vardiya Seçimi</div>
     <div class="vardiya-buttons">
@@ -243,38 +133,20 @@ body{
 
     <div class="holiday-box" id="holidayInfo"></div>
   </div>
-</div>
 
-<!-- CUSTOM NOTIFICATION -->
-<div id="customNotification">
-  <span id="notifText"></span>
-  <button onclick="closeNotification()">Kapat</button>
 </div>
 
 <script>
-// ------------------
-// SERVICE WORKER
-// ------------------
+// ------------------ SERVICE WORKER ------------------
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('service-worker.js').then(()=>console.log('SW registered'));
 }
 
-// ------------------
-// VARDİYA SISTEMI
-// ------------------
+// ------------------ VARDIYA ------------------
 let secilen = localStorage.getItem('secilenVardiya') || 1;
 let currentYear = new Date().getFullYear();
 let currentMonth = new Date().getMonth();
-
-const tatiller={
-"1-1":"🎉 Yılbaşı",
-"4-23":"🇹🇷 23 Nisan",
-"5-1":"👷 1 Mayıs",
-"5-19":"🇹🇷 19 Mayıs",
-"7-15":"🇹🇷 15 Temmuz",
-"8-30":"🇹🇷 30 Ağustos",
-"10-29":"🇹🇷 29 Ekim"
-};
+const tatiller={"1-1":"🎉 Yılbaşı","4-23":"🇹🇷 23 Nisan","5-1":"👷 1 Mayıs","5-19":"🇹🇷 19 Mayıs","7-15":"🇹🇷 15 Temmuz","8-30":"🇹🇷 30 Ağustos","10-29":"🇹🇷 29 Ekim"};
 
 function vardiya(t){
   const gunFarki = Math.floor((Date.UTC(t.getFullYear(),t.getMonth(),t.getDate())-Date.UTC(2026,0,1))/86400000)%4;
@@ -297,9 +169,7 @@ function draw(){
   const firstDay=(new Date(currentYear,currentMonth,1).getDay()+6)%7;
   const days=new Date(currentYear,currentMonth+1,0).getDate();
   monthTitle.innerText=new Date(currentYear,currentMonth).toLocaleDateString('tr-TR',{month:'long',year:'numeric'});
-
   for(let i=0;i<firstDay;i++) calendar.appendChild(document.createElement('div'));
-
   for(let i=1;i<=days;i++){
     const date=new Date(currentYear,currentMonth,i);
     const v=vardiya(date)[secilen-1];
@@ -312,10 +182,7 @@ function draw(){
     calendar.appendChild(d);
     v==='gunduz'?g++:v==='gece'?n++:o++;
   }
-
-  dayCount.innerText=g;
-  nightCount.innerText=n;
-  offCount.innerText=o;
+  dayCount.innerText=g; nightCount.innerText=n; offCount.innerText=o;
 }
 
 document.querySelectorAll('.vardiya-btn').forEach(b=>{
@@ -337,62 +204,46 @@ function tick(){
   date.innerText=n.toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 }
 
-function toggleSettings(){
-  settings.style.display=settings.style.display==='block'?'none':'block';
-}
+function toggleSettings(){settings.style.display=settings.style.display==='block'?'none':'block';}
 
 setInterval(tick,1000);
-tick();draw();todayInfo();
+tick(); draw(); todayInfo();
 
-// ------------------
-// INSTALL POPUP
-// ------------------
+// ------------------ INSTALL POPUP ------------------
 let deferredPrompt;
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  document.getElementById("installPopup").style.display="flex";
-});
-document.getElementById("installBtn").addEventListener("click", async () => {
-  if(!deferredPrompt) return;
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  if(outcome === "accepted") console.log("Uygulama yüklendi");
-  deferredPrompt = null;
-  document.getElementById("installPopup").style.display="none";
-});
+window.addEventListener("beforeinstallprompt", (e) => {e.preventDefault(); deferredPrompt = e; document.getElementById("installPopup").style.display="flex";});
+document.getElementById("installBtn").addEventListener("click", async () => {if(!deferredPrompt) return; deferredPrompt.prompt(); deferredPrompt.userChoice.then(()=>{deferredPrompt=null; document.getElementById("installPopup").style.display="none";});});
 
-// ------------------
-// CUSTOM NOTIFICATION
-// ------------------
-function showNotification(msg){
-  const notif = document.getElementById('customNotification');
-  document.getElementById('notifText').innerText = msg;
-  notif.style.display='block';
-}
+// ------------------ BİLDİRİM ------------------
+const defaultNotification = {title:"Hoşgeldiniz",message:"Vardiya Takip uygulamasına hoşgeldiniz!",timestamp:"2026-03-10T00:00:00Z"};
 
-function closeNotification(){
-  document.getElementById('customNotification').style.display='none';
+async function showNotification(data){
+  if(!('Notification' in window)) return;
+  const perm = await Notification.requestPermission();
+  if(perm!=='granted') return;
+  new Notification(data.title,{body:data.message});
 }
 
 async function checkNotification(){
+  let data;
   try{
-    const res = await fetch('https://kendi-github.github.io/bildirim.json'); // kendi URL’in
-    const data = await res.json();
-    const last = localStorage.getItem('lastNotification')||'';
-    if(data.timestamp !== last){
-      showNotification(`${data.title} - ${data.message}`);
-      localStorage.setItem('lastNotification', data.timestamp);
-    }
+    const res = await fetch('https://yasindemirkan83-png.github.io/bildirim.json');
+    data = await res.json();
+    localStorage.setItem('vardiyaData', JSON.stringify(data));
   }catch(e){
-    console.error('Bildirim kontrol hatası', e);
+    data = JSON.parse(localStorage.getItem('vardiyaData')) || defaultNotification;
+  }
+
+  const last = localStorage.getItem('lastNotification')||'';
+  if(data.timestamp !== last){
+    showNotification(data);
+    localStorage.setItem('lastNotification', data.timestamp);
   }
 }
 
-// Açılır açılmaz kontrol
+// İlk açılış ve 5 dakikada bir
 checkNotification();
-// 5 dakikada bir kontrol
-setInterval(checkNotification, 1000*60*5);
+setInterval(checkNotification,1000*60*5);
 
 </script>
 </body>
