@@ -8,12 +8,12 @@
   "description": "4'lü vardiya sistemini takip etmenizi sağlar.",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/2370/2370264.png",
+      "src": "vardiya.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/2370/2370264.png",
+      "src": "vardiya.jpg",
       "sizes": "512x512",
       "type": "image/png"
     }
