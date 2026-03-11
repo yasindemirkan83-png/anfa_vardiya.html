@@ -49,16 +49,14 @@ body{ display:flex; flex-direction:column; align-items:center; max-width:500px; 
 .work-night{ background: var(--p-night) !important; color:white !important; }
 .today { border: 3px solid #2b2d42 !important; color: #2b2d42; }
 
-/* PWA Kurulum Butonu */
-#install-banner { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; background: #2b2d42; color: white; padding: 15px; border-radius: 15px; display: none; justify-content: space-between; align-items: center; z-index: 9999; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-#install-btn { background: var(--p-day); border: none; color: white; padding: 8px 15px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+/* PWA Yükleme Bannerı - Daha Belirgin */
+#install-banner { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; background: #2b2d42; color: white; padding: 15px; border-radius: 15px; display: none; justify-content: space-between; align-items: center; z-index: 9999; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); }
+#install-btn { background: var(--p-day); border: none; color: white; padding: 10px 20px; border-radius: 10px; font-weight: 700; cursor: pointer; font-family: 'Poppins', sans-serif; }
 
 .sub-menu-btn { width: 100%; background: #f8f9fc; border: 1px solid #eee; padding: 12px; border-radius: 12px; margin-bottom: 8px; text-align: left; font-weight: 600; color: var(--p-header); cursor: pointer; display: flex; justify-content: space-between; }
-
 .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:2000; align-items:center; justify-content:center; backdrop-filter: blur(5px); }
 .popup { background: white; width: 88%; max-height: 85%; border-radius: 30px; padding: 25px; text-align: center; overflow-y: auto; position: relative; }
 .close-btn { position: absolute; top: 15px; right: 20px; font-size: 1.8rem; cursor: pointer; color: #ccc; }
-
 .legal-footer { padding: 20px; text-align: center; color: #aaa; font-size: 0.75rem; font-weight: 600; }
 </style>
 </head>
@@ -97,7 +95,6 @@ body{ display:flex; flex-direction:column; align-items:center; max-width:500px; 
       <button onclick="nextMonth()" style="border:none;background:none;font-size:1.5rem;color:var(--p-header);">❯</button>
     </div>
     <div class="calendar-grid" id="calendar"></div>
-
     <div class="month-summary">
         <div class="summary-item"><span class="summary-count" id="count-day">0</span><span class="summary-label">Gündüz</span></div>
         <div class="summary-item"><span class="summary-count" id="count-night">0</span><span class="summary-label">Gece</span></div>
@@ -107,14 +104,11 @@ body{ display:flex; flex-direction:column; align-items:center; max-width:500px; 
   </div>
 
   <div class="ads-box" style="min-height: 120px;">REKLAM ALANI - ALT</div>
-
-  <div class="legal-footer">
-      © 2026 Vardiya Takip Sistemi <br> Tüm Hakları Saklıdır.
-  </div>
+  <div class="legal-footer">© 2026 Vardiya Takip Sistemi <br> Tüm Hakları Saklıdır.</div>
 </div>
 
 <div id="install-banner">
-    <span style="font-size:0.8rem;">Uygulamayı ana ekrana ekle!</span>
+    <span style="font-size:0.85rem; font-weight:600;">Uygulamayı telefona indir!</span>
     <button id="install-btn">YÜKLE</button>
 </div>
 
@@ -141,9 +135,7 @@ body{ display:flex; flex-direction:column; align-items:center; max-width:500px; 
 </div>
 
 <div class="overlay" id="pop-vardiya">
-    <div class="popup">
-        <span class="close-btn" onclick="closePopup('pop-vardiya')">×</span>
-        <h3 style="color:var(--p-header);">Vardiya ve Renkler</h3>
+    <div class="popup"><span class="close-btn" onclick="closePopup('pop-vardiya')">×</span><h3 style="color:var(--p-header);">Vardiya ve Renkler</h3>
         <div style="display:flex; flex-direction:column; gap:12px; align-items:start; padding:10px;">
             <div style="display:flex; align-items:center; gap:10px;"><div style="width:20px;height:20px;border-radius:5px;background:var(--p-day)"></div> Gündüz Çalışma</div>
             <div style="display:flex; align-items:center; gap:10px;"><div style="width:20px;height:20px;border-radius:5px;background:var(--p-night)"></div> Gece Çalışma</div>
@@ -152,24 +144,9 @@ body{ display:flex; flex-direction:column; align-items:center; max-width:500px; 
     </div>
 </div>
 
-<div class="overlay" id="pop-dates">
-    <div class="popup">
-        <span class="close-btn" onclick="closePopup('pop-dates')">×</span>
-        <h3 style="color:var(--p-header);">2026 Önemli Günler</h3>
-        <div id="full-date-list" style="text-align:left; line-height: 2.2; font-size: 0.9rem;"></div>
-    </div>
-</div>
+<div class="overlay" id="pop-dates"><div class="popup"><span class="close-btn" onclick="closePopup('pop-dates')">×</span><h3 style="color:var(--p-header);">2026 Önemli Günler</h3><div id="full-date-list" style="text-align:left; line-height: 2.2; font-size: 0.9rem;"></div></div></div>
 
-<div class="overlay" id="pop-about">
-    <div class="popup">
-        <span class="close-btn" onclick="closePopup('pop-about')">×</span>
-        <h3 style="color:var(--p-header);">Hakkında</h3>
-        <p class="handwritten-content">
-            Vardiya Takip Sistemi personel çalışma günlerinin planlamasını kolaylaştırmak için geliştirilmiştir. Veriler kullanıcı tarayıcı önbelleğinde saklanır ve hiç bir kişisel bilginiz kayıt edilmez. <br><br>
-            Bildirimler için ayarlar kısmından izin vermeniz önerilir...
-        </p>
-    </div>
-</div>
+<div class="overlay" id="pop-about"><div class="popup"><span class="close-btn" onclick="closePopup('pop-about')">×</span><h3 style="color:var(--p-header);">Hakkında</h3><p class="handwritten-content">Vardiya Takip Sistemi personel çalışma günlerinin planlamasını kolaylaştırmak için geliştirilmiştir. Veriler kullanıcı tarayıcı önbelleğinde saklanır ve hiç bir kişisel bilginiz kayıt edilmez. <br><br> Bildirimler için ayarlar kısmından izin vermeniz önerilir...</p></div></div>
 
 <script>
 let secilen = parseInt(localStorage.getItem('secilenVardiya')) || 1;
@@ -183,15 +160,11 @@ const onemliGunler = {
     "6-15": "15 Temmuz Demokrasi Günü", "7-30": "30 Ağustos Zafer Bayramı", "8-22": "Mevlid Kandili", "9-28": "29 Ekim Cumhuriyet Bayramı Arefesi", "9-29": "29 Ekim Cumhuriyet Bayramı"
 };
 
-/** * GÜNCELLENEN DÖNGÜ (Resimdeki 11 Mart Verisine Göre)
- * 11 Mart -> Gündüz:V3, Gece:V4, İzin:V1,V2
- */
+/** RESİMDEKİ 11 MART REFERANSLI DÖNGÜ **/
 function getVardiyaArray(t) {
-    const refDate = new Date(2026, 2, 11); // 11 Mart 2026
+    const refDate = new Date(2026, 2, 11);
     const diffDays = Math.floor((t - refDate) / (1000 * 60 * 60 * 24));
     const cycle = (diffDays % 4 + 4) % 4;
-    
-    // Resimdeki Satırlar (11 Mart başlangıçlı):
     const duzenler = [
         ['izin', 'izin', 'gunduz', 'gece'], // 11 Mart
         ['izin', 'gunduz', 'gece', 'izin'], // 12 Mart
@@ -219,9 +192,7 @@ function draw(){
   const days=new Date(currentYear,currentMonth+1,0).getDate();
   const monthName = new Date(currentYear,currentMonth).toLocaleDateString('tr-TR',{month:'long'});
   document.getElementById('monthTitle').innerText = monthName.toUpperCase() + " " + currentYear;
-
   let counts = {gunduz:0, gece:0, izin:0}, monthlySpecialDays = [];
-
   for(let i=0;i<firstDay;i++) cal.appendChild(document.createElement('div'));
   for(let i=1;i<=days;i++){
     const d=new Date(currentYear,currentMonth,i);
@@ -278,15 +249,28 @@ function enableNotif() {
     Notification.requestPermission().then(perm => { if(perm === "granted") alert("✅ Bildirimler aktif edildi."); });
 }
 
-// PWA Yükleme
+/** PWA YÜKLEME MANTIĞI (BANNER TETİKLEME) **/
 let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault(); deferredPrompt = e;
+    // Tarayıcının varsayılan bannerını engelle
+    e.preventDefault();
+    // Olayı sakla ki sonra tetikleyebilelim
+    deferredPrompt = e;
+    // Kendi hazırladığımız özel bannerı göster
     document.getElementById('install-banner').style.display = 'flex';
 });
-document.getElementById('install-btn').onclick = () => {
-    if(deferredPrompt){ deferredPrompt.prompt(); document.getElementById('install-banner').style.display = 'none'; }
-};
+
+document.getElementById('install-btn').addEventListener('click', async () => {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            console.log('Kullanıcı kabul etti');
+            document.getElementById('install-banner').style.display = 'none';
+        }
+        deferredPrompt = null;
+    }
+});
 
 window.onload=()=>{ tick(); setInterval(tick,1000); draw(); buildDateList(); updateLiveStatus(); };
 </script>
