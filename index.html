@@ -8,71 +8,82 @@
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --p-bg: #f8f9fc; --p-header: #4895ef;
+  --p-bg: #f8f9fc; --p-header: #4895ef; --p-accent: #7209b7;
   --p-day: #f72585; --p-night: #4cc9f0; --p-off: #e0e1dd;
   --p-text: #2b2d42;
 }
 *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
 body{ margin:0; font-family:'Poppins', sans-serif; background: var(--p-bg); color: var(--p-text); display:flex; flex-direction:column; align-items:center; max-width:500px; margin:auto; min-height:100vh; overflow-x: hidden; }
 
-/* Header - Mavi Kısım */
-.header{ background: linear-gradient(135deg, #4cc9f0, #4895ef); padding:15px; border-radius:0 0 25px 25px; width:100%; box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; color:white; }
-.header-top { display:flex; justify-content:space-between; align-items:center; }
-.shift-now { background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 12px; font-size: 0.8rem; margin-top: 10px; font-weight: 600; text-align: center; border: 1px solid rgba(255,255,255,0.3); }
+/* Header */
+.header{ background: linear-gradient(135deg, #4cc9f0, #4895ef); padding:15px; border-radius:0 0 25px 25px; width:100%; box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+.header-top { display: flex; justify-content: space-between; align-items: center; }
+#time { font-size: 1.8rem; color: white; font-weight: 700; }
+#date { font-size: 0.75rem; color: white; opacity: 0.9; }
+.current-status-bar { display: flex; justify-content: space-around; background: rgba(255, 255, 255, 0.2); margin-top: 10px; padding: 8px; border-radius: 12px; color: white; font-size: 0.8rem; font-weight: 600; }
+.status-item span { background: white; color: var(--p-header); padding: 2px 8px; border-radius: 6px; margin-left: 5px; }
 
-/* Günün Özeti Kartı */
-.today-summary { background: white; width: 92%; padding: 15px; border-radius: 20px; margin: 15px 0 5px 0; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-left: 8px solid var(--p-header); }
-.today-status { font-size: 1.1rem; font-weight: 700; }
-
-/* Vardiya Butonları */
-.main-content{ flex:1; width:100%; padding: 5px 0; display:flex; flex-direction:column; align-items:center; }
+/* Sections */
+.main-content{ flex:1; width:100%; padding: 10px 0; display:flex; flex-direction:column; align-items:center; }
 .section{ background: white; padding:15px; border-radius:20px; margin-bottom:12px; width:92%; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
-.vardiya-btn { flex: 1; background: #f1f3f5; border: none; border-radius: 12px; padding: 12px 0; font-weight: 600; cursor: pointer; color: #adb5bd; }
-.vardiya-btn.active { background: var(--p-header); color: white; box-shadow: 0 4px 10px rgba(72, 149, 239, 0.3); }
 
-/* Takvim */
+/* Buttons & Calendar */
+.vardiya-btn { flex: 1; background: #f1f3f5; border: none; border-radius: 12px; padding: 12px 0; font-weight: 600; cursor: pointer; color: #adb5bd; transition: 0.3s; }
+.vardiya-btn.active { background: var(--p-header); color: white; box-shadow: 0 4px 10px rgba(72, 149, 239, 0.3); }
 .calendar-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:5px; margin-top:10px; }
 .day{ border-radius:10px; padding:12px 0; font-size:.85rem; text-align:center; font-weight: 600; background: #f8f9fa; color: #adb5bd; }
 .work-day{ background: var(--p-day) !important; color:white !important; }
 .work-night{ background: var(--p-night) !important; color:white !important; }
 .today { border: 2px solid var(--p-text) !important; color: var(--p-text); font-weight: 800; }
 
-/* İstatistik & Reklam */
-.ad-banner { background: #f8f9fc; border: 1px dashed #ccc; padding: 10px; text-align: center; border-radius: 12px; margin-top: 15px; font-size: 0.75rem; color: #aaa; }
-.stat-box { display:flex; justify-content:space-around; margin-top:15px; border-top:1px solid #eee; padding-top:15px; text-align:center; }
-.stat-item b { font-size: 1.2rem; display: block; }
-
-/* Modallar */
+/* Popups */
 .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:2000; align-items:center; justify-content:center; backdrop-filter: blur(5px); }
-.popup { background: white; width: 92%; max-height: 90%; border-radius: 30px; padding: 25px; text-align: center; overflow-y: auto; position: relative; }
-.sub-menu-btn { width: 100%; background: #f8f9fc; border: 1px solid #eee; padding: 15px; border-radius: 15px; margin-bottom: 10px; text-align: left; font-weight: 600; color: var(--p-header); display: flex; justify-content: space-between; cursor: pointer; }
-.acc-btn { width:100%; background:#f1f3f5; border:none; padding:12px; border-radius:10px; margin-top:8px; font-weight:600; text-align:left; display:flex; justify-content:space-between; }
-.acc-content { display:none; padding:12px; text-align:left; font-size:0.85rem; border-radius:0 0 10px 10px; background:#fafafa; border-top:1px solid #eee; }
-.input-style { width:100%; padding:12px; margin-bottom:12px; border-radius:12px; border:1px solid #ccc; font-family:'Poppins', sans-serif; }
+.popup { background: white; width: 92%; max-height: 85%; border-radius: 30px; padding: 25px; text-align: center; overflow-y: auto; position: relative; }
+.close-btn { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; color: #ccc; }
+.sub-menu-btn { width: 100%; background: #f8f9fc; border: 1px solid #eee; padding: 15px; border-radius: 15px; margin-bottom: 10px; text-align: left; font-weight: 600; color: var(--p-header); display: flex; justify-content: space-between; }
+
+/* Accordion (Açılır Menü) */
+.acc-btn { width:100%; background:#f1f3f5; border:none; padding:12px; border-radius:10px; margin-top:8px; font-weight:600; color:var(--p-text); text-align:left; cursor:pointer; display:flex; justify-content:space-between; align-items: center; }
+.acc-content { display:none; padding:12px; text-align:left; font-size:0.85rem; line-height:1.8; border-radius:0 0 10px 10px; background:#fff5f5; color:#d00000; border-top:1px solid #fceaea; }
+
+/* Intro & Others */
+#intro-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:white; z-index:10000; display:none; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:30px; }
+.intro-dot { width:8px; height:8px; background:#ddd; border-radius:50%; transition: 0.3s; }
+.intro-dot.active { width:24px; background:var(--p-header); border-radius:10px; }
+.handwritten { font-family: 'Caveat', cursive; font-size: 1.5rem; color: #444; line-height: 1.3; }
+.color-row { display: flex; align-items: center; justify-content: space-between; padding: 10px; background: #f8f9fc; border-radius: 15px; margin-bottom: 8px; border:1px solid #eee; }
+.ads-box { width: 92%; margin: 10px 0; background: #ebf2fa; border: 1px dashed #4895ef; border-radius: 15px; display: flex; align-items: center; justify-content: center; min-height: 80px; color: #4895ef; font-size: 0.7rem; }
+
+#install-banner { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; background: #2b2d42; color: white; padding: 15px; border-radius: 18px; display: none; justify-content: space-between; align-items: center; z-index: 9999; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+#install-btn { background: var(--p-day); border: none; color: white; padding: 10px 20px; border-radius: 12px; font-weight: 700; }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-top">
-    <div>
-        <div id="date-display" style="font-size: 0.75rem; opacity: 0.9;">...</div>
-        <div id="time" style="font-size: 1.7rem; font-weight: 700;">00:00</div>
+<div id="intro-overlay">
+    <div id="intro-img" style="font-size:80px; margin-bottom:20px;">🌟</div>
+    <h2 id="intro-title" style="color:var(--p-header);">Hoş Geldin!</h2>
+    <p id="intro-text" style="color:#666; margin-bottom:40px;">Yepyeni arayüz ve kişiselleştirilebilir renklerle vardiya takibi artık çok daha keyifli.</p>
+    <div style="display:flex; gap:8px; margin-bottom:40px;">
+        <div class="intro-dot active"></div><div class="intro-dot"></div><div class="intro-dot"></div>
     </div>
-    <button style="background:none;border:none;color:white;font-size:1.8rem;cursor:pointer;" onclick="openPopup('pop-settings')">⚙️</button>
-  </div>
-  <div class="shift-now" id="who-is-working">Gündüz: V? | Gece: V?</div>
+    <button onclick="nextIntro()" style="width:100%; padding:18px; background:var(--p-header); color:white; border:none; border-radius:20px; font-weight:700;">BAŞLA</button>
 </div>
 
-<div class="today-summary" id="today-panel">
-    <div>
-        <div style="font-size: 0.75rem; color: #888; font-weight: 600; text-transform: uppercase;">Bugünkü Durumunuz</div>
-        <div class="today-status" id="status-text">Hesaplanıyor...</div>
-    </div>
-    <div id="status-icon" style="font-size: 2.2rem;">⏳</div>
+<div class="header">
+  <div class="header-top">
+    <div><div id="date">Yükleniyor...</div><div id="time">00:00</div></div>
+    <button style="background:none;border:none;color:white;font-size:1.8rem;cursor:pointer;" onclick="openPopup('pop-settings')">⚙️</button>
+  </div>
+  <div class="current-status-bar">
+    <div class="status-item">☀️ Gündüz: <span id="cur-day">-</span></div>
+    <div class="status-item">🌙 Gece: <span id="cur-night">-</span></div>
+  </div>
 </div>
 
 <div class="main-content">
+  <div class="ads-box">REKLAM ALANI</div>
+
   <div class="section" style="display:flex; gap:8px;">
       <button class="vardiya-btn" onclick="setVardiya(1)" id="btn-v1">V1</button>
       <button class="vardiya-btn" onclick="setVardiya(2)" id="btn-v2">V2</button>
@@ -81,208 +92,252 @@ body{ margin:0; font-family:'Poppins', sans-serif; background: var(--p-bg); colo
   </div>
 
   <div class="section">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px; font-weight: 700; color: var(--p-header);">
-      <button onclick="changeMonth(-1)" style="border:none;background:none;font-size:1.5rem;color:inherit;cursor:pointer;">❮</button>
-      <span id="monthTitle">MART 2026</span>
-      <button onclick="changeMonth(1)" style="border:none;background:none;font-size:1.5rem;color:inherit;cursor:pointer;">❯</button>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+      <button onclick="changeMonth(-1)" style="border:none;background:none;font-size:1.5rem;color:var(--p-header);">❮</button>
+      <span id="monthTitle" style="font-weight:700; color:var(--p-header);">MART 2026</span>
+      <button onclick="nextMonth()" style="border:none;background:none;font-size:1.5rem;color:var(--p-header);">❯</button>
     </div>
     <div class="calendar-grid" id="calendar"></div>
-    
-    <div class="ad-banner">REKLAM ALANI</div>
-
-    <div class="stat-box">
-        <div class="stat-item"><b id="c-day" style="color:var(--p-day);">0</b><small>Gündüz</small></div>
-        <div class="stat-item"><b id="c-night" style="color:var(--p-night);">0</b><small>Gece</small></div>
-        <div class="stat-item"><b id="c-off" style="color:#adb5bd;">0</b><small>İzin</small></div>
+    <div style="display:flex; justify-content:space-around; margin-top:20px; border-top:1px solid #eee; padding-top:15px; text-align:center;">
+        <div><b id="c-day" style="color:var(--p-day); font-size:1.2rem;">0</b><br><small>Gündüz</small></div>
+        <div><b id="c-night" style="color:var(--p-night); font-size:1.2rem;">0</b><br><small>Gece</small></div>
+        <div><b id="c-off" style="color:#adb5bd; font-size:1.2rem;">0</b><br><small>İzin</small></div>
     </div>
 
     <div id="special-day-container" style="display:none; margin-top: 15px;">
-        <button class="acc-btn" onclick="toggleAcc('acc-this-month')" style="background:#fff5f5; color:#d00000; cursor:pointer;">
-           <span>✨ Bu Ayki Özel Günler</span> <span>▼</span>
+        <button class="acc-btn" onclick="toggleAcc('acc-this-month')" style="background:#fff5f5; color:#d00000; font-size:0.85rem;">
+           <span>✨ Bu Ayki Özel Günler</span> <span id="acc-icon">▼</span>
         </button>
-        <div id="acc-this-month" class="acc-content" style="color:#d00000;"></div>
+        <div id="acc-this-month" class="acc-content">
+            </div>
     </div>
   </div>
+  
+  <div class="ads-box" style="min-height:100px;">REKLAM ALANI</div>
 </div>
+
+<div id="install-banner"><span>Uygulamayı indir!</span><button id="install-btn">YÜKLE</button></div>
 
 <div class="overlay" id="pop-settings">
     <div class="popup">
-        <span style="position:absolute;top:15px;right:20px;font-size:2rem;color:#ccc;cursor:pointer;" onclick="closePopup('pop-settings')">×</span>
+        <span class="close-btn" onclick="closePopup('pop-settings')">×</span>
         <h3 style="color:var(--p-header);">Ayarlar</h3>
-        
-        <div class="sub-menu-btn" onclick="openPopup('pop-alarms')">⏰ Akıllı Alarmlar <span>➔</span></div>
         <div class="sub-menu-btn" onclick="openPopup('pop-colors')">🎨 Renkleri Kişiselleştir <span>➔</span></div>
         <div class="sub-menu-btn" onclick="openPopup('pop-dates')">🗓️ Tüm Yılın Tatilleri <span>➔</span></div>
         <div class="sub-menu-btn" onclick="openPopup('pop-about')">ℹ️ Hakkında <span>➔</span></div>
-        
-        <button onclick="requestNotif()" id="notif-btn" style="width:100%; padding:15px; background:#d00000; color:white; border:none; border-radius:15px; font-weight:700; margin-top:10px; cursor:pointer;">🔔 BİLDİRİMLERİ AKTİF ET</button>
-
-        <div style="margin:20px 0;"><img id="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://yasindemirkan83-png.github.io/anfa_vardiya.html" style="border-radius:10px; border:1px solid #eee;"></div>
-        
+        <button onclick="alert('Bildirimler Aktif!')" style="width:100%; padding:15px; background:#d00000; color:white; border:none; border-radius:15px; font-weight:700; margin-top:10px;">🔔 BİLDİRİMLERİ AÇ</button>
+        <div style="margin:20px 0;"><img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://yasindemirkan83-png.github.io/anfa_vardiya.html" style="border-radius:10px; border:1px solid #eee;"></div>
         <div style="display:flex; justify-content:center; gap:25px; font-size:1.6rem;">
-            <a href="tel:05375120777" style="text-decoration:none;">📞</a> 
-            <a href="https://wa.me/905375120777" style="text-decoration:none;">💬</a> 
-            <a href="mailto:yasindemirkan83@gmail.com" style="text-decoration:none;">✉️</a> </div>
-        <button id="pwa-btn" style="width:100%; padding:10px; background:#2ecc71; color:white; border:none; border-radius:12px; font-weight:700; margin-top:15px; display:none;">Uygulamayı Yükle</button>
-    </div>
-</div>
-
-<div class="overlay" id="pop-alarms">
-    <div class="popup">
-        <h3>Alarmlar</h3>
-        <button onclick="openPopup('pop-alarm-form')" style="width:100%; padding:12px; background:var(--p-header); color:white; border:none; border-radius:12px; margin-bottom:15px; font-weight:700;">+ Yeni Alarm</button>
-        <div id="alarm-list-container"></div>
-        <button onclick="closePopup('pop-alarms')" style="margin-top:15px; border:none; background:none; color:var(--p-header); font-weight:700;">Geri</button>
-    </div>
-</div>
-
-<div class="overlay" id="pop-alarm-form" style="z-index: 2100;">
-    <div class="popup">
-        <h4>Alarm Detayı</h4>
-        <input type="time" id="new-al-time" class="input-style">
-        <input type="text" id="new-al-label" class="input-style" placeholder="Alarm Adı">
-        <select id="new-al-type" class="input-style">
-            <option value="day">☀️ Gündüz Vardiyasında</option>
-            <option value="night">🌙 Gece Vardiyasında</option>
-        </select>
-        <button onclick="saveAlarm()" style="width:100%; padding:12px; background:#2ecc71; color:white; border:none; border-radius:12px; font-weight:700;">Kaydet</button>
-        <button onclick="closePopup('pop-alarm-form')" style="margin-top:10px; border:none; background:none; color:#666;">İptal</button>
-    </div>
-</div>
-
-<div class="overlay" id="pop-dates">
-    <div class="popup">
-        <h3 style="color:var(--p-header);">2026 Tatilleri</h3>
-        <button class="acc-btn" onclick="toggleAcc('acc-dini')">🕋 Dini Günler <span>▼</span></button>
-        <div id="acc-dini" class="acc-content">• 18 Mart: Ramazan Başlangıcı<br>• 19 Mart: Arefe<br>• 20-22 Mart: Ramazan Bayramı<br>• 14 Nisan: Kadir Gecesi<br>• 26-30 Mayıs: Kurban Bayramı</div>
-        <button class="acc-btn" onclick="toggleAcc('acc-resmi')">🇹🇷 Resmi Tatiller <span>▼</span></button>
-        <div id="acc-resmi" class="acc-content">• 1 Ocak: Yılbaşı<br>• 23 Nisan: Çocuk B.<br>• 1 Mayıs: İşçi B.<br>• 19 Mayıs: Gençlik B.<br>• 30 Ağustos: Zafer B.<br>• 29 Ekim: Cumhuriyet B.</div>
-        <br><button onclick="closePopup('pop-dates')" style="border:none;background:none;font-weight:700;color:var(--p-header);">Kapat</button>
+            <a href="tel:05375120777" style="text-decoration:none;">📞</a>
+            <a href="https://wa.me/905375120777" style="text-decoration:none;">💬</a>
+            <a href="mailto:yasindemirkan83@gmail.com" style="text-decoration:none;">✉️</a>
+        </div>
     </div>
 </div>
 
 <div class="overlay" id="pop-colors">
     <div class="popup">
-        <h3>Renkleri Özelleştir</h3>
-        Gündüz: <input type="color" id="in-day" onchange="saveColors()"><br><br>
-        Gece: <input type="color" id="in-night" onchange="saveColors()">
-        <br><button onclick="closePopup('pop-colors')" style="margin-top:15px; border:none; background:none; color:var(--p-header); font-weight:700;">Tamam</button>
+        <span class="close-btn" onclick="closePopup('pop-colors')">×</span>
+        <h3 style="color:var(--p-header);">Renk Seçimi</h3>
+        <div class="color-row"><span>☀️ Gündüz Çalışma</span><input type="color" id="in-day" onchange="saveColors()"></div>
+        <div class="color-row"><span>🌙 Gece Çalışma</span><input type="color" id="in-night" onchange="saveColors()"></div>
+        <div class="color-row"><span>🏠 İzin Günü</span><input type="color" id="in-off" onchange="saveColors()"></div>
+        <button onclick="resetColors()" style="background:none; border:none; color:var(--p-header); text-decoration:underline; margin-top:15px; font-weight:600;">Sıfırla</button>
+    </div>
+</div>
+
+<div class="overlay" id="pop-dates">
+    <div class="popup">
+        <span class="close-btn" onclick="closePopup('pop-dates')">×</span>
+        <h3 style="color:var(--p-header);">2026 Tatil Takvimi</h3>
+        
+        <button class="acc-btn" onclick="toggleAcc('acc-dini')">🕋 Dini Bayramlar & Arefeler <span>▼</span></button>
+        <div id="acc-dini" class="acc-content" style="background:#fafafa; color:inherit;">
+            • 19 Mart: Ramazan Bayramı Arefesi<br>
+            • 20 Mart: Ramazan Bayramı 1. Gün<br>
+            • 21 Mart: Ramazan Bayramı 2. Gün<br>
+            • 22 Mart: Ramazan Bayramı 3. Gün<br>
+            • 26 Mayıs: Kurban Bayramı Arefesi<br>
+            • 27 Mayıs: Kurban Bayramı 1. Gün<br>
+            • 28 Mayıs: Kurban Bayramı 2. Gün<br>
+            • 29 Mayıs: Kurban Bayramı 3. Gün<br>
+            • 30 Mayıs: Kurban Bayramı 4. Gün
+        </div>
+
+        <button class="acc-btn" onclick="toggleAcc('acc-resmi')">🇹🇷 Resmi Tatiller <span>▼</span></button>
+        <div id="acc-resmi" class="acc-content" style="background:#fafafa; color:inherit;">
+            • 1 Ocak: Yılbaşı<br>
+            • 23 Nisan: Ulusal Egemenlik<br>
+            • 1 Mayıs: Emek ve Dayanışma<br>
+            • 19 Mayıs: Gençlik ve Spor<br>
+            • 15 Temmuz: Demokrasi Günü<br>
+            • 30 Ağustos: Zafer Bayramı<br>
+            • 29 Ekim: Cumhuriyet Bayramı
+        </div>
+
+        <button class="acc-btn" onclick="toggleAcc('acc-kandil')">✨ Kandiller & Önemli Geceler <span>▼</span></button>
+        <div id="acc-kandil" class="acc-content" style="background:#fafafa; color:inherit;">
+            • 15 Ocak: Regaip Kandili<br>
+            • 13 Şubat: Miraç Kandili<br>
+            • 2 Mart: Berat Kandili<br>
+            • 18 Mart: Ramazan Başlangıcı<br>
+            • 14 Nisan: Kadir Gecesi<br>
+            • 22 Eylül: Mevlid Kandili
+        </div>
     </div>
 </div>
 
 <div class="overlay" id="pop-about">
     <div class="popup">
+        <span class="close-btn" onclick="closePopup('pop-about')">×</span>
         <h3 style="color:var(--p-header);">Hakkında</h3>
-        <div style="font-family: 'Caveat', cursive; font-size: 1.4rem; text-align: left;">Bu sistem vardiya düzenini kolayca takip etmeniz için tasarlanmıştır. Veriler tarayıcınızda saklanır. Kişisel bilgi kaydetmez. Bildirimler için izin vermeniz önerilir.</div>
-        <button onclick="closePopup('pop-about')" style="margin-top:20px; border:none; background:none; color:var(--p-header); font-weight:700;">Kapat</button>
+        <div class="handwritten">
+            Vardiya Takip Sistemi personel çalışma günlerinin planlamasını kolaylaştırmak için geliştirilmiştir. Veriler kullanıcı tarayıcı önbelleğinde saklanır ve hiç bir kişisel bilginiz kayıt edilmez. <br><br> Bildirimler için ayarlar kısmından izin vermeniz önerilir...
+        </div>
     </div>
 </div>
 
 <script>
-let currentV = parseInt(localStorage.getItem('vSel')) || 1;
+/** 🛠️ CORE MANTIK **/
+let currentV = parseInt(localStorage.getItem('vSelection')) || 1;
 let curYear = 2026, curMonth = new Date().getMonth();
-let colors = JSON.parse(localStorage.getItem('vCols')) || { day: '#f72585', night: '#4cc9f0', off: '#e0e1dd' };
-let alarms = JSON.parse(localStorage.getItem('vAlarms')) || [];
-const tatiller = { "0-1":"Yılbaşı", "2-2":"Berat Kandili", "2-19":"Arefe", "2-20":"Ramazan Bayramı 1", "2-21":"Ramazan Bayramı 2", "2-22":"Ramazan Bayramı 3", "3-14":"Kadir Gecesi", "3-23":"23 Nisan", "4-1":"1 Mayıs", "4-19":"19 Mayıs", "4-26":"Kurban Arefe", "4-27":"Kurban Bayramı 1", "4-28":"Kurban Bayramı 2", "4-29":"Kurban Bayramı 3", "4-30":"Kurban Bayramı 4", "6-15":"15 Temmuz", "7-30":"30 Ağustos", "9-29":"29 Ekim" };
 
-function getShiftType(date, vNum) {
+const tatiller = { 
+    "0-1":"Yılbaşı", "0-15":"Regaip Kandili", "1-13":"Miraç Kandili", "2-2":"Berat Kandili", "3-14":"Kadir Gecesi",
+    "2-18":"Ramazan Başlangıcı", "2-19":"Ramazan Bayramı Arefesi", "2-20":"Ramazan Bayramı 1. Gün", "2-21":"Ramazan Bayramı 2. Gün", "2-22":"Ramazan Bayramı 3. Gün",
+    "3-23":"23 Nisan", "4-1":"1 Mayıs", "4-19":"19 Mayıs", "4-26":"Kurban Bayramı Arefesi", "4-27":"Kurban Bayramı 1. Gün", "4-28":"Kurban Bayramı 2. Gün", "4-29":"Kurban Bayramı 3. Gün", "4-30":"Kurban Bayramı 4. Gün",
+    "6-15":"15 Temmuz", "7-30":"30 Ağustos", "8-22":"Mevlid Kandili", "9-29":"29 Ekim Cumhuriyet Bayramı" 
+};
+
+// Renk Ayarları
+const defColors = { day: '#f72585', night: '#4cc9f0', off: '#e0e1dd' };
+let uColors = JSON.parse(localStorage.getItem('uColors')) || {...defColors};
+
+function applyColors() {
+    document.documentElement.style.setProperty('--p-day', uColors.day);
+    document.documentElement.style.setProperty('--p-night', uColors.night);
+    document.documentElement.style.setProperty('--p-off', uColors.off);
+    if(document.getElementById('in-day')){
+        document.getElementById('in-day').value = uColors.day;
+        document.getElementById('in-night').value = uColors.night;
+        document.getElementById('in-off').value = uColors.off;
+    }
+}
+function saveColors() {
+    uColors = { day: document.getElementById('in-day').value, night: document.getElementById('in-night').value, off: document.getElementById('in-off').value };
+    localStorage.setItem('uColors', JSON.stringify(uColors));
+    applyColors(); draw();
+}
+function resetColors() { uColors = {...defColors}; localStorage.setItem('uColors', JSON.stringify(uColors)); applyColors(); draw(); }
+
+// Tanıtım Sistemi
+let iStep = 0;
+const iData = [
+    {img:"🌟", title:"Hoş Geldin!", text:"Yepyeni arayüz ve kişiselleştirilebilir renklerle vardiya takibi artık çok daha keyifli."},
+    {img:"🎨", title:"Renkleri Seç", text:"Ayarlardan Gündüz, Gece ve İzin günlerinin renklerini kendine göre belirleyebilirsin."},
+    {img:"📱", title:"Hemen Yükle", text:"Uygulamayı ana ekrana ekleyerek internet olmasa bile her an kullanabilirsin."}
+];
+function nextIntro() {
+    iStep++;
+    if(iStep >= iData.length) { document.getElementById('intro-overlay').style.display='none'; localStorage.setItem('introOk', '1'); return; }
+    document.getElementById('intro-img').innerText = iData[iStep].img;
+    document.getElementById('intro-title').innerText = iData[iStep].title;
+    document.getElementById('intro-text').innerText = iData[iStep].text;
+    let dots = document.querySelectorAll('.intro-dot');
+    dots.forEach((d,idx) => d.classList.toggle('active', idx===iStep));
+}
+
+// Vardiya Hesaplama (11 Mart V3 Gündüz / V4 Gece Referans)
+function getV(date) {
     const ref = new Date(2026, 2, 11);
-    const diff = Math.floor((new Date(date).setHours(0,0,0,0) - ref.setHours(0,0,0,0)) / 86400000);
+    const diff = Math.floor((date - ref) / 86400000);
     const cycle = (diff % 4 + 4) % 4;
-    return [['off','off','day','night'],['off','day','night','off'],['day','night','off','off'],['night','off','off','day']][cycle][vNum-1];
+    return [['off','off','day','night'],['off','day','night','off'],['day','night','off','off'],['night','off','off','day']][cycle];
+}
+
+function setVardiya(v) {
+    currentV = v; localStorage.setItem('vSelection', v);
+    document.querySelectorAll('.vardiya-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('btn-v'+v).classList.add('active');
+    draw();
 }
 
 function draw() {
     const cal = document.getElementById('calendar'); cal.innerHTML = '';
     const first = (new Date(curYear, curMonth, 1).getDay() + 6) % 7;
     const days = new Date(curYear, curMonth + 1, 0).getDate();
-    document.getElementById('monthTitle').innerText = new Date(curYear, curMonth).toLocaleDateString('tr-TR',{month:'long', year:'numeric'}).toUpperCase();
-
-    let counts = { day: 0, night: 0, off: 0 }, specials = [];
+    const monthName = new Date(curYear, curMonth).toLocaleDateString('tr-TR',{month:'long'});
+    document.getElementById('monthTitle').innerText = monthName.toUpperCase() + " " + curYear;
+    
+    let c = {day:0, night:0, off:0}, tList = [];
     for(let i=0; i<first; i++) cal.appendChild(document.createElement('div'));
     for(let i=1; i<=days; i++) {
         const d = new Date(curYear, curMonth, i);
-        const type = getShiftType(d, currentV);
-        counts[type]++;
+        const type = getV(d)[currentV-1];
+        c[type]++;
         const div = document.createElement('div');
         div.className = 'day ' + (type==='day'?'work-day':type==='night'?'work-night':'');
         if(d.toDateString() === new Date().toDateString()) div.classList.add('today');
         div.innerText = i; cal.appendChild(div);
-        if(tatiller[curMonth+'-'+i]) specials.push(`• <b>${i} ${new Date(curYear, curMonth).toLocaleDateString('tr-TR',{month:'long'})}:</b> ${tatiller[curMonth+'-'+i]}`);
+        
+        // Bu ayın tatillerini yakala
+        if(tatiller[curMonth+'-'+i]) {
+            tList.push(`• <b>${i} ${monthName}:</b> ${tatiller[curMonth+'-'+i]}`);
+        }
     }
+    document.getElementById('c-day').innerText = c.day;
+    document.getElementById('c-night').innerText = c.night;
+    document.getElementById('c-off').innerText = c.off;
 
-    document.getElementById('c-day').innerText = counts.day;
-    document.getElementById('c-night').innerText = counts.night;
-    document.getElementById('c-off').innerText = counts.off;
-    
-    const specContainer = document.getElementById('special-day-container');
-    if(specials.length > 0) { specContainer.style.display='block'; document.getElementById('acc-this-month').innerHTML = specials.join('<br>'); } else specContainer.style.display='none';
-
-    const todayType = getShiftType(new Date(), currentV);
-    const labels = {day:'GÜNDÜZ VARDİYASI', night:'GECE VARDİYASI', off:'İSTİRAHAT (OFF)'};
-    document.getElementById('status-text').innerText = labels[todayType];
-    document.getElementById('status-icon').innerText = todayType==='day'?'☀️':todayType==='night'?'🌙':'🏠';
-    document.getElementById('today-panel').style.borderLeftColor = (todayType==='day'?colors.day:(todayType==='night'?colors.night:'#eee'));
-
-    let dV = "-", nV = "-";
-    for(let i=1; i<=4; i++) {
-        let st = getShiftType(new Date(), i);
-        if(st === 'day') dV = "V" + i;
-        if(st === 'night') nV = "V" + i;
-    }
-    document.getElementById('who-is-working').innerText = `☀️ Gündüz: ${dV} | 🌙 Gece: ${nV}`;
-}
-
-async function requestNotif() {
-    const perm = await Notification.requestPermission();
-    if(perm === 'granted') {
-        document.getElementById('notif-btn').style.background = '#2ecc71';
-        document.getElementById('notif-btn').innerText = '✅ BİLDİRİMLER AKTİF';
+    // Alt Kısımdaki Özel Gün Menüsü Güncelleme
+    const sContainer = document.getElementById('special-day-container');
+    const sContent = document.getElementById('acc-this-month');
+    if(tList.length > 0) {
+        sContainer.style.display = 'block';
+        sContent.innerHTML = tList.join('<br>');
+    } else {
+        sContainer.style.display = 'none';
+        sContent.style.display = 'none'; // Kapalı başla
     }
 }
 
-function saveAlarm() {
-    const t = document.getElementById('new-al-time').value, l = document.getElementById('new-al-label').value, ty = document.getElementById('new-al-type').value;
-    if(t && l) { alarms.push({ id: Date.now(), time: t, label: l, type: ty, active: true }); localStorage.setItem('vAlarms', JSON.stringify(alarms)); drawAlarmList(); closePopup('pop-alarm-form'); }
-}
-function drawAlarmList() {
-    const cont = document.getElementById('alarm-list-container'); cont.innerHTML = '';
-    alarms.forEach(al => {
-        cont.innerHTML += `<div style="background:#f8f9fc; padding:10px; border-radius:10px; margin-bottom:5px; display:flex; justify-content:space-between; align-items:center; font-size:0.8rem;">
-            <span><b>${al.time}</b> - ${al.label}</span>
-            <button onclick="delAlarm(${al.id})" style="border:none; background:none; color:red;">Sil</button>
-        </div>`;
-    });
-}
-function delAlarm(id) { alarms = alarms.filter(a => a.id !== id); localStorage.setItem('vAlarms', JSON.stringify(alarms)); drawAlarmList(); }
+function changeMonth(n) { curMonth += n; if(curMonth>11){curMonth=0;curYear++} if(curMonth<0){curMonth=11;curYear--} draw(); }
+function openPopup(id) { document.getElementById(id).style.display='flex'; }
+function closePopup(id) { document.getElementById(id).style.display='none'; }
 
+function toggleAcc(id) {
+    let el = document.getElementById(id);
+    let isOpening = el.style.display !== 'block';
+    el.style.display = isOpening ? 'block' : 'none';
+}
+
+// Saat & Durum Güncelleme
 setInterval(() => {
-    const now = new Date();
-    document.getElementById('time').innerText = now.toLocaleTimeString('tr-TR',{hour:'2-digit', minute:'2-digit'});
-    document.getElementById('date-display').innerText = now.toLocaleDateString('tr-TR',{weekday:'long', day:'numeric', month:'long'});
-    if(now.getSeconds() === 0) {
-        const tStr = now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0');
-        const todayT = getShiftType(now, currentV);
-        alarms.forEach(al => { if(al.active && al.time === tStr && al.type === todayT) alert("⏰ " + al.label); });
-    }
+    const n = new Date();
+    document.getElementById('time').innerText = n.toLocaleTimeString('tr-TR',{hour:'2-digit', minute:'2-digit'});
+    document.getElementById('date').innerText = n.toLocaleDateString('tr-TR',{weekday:'long', day:'numeric', month:'long'});
 }, 1000);
 
-function applyColors() {
-    document.documentElement.style.setProperty('--p-day', colors.day);
-    document.documentElement.style.setProperty('--p-night', colors.night);
-}
-function saveColors() {
-    colors = { day: document.getElementById('in-day').value, night: document.getElementById('in-night').value, off: '#e0e1dd' };
-    localStorage.setItem('vCols', JSON.stringify(colors)); applyColors(); draw();
+function updateStatus() {
+    const v = getV(new Date());
+    let g="-", n="-";
+    v.forEach((type, idx) => { if(type==='day') g="V"+(idx+1); if(type==='night') n="V"+(idx+1); });
+    document.getElementById('cur-day').innerText = g;
+    document.getElementById('cur-night').innerText = n;
 }
 
-function setVardiya(v) { currentV = v; localStorage.setItem('vSel', v); document.querySelectorAll('.vardiya-btn').forEach(b=>b.classList.remove('active')); document.getElementById('btn-v'+v).classList.add('active'); draw(); }
-function openPopup(id) { document.getElementById(id).style.display='flex'; if(id==='pop-alarms') drawAlarmList(); }
-function closePopup(id) { document.getElementById(id).style.display='none'; }
-function toggleAcc(id) { let el = document.getElementById(id); el.style.display = (el.style.display === 'block') ? 'none' : 'block'; }
-function changeMonth(n) { curMonth += n; if(curMonth>11){curMonth=0;curYear++} if(curMonth<0){curMonth=11;curYear--} draw(); }
+// PWA Yükleme
+let defPrompt;
+window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); defPrompt = e; document.getElementById('install-banner').style.display = 'flex'; });
+document.getElementById('install-btn').onclick = () => { if(defPrompt){ defPrompt.prompt(); document.getElementById('install-banner').style.display = 'none'; } };
 
-window.onload = () => { applyColors(); setVardiya(currentV); };
+window.onload = () => {
+    if(!localStorage.getItem('introOk')) document.getElementById('intro-overlay').style.display='flex';
+    applyColors();
+    setVardiya(currentV);
+    updateStatus();
+};
 </script>
 </body>
 </html>
+
