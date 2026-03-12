@@ -1,62 +1,63 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Vardiya Takip Sistemi Pro</title>
-<link rel="manifest" href="manifest.json">
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-<style>
-:root{
-  --p-bg: #f8f9fc; --p-header: #4895ef; --p-accent: #7209b7;
-  --p-day: #f72585; --p-night: #4cc9f0; --p-off: #e0e1dd;
-  --p-text: #2b2d42;
-}
-*{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
-body{ margin:0; font-family:'Poppins', sans-serif; background: var(--p-bg); color: var(--p-text); display:flex; flex-direction:column; align-items:center; max-width:500px; margin:auto; min-height:100vh; overflow-x: hidden; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Vardiya Takip Sistemi Pro</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4895ef">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --p-bg: #f8f9fc; --p-header: #4895ef; --p-accent: #7209b7;
+            --p-day: #f72585; --p-night: #4cc9f0; --p-off: #e0e1dd;
+            --p-text: #2b2d42;
+        }
+        *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
+        body{ margin:0; font-family:'Poppins', sans-serif; background: var(--p-bg); color: var(--p-text); display:flex; flex-direction:column; align-items:center; max-width:500px; margin:auto; min-height:100vh; overflow-x: hidden; }
 
-/* Header */
-.header{ background: linear-gradient(135deg, #4cc9f0, #4895ef); padding:15px; border-radius:0 0 25px 25px; width:100%; box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
-.header-top { display: flex; justify-content: space-between; align-items: center; }
-#time { font-size: 1.8rem; color: white; font-weight: 700; }
-#date { font-size: 0.75rem; color: white; opacity: 0.9; }
-.current-status-bar { display: flex; justify-content: space-around; background: rgba(255, 255, 255, 0.2); margin-top: 10px; padding: 8px; border-radius: 12px; color: white; font-size: 0.8rem; font-weight: 600; }
-.status-item span { background: white; color: var(--p-header); padding: 2px 8px; border-radius: 6px; margin-left: 5px; }
+        /* Header */
+        .header{ background: linear-gradient(135deg, #4cc9f0, #4895ef); padding:15px; border-radius:0 0 25px 25px; width:100%; box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; }
+        #time { font-size: 1.8rem; color: white; font-weight: 700; }
+        #date { font-size: 0.75rem; color: white; opacity: 0.9; }
+        .current-status-bar { display: flex; justify-content: space-around; background: rgba(255, 255, 255, 0.2); margin-top: 10px; padding: 8px; border-radius: 12px; color: white; font-size: 0.8rem; font-weight: 600; }
+        .status-item span { background: white; color: var(--p-header); padding: 2px 8px; border-radius: 6px; margin-left: 5px; }
 
-/* Sections */
-.main-content{ flex:1; width:100%; padding: 10px 0; display:flex; flex-direction:column; align-items:center; }
-.section{ background: white; padding:15px; border-radius:20px; margin-bottom:12px; width:92%; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
+        /* Sections */
+        .main-content{ flex:1; width:100%; padding: 10px 0; display:flex; flex-direction:column; align-items:center; }
+        .section{ background: white; padding:15px; border-radius:20px; margin-bottom:12px; width:92%; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
 
-/* Buttons & Calendar */
-.vardiya-btn { flex: 1; background: #f1f3f5; border: none; border-radius: 12px; padding: 12px 0; font-weight: 600; cursor: pointer; color: #adb5bd; transition: 0.3s; }
-.vardiya-btn.active { background: var(--p-header); color: white; box-shadow: 0 4px 10px rgba(72, 149, 239, 0.3); }
-.calendar-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:5px; margin-top:10px; }
-.day{ border-radius:10px; padding:12px 0; font-size:.85rem; text-align:center; font-weight: 600; background: #f8f9fa; color: #adb5bd; }
-.work-day{ background: var(--p-day) !important; color:white !important; }
-.work-night{ background: var(--p-night) !important; color:white !important; }
-.today { border: 2px solid var(--p-text) !important; color: var(--p-text); font-weight: 800; }
+        /* Buttons & Calendar */
+        .vardiya-btn { flex: 1; background: #f1f3f5; border: none; border-radius: 12px; padding: 12px 0; font-weight: 600; cursor: pointer; color: #adb5bd; transition: 0.3s; }
+        .vardiya-btn.active { background: var(--p-header); color: white; box-shadow: 0 4px 10px rgba(72, 149, 239, 0.3); }
+        .calendar-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:5px; margin-top:10px; }
+        .day{ border-radius:10px; padding:12px 0; font-size:.85rem; text-align:center; font-weight: 600; background: #f8f9fa; color: #adb5bd; }
+        .work-day{ background: var(--p-day) !important; color:white !important; }
+        .work-night{ background: var(--p-night) !important; color:white !important; }
+        .today { border: 2px solid var(--p-text) !important; color: var(--p-text); font-weight: 800; }
 
-/* Popups */
-.overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:2000; align-items:center; justify-content:center; backdrop-filter: blur(5px); }
-.popup { background: white; width: 92%; max-height: 85%; border-radius: 30px; padding: 25px; text-align: center; overflow-y: auto; position: relative; }
-.close-btn { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; color: #ccc; }
-.sub-menu-btn { width: 100%; background: #f8f9fc; border: 1px solid #eee; padding: 15px; border-radius: 15px; margin-bottom: 10px; text-align: left; font-weight: 600; color: var(--p-header); display: flex; justify-content: space-between; }
+        /* Popups */
+        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:2000; align-items:center; justify-content:center; backdrop-filter: blur(5px); }
+        .popup { background: white; width: 92%; max-height: 85%; border-radius: 30px; padding: 25px; text-align: center; overflow-y: auto; position: relative; }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; color: #ccc; }
+        .sub-menu-btn { width: 100%; background: #f8f9fc; border: 1px solid #eee; padding: 15px; border-radius: 15px; margin-bottom: 10px; text-align: left; font-weight: 600; color: var(--p-header); display: flex; justify-content: space-between; }
 
-/* Accordion (Açılır Menü) */
-.acc-btn { width:100%; background:#f1f3f5; border:none; padding:12px; border-radius:10px; margin-top:8px; font-weight:600; color:var(--p-text); text-align:left; cursor:pointer; display:flex; justify-content:space-between; align-items: center; }
-.acc-content { display:none; padding:12px; text-align:left; font-size:0.85rem; line-height:1.8; border-radius:0 0 10px 10px; background:#fff5f5; color:#d00000; border-top:1px solid #fceaea; }
+        /* Accordion */
+        .acc-btn { width:100%; background:#f1f3f5; border:none; padding:12px; border-radius:10px; margin-top:8px; font-weight:600; color:var(--p-text); text-align:left; cursor:pointer; display:flex; justify-content:space-between; align-items: center; }
+        .acc-content { display:none; padding:12px; text-align:left; font-size:0.85rem; line-height:1.8; border-radius:0 0 10px 10px; background:#fff5f5; color:#d00000; border-top:1px solid #fceaea; }
 
-/* Intro & Others */
-#intro-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:white; z-index:10000; display:none; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:30px; }
-.intro-dot { width:8px; height:8px; background:#ddd; border-radius:50%; transition: 0.3s; }
-.intro-dot.active { width:24px; background:var(--p-header); border-radius:10px; }
-.handwritten { font-family: 'Caveat', cursive; font-size: 1.5rem; color: #444; line-height: 1.3; }
-.color-row { display: flex; align-items: center; justify-content: space-between; padding: 10px; background: #f8f9fc; border-radius: 15px; margin-bottom: 8px; border:1px solid #eee; }
-.ads-box { width: 92%; margin: 10px 0; background: #ebf2fa; border: 1px dashed #4895ef; border-radius: 15px; display: flex; align-items: center; justify-content: center; min-height: 80px; color: #4895ef; font-size: 0.7rem; }
+        /* Intro & Others */
+        #intro-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:white; z-index:10000; display:none; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:30px; }
+        .intro-dot { width:8px; height:8px; background:#ddd; border-radius:50%; transition: 0.3s; }
+        .intro-dot.active { width:24px; background:var(--p-header); border-radius:10px; }
+        .handwritten { font-family: 'Caveat', cursive; font-size: 1.5rem; color: #444; line-height: 1.3; }
+        .color-row { display: flex; align-items: center; justify-content: space-between; padding: 10px; background: #f8f9fc; border-radius: 15px; margin-bottom: 8px; border:1px solid #eee; }
+        .ads-box { width: 92%; margin: 10px 0; background: #ebf2fa; border: 1px dashed #4895ef; border-radius: 15px; display: flex; align-items: center; justify-content: center; min-height: 80px; color: #4895ef; font-size: 0.7rem; }
 
-#install-banner { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; background: #2b2d42; color: white; padding: 15px; border-radius: 18px; display: none; justify-content: space-between; align-items: center; z-index: 9999; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-#install-btn { background: var(--p-day); border: none; color: white; padding: 10px 20px; border-radius: 12px; font-weight: 700; }
-</style>
+        #install-banner { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; background: #2b2d42; color: white; padding: 15px; border-radius: 18px; display: none; justify-content: space-between; align-items: center; z-index: 9999; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        #install-btn { background: var(--p-day); border: none; color: white; padding: 10px 20px; border-radius: 12px; font-weight: 700; }
+    </style>
 </head>
 <body>
 
@@ -108,8 +109,7 @@ body{ margin:0; font-family:'Poppins', sans-serif; background: var(--p-bg); colo
         <button class="acc-btn" onclick="toggleAcc('acc-this-month')" style="background:#fff5f5; color:#d00000; font-size:0.85rem;">
            <span>✨ Bu Ayki Özel Günler</span> <span id="acc-icon">▼</span>
         </button>
-        <div id="acc-this-month" class="acc-content">
-            </div>
+        <div id="acc-this-month" class="acc-content"></div>
     </div>
   </div>
   
@@ -150,39 +150,13 @@ body{ margin:0; font-family:'Poppins', sans-serif; background: var(--p-bg); colo
     <div class="popup">
         <span class="close-btn" onclick="closePopup('pop-dates')">×</span>
         <h3 style="color:var(--p-header);">2026 Tatil Takvimi</h3>
-        
         <button class="acc-btn" onclick="toggleAcc('acc-dini')">🕋 Dini Bayramlar & Arefeler <span>▼</span></button>
         <div id="acc-dini" class="acc-content" style="background:#fafafa; color:inherit;">
-            • 19 Mart: Ramazan Bayramı Arefesi<br>
-            • 20 Mart: Ramazan Bayramı 1. Gün<br>
-            • 21 Mart: Ramazan Bayramı 2. Gün<br>
-            • 22 Mart: Ramazan Bayramı 3. Gün<br>
-            • 26 Mayıs: Kurban Bayramı Arefesi<br>
-            • 27 Mayıs: Kurban Bayramı 1. Gün<br>
-            • 28 Mayıs: Kurban Bayramı 2. Gün<br>
-            • 29 Mayıs: Kurban Bayramı 3. Gün<br>
-            • 30 Mayıs: Kurban Bayramı 4. Gün
+            • 19 Mart: Ramazan Bayramı Arefesi<br>• 20 Mart: Ramazan Bayramı 1. Gün<br>• 21 Mart: Ramazan Bayramı 2. Gün<br>• 22 Mart: Ramazan Bayramı 3. Gün<br>• 26 Mayıs: Kurban Bayramı Arefesi<br>• 27 Mayıs: Kurban Bayramı 1. Gün<br>• 28 Mayıs: Kurban Bayramı 2. Gün<br>• 29 Mayıs: Kurban Bayramı 3. Gün<br>• 30 Mayıs: Kurban Bayramı 4. Gün
         </div>
-
         <button class="acc-btn" onclick="toggleAcc('acc-resmi')">🇹🇷 Resmi Tatiller <span>▼</span></button>
         <div id="acc-resmi" class="acc-content" style="background:#fafafa; color:inherit;">
-            • 1 Ocak: Yılbaşı<br>
-            • 23 Nisan: Ulusal Egemenlik<br>
-            • 1 Mayıs: Emek ve Dayanışma<br>
-            • 19 Mayıs: Gençlik ve Spor<br>
-            • 15 Temmuz: Demokrasi Günü<br>
-            • 30 Ağustos: Zafer Bayramı<br>
-            • 29 Ekim: Cumhuriyet Bayramı
-        </div>
-
-        <button class="acc-btn" onclick="toggleAcc('acc-kandil')">✨ Kandiller & Önemli Geceler <span>▼</span></button>
-        <div id="acc-kandil" class="acc-content" style="background:#fafafa; color:inherit;">
-            • 15 Ocak: Regaip Kandili<br>
-            • 13 Şubat: Miraç Kandili<br>
-            • 2 Mart: Berat Kandili<br>
-            • 18 Mart: Ramazan Başlangıcı<br>
-            • 14 Nisan: Kadir Gecesi<br>
-            • 22 Eylül: Mevlid Kandili
+            • 1 Ocak: Yılbaşı<br>• 23 Nisan: Ulusal Egemenlik<br>• 1 Mayıs: Emek ve Dayanışma<br>• 19 Mayıs: Gençlik ve Spor<br>• 15 Temmuz: Demokrasi Günü<br>• 30 Ağustos: Zafer Bayramı<br>• 29 Ekim: Cumhuriyet Bayramı
         </div>
     </div>
 </div>
@@ -192,7 +166,7 @@ body{ margin:0; font-family:'Poppins', sans-serif; background: var(--p-bg); colo
         <span class="close-btn" onclick="closePopup('pop-about')">×</span>
         <h3 style="color:var(--p-header);">Hakkında</h3>
         <div class="handwritten">
-            Vardiya Takip Sistemi personel çalışma günlerinin planlamasını kolaylaştırmak için geliştirilmiştir. Veriler kullanıcı tarayıcı önbelleğinde saklanır ve hiç bir kişisel bilginiz kayıt edilmez. <br><br> Bildirimler için ayarlar kısmından izin vermeniz önerilir...
+            Vardiya Takip Sistemi personel çalışma günlerinin planlamasını kolaylaştırmak için geliştirilmiştir. Veriler kullanıcı tarayıcı önbelleğinde saklanır.
         </div>
     </div>
 </div>
@@ -209,7 +183,6 @@ const tatiller = {
     "6-15":"15 Temmuz", "7-30":"30 Ağustos", "8-22":"Mevlid Kandili", "9-29":"29 Ekim Cumhuriyet Bayramı" 
 };
 
-// Renk Ayarları
 const defColors = { day: '#f72585', night: '#4cc9f0', off: '#e0e1dd' };
 let uColors = JSON.parse(localStorage.getItem('uColors')) || {...defColors};
 
@@ -230,7 +203,7 @@ function saveColors() {
 }
 function resetColors() { uColors = {...defColors}; localStorage.setItem('uColors', JSON.stringify(uColors)); applyColors(); draw(); }
 
-// Tanıtım Sistemi
+// Intro
 let iStep = 0;
 const iData = [
     {img:"🌟", title:"Hoş Geldin!", text:"Yepyeni arayüz ve kişiselleştirilebilir renklerle vardiya takibi artık çok daha keyifli."},
@@ -247,7 +220,6 @@ function nextIntro() {
     dots.forEach((d,idx) => d.classList.toggle('active', idx===iStep));
 }
 
-// Vardiya Hesaplama (11 Mart V3 Gündüz / V4 Gece Referans)
 function getV(date) {
     const ref = new Date(2026, 2, 11);
     const diff = Math.floor((date - ref) / 86400000);
@@ -279,39 +251,24 @@ function draw() {
         div.className = 'day ' + (type==='day'?'work-day':type==='night'?'work-night':'');
         if(d.toDateString() === new Date().toDateString()) div.classList.add('today');
         div.innerText = i; cal.appendChild(div);
-        
-        // Bu ayın tatillerini yakala
-        if(tatiller[curMonth+'-'+i]) {
-            tList.push(`• <b>${i} ${monthName}:</b> ${tatiller[curMonth+'-'+i]}`);
-        }
+        if(tatiller[curMonth+'-'+i]) tList.push(`• <b>${i} ${monthName}:</b> ${tatiller[curMonth+'-'+i]}`);
     }
     document.getElementById('c-day').innerText = c.day;
     document.getElementById('c-night').innerText = c.night;
     document.getElementById('c-off').innerText = c.off;
 
-    // Alt Kısımdaki Özel Gün Menüsü Güncelleme
     const sContainer = document.getElementById('special-day-container');
     const sContent = document.getElementById('acc-this-month');
-    if(tList.length > 0) {
-        sContainer.style.display = 'block';
-        sContent.innerHTML = tList.join('<br>');
-    } else {
-        sContainer.style.display = 'none';
-        sContent.style.display = 'none'; // Kapalı başla
-    }
+    if(tList.length > 0) { sContainer.style.display = 'block'; sContent.innerHTML = tList.join('<br>'); } 
+    else { sContainer.style.display = 'none'; }
 }
 
 function changeMonth(n) { curMonth += n; if(curMonth>11){curMonth=0;curYear++} if(curMonth<0){curMonth=11;curYear--} draw(); }
+function nextMonth() { changeMonth(1); } // Eksik olan fonksiyon eklendi
 function openPopup(id) { document.getElementById(id).style.display='flex'; }
 function closePopup(id) { document.getElementById(id).style.display='none'; }
+function toggleAcc(id) { let el = document.getElementById(id); el.style.display = (el.style.display !== 'block') ? 'block' : 'none'; }
 
-function toggleAcc(id) {
-    let el = document.getElementById(id);
-    let isOpening = el.style.display !== 'block';
-    el.style.display = isOpening ? 'block' : 'none';
-}
-
-// Saat & Durum Güncelleme
 setInterval(() => {
     const n = new Date();
     document.getElementById('time').innerText = n.toLocaleTimeString('tr-TR',{hour:'2-digit', minute:'2-digit'});
@@ -326,10 +283,24 @@ function updateStatus() {
     document.getElementById('cur-night').innerText = n;
 }
 
-// PWA Yükleme
+// PWA YÜKLEME MANTIĞI
 let defPrompt;
-window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); defPrompt = e; document.getElementById('install-banner').style.display = 'flex'; });
-document.getElementById('install-btn').onclick = () => { if(defPrompt){ defPrompt.prompt(); document.getElementById('install-banner').style.display = 'none'; } };
+window.addEventListener('beforeinstallprompt', (e) => { 
+    e.preventDefault(); 
+    defPrompt = e; 
+    document.getElementById('install-banner').style.display = 'flex'; 
+});
+document.getElementById('install-btn').onclick = () => { 
+    if(defPrompt){ 
+        defPrompt.prompt(); 
+        document.getElementById('install-banner').style.display = 'none'; 
+    } 
+};
+
+// SERVICE WORKER KAYDI (YÜKLEME İÇİN ŞART)
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').then(() => console.log("SW Kayıtlı"));
+}
 
 window.onload = () => {
     if(!localStorage.getItem('introOk')) document.getElementById('intro-overlay').style.display='flex';
@@ -340,4 +311,3 @@ window.onload = () => {
 </script>
 </body>
 </html>
-
