@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Vardiya Master Pro | KORSAV</title>
-    
+
+    <!-- PWA Meta Etiketleri -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#4895ef">
-    <link rel="apple-touch-icon" href="icon-192.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="VardiyaPro">
 
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -19,7 +23,7 @@
         *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
         body{ font-family:'Poppins', sans-serif; background: var(--p-bg); color: var(--p-text); display:flex; flex-direction:column; align-items:center; max-width:500px; margin:auto; min-height:100vh; }
 
-        /* Header Tasarımı */
+        /* Header */
         .header{ background: linear-gradient(135deg, #4cc9f0 0%, #4895ef 100%); padding:20px; border-radius:0 0 30px 30px; width:100%; box-shadow: 0 8px 20px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
         .header-top { display: flex; justify-content: space-between; align-items: center; }
         #time { font-size: 1.8rem; color: white; font-weight: 700; }
@@ -29,21 +33,6 @@
         /* Ana İçerik */
         .main-content{ width:100%; padding: 15px; display:flex; flex-direction:column; gap: 15px; }
         .section{ background: var(--p-card); padding:20px; border-radius:25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-
-        /* Yükleme Butonu Stili */
-        #pwa-install-btn {
-            display: none;
-            width: 100%;
-            background: var(--p-text);
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-bottom: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
 
         /* Vardiya Butonları */
         .v-row { display: flex; gap: 8px; }
@@ -59,7 +48,7 @@
         .work-night{ background: var(--p-night) !important; color:white !important; }
         .today { border: 2px solid var(--p-text) !important; color: var(--p-text); }
 
-        /* Önemli Günler Listesi */
+        /* Önemli Günler */
         #special-days-list { margin-top: 15px; padding-top: 10px; border-top: 1px solid #eee; }
         .special-day-item { background: #fff9f9; padding: 6px 10px; border-radius: 8px; margin-bottom: 5px; border-left: 3px solid var(--p-day); font-size: 0.75rem; color: #333; }
 
@@ -67,6 +56,33 @@
         #intro-box { background: white; padding: 20px; border-radius: 20px; border-left: 6px solid var(--p-header); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         #intro-box h4 { color: var(--p-header); font-size: 1rem; margin-bottom: 8px; }
         #intro-box p { font-size: 0.8rem; line-height: 1.4; margin-bottom: 10px; color: #444; }
+
+        /* PWA Yükle Butonu */
+        #pwa-install-bar {
+            display: none;
+            width: 100%;
+            background: linear-gradient(135deg, #7209b7, #4895ef);
+            border-radius: 20px;
+            padding: 14px 18px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            box-shadow: 0 6px 20px rgba(114,9,183,0.25);
+        }
+        #pwa-install-bar.show { display: flex; }
+        #pwa-install-bar .pwa-info { color: white; }
+        #pwa-install-bar .pwa-info b { display: block; font-size: 0.9rem; }
+        #pwa-install-bar .pwa-info span { font-size: 0.72rem; opacity: 0.85; }
+        #pwa-install-bar .pwa-btns { display: flex; gap: 8px; flex-shrink: 0; }
+        #btn-install-now {
+            background: white; color: #7209b7; border: none;
+            padding: 9px 16px; border-radius: 12px; font-weight: 700;
+            font-size: 0.8rem; cursor: pointer; white-space: nowrap;
+        }
+        #btn-install-dismiss {
+            background: rgba(255,255,255,0.2); color: white; border: none;
+            width: 32px; height: 32px; border-radius: 10px; font-size: 1rem; cursor: pointer;
+        }
 
         /* Popuplar */
         .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:2000; align-items:center; justify-content:center; backdrop-filter: blur(8px); }
@@ -99,7 +115,18 @@
 </div>
 
 <div class="main-content">
-    <button id="pwa-install-btn">📲 UYGULAMAYI YÜKLE</button>
+
+    <!-- PWA Yükle Bandı -->
+    <div id="pwa-install-bar">
+        <div class="pwa-info">
+            <b>📲 Uygulamayı Yükle</b>
+            <span>Ana ekrana ekle, çevrimdışı çalış</span>
+        </div>
+        <div class="pwa-btns">
+            <button id="btn-install-now" onclick="triggerInstall()">YÜKLE</button>
+            <button id="btn-install-dismiss" onclick="dismissInstall()">✕</button>
+        </div>
+    </div>
 
     <div id="intro-box" style="display: none;">
         <h4>Kişisel Verileriniz Bizim İçin Önemlidir</h4>
@@ -136,6 +163,7 @@
     <div class="ad-space">REKLAM ALANI</div>
 </div>
 
+<!-- POPUPLAR -->
 <div class="overlay" id="pop-settings">
     <div class="popup">
         <span class="close-btn" onclick="closePopup('pop-settings')">×</span>
@@ -143,6 +171,7 @@
         <button class="sub-menu-btn" onclick="openPopup('pop-izin')">📊 İzin Hesapla <span>➔</span></button>
         <button class="sub-menu-btn" onclick="openPopup('pop-haklar')">📜  Haklar <span>➔</span></button>
         <button class="sub-menu-btn" onclick="openPopup('pop-renk')">🎨 Renk Ayarları <span>➔</span></button>
+        <button class="sub-menu-btn" id="menu-install-btn" onclick="triggerInstall()" style="display:none;">📲 Uygulamayı Yükle <span>➔</span></button>
         <button class="sub-menu-btn" onclick="openPopup('pop-about')">ℹ️ İletişim & Hakkında <span>➔</span></button>
     </div>
 </div>
@@ -203,42 +232,66 @@
 </div>
 
 <script>
-let curYear = 2026, curMonth = new Date().getMonth();
-let currentV = parseInt(localStorage.getItem('vSelection')) || 1;
-
-// --- 3. SERVICE WORKER KAYDI VE YÜKLEME MANTIĞI ---
-let deferredPrompt;
-const installBtn = document.getElementById('pwa-install-btn');
-
+// ── PWA: Service Worker Kaydı ──────────────────────────────────
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').then(reg => {
-            console.log('SW Kayıtlı');
-        }).catch(err => console.log('SW Hatası:', err));
+        navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log('SW kayıtlı:', reg.scope))
+            .catch(err => console.warn('SW hatası:', err));
     });
 }
+
+// ── PWA: Yükleme Prompt Mantığı ───────────────────────────────
+let deferredPrompt = null;
 
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    installBtn.style.display = 'block'; // Kurulabilirse butonu göster
+    // Yükle bandını göster
+    document.getElementById('pwa-install-bar').classList.add('show');
+    // Menüdeki yükle butonunu göster
+    document.getElementById('menu-install-btn').style.display = 'flex';
 });
 
-installBtn.addEventListener('click', async () => {
-    if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') {
-            installBtn.style.display = 'none';
+function triggerInstall() {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(choice => {
+        if (choice.outcome === 'accepted') {
+            dismissInstall();
+            console.log('PWA yüklendi');
         }
         deferredPrompt = null;
-    }
+    });
+}
+
+function dismissInstall() {
+    document.getElementById('pwa-install-bar').classList.remove('show');
+}
+
+// Uygulama zaten yüklüyse bandı gizle
+window.addEventListener('appinstalled', () => {
+    dismissInstall();
+    document.getElementById('menu-install-btn').style.display = 'none';
 });
 
-// --- DİĞER FONKSİYONLARIN AYNI KALIYOR ---
+// ── Uygulama Mantığı ──────────────────────────────────────────
+let curYear = 2026, curMonth = new Date().getMonth();
+let currentV = parseInt(localStorage.getItem('vSelection')) || 1;
+
 const tatiller = {
-    "0-1":"Yılbaşı", "3-23":"23 Nisan", "4-1":"1 Mayıs", "4-19":"19 Mayıs", "6-15":"15 Temmuz", "7-30":"30 Ağustos", "9-29":"29 Ekim",
-    "2026-0-15":"Regaip Kandili", "2026-1-13":"Miraç Kandili", "2026-2-2":"Berat Kandili", "2026-2-14":"Kadir Gecesi", "2026-2-20":"Ramazan Bayramı", "2026-4-27":"Kurban Bayramı", "2026-8-22":"Mevlid Kandili"
+    "0-1":"Yılbaşı", "3-23":"23 Nisan", "4-1":"1 Mayıs", "4-19":"19 Mayıs",
+    "6-15":"15 Temmuz", "7-30":"30 Ağustos", "9-29":"29 Ekim",
+    "2026-0-15":"Regaip Kandili", "2026-1-13":"Miraç Kandili", "2026-2-2":"Berat Kandili",
+    "2026-2-14":"Kadir Gecesi", "2026-2-20":"Ramazan Bayramı", "2026-4-27":"Kurban Bayramı", "2026-8-22":"Mevlid Kandili",
+    "2027-0-4":"Regaip Kandili", "2027-1-2":"Miraç Kandili", "2027-1-22":"Berat Kandili",
+    "2027-2-4":"Kadir Gecesi", "2027-2-10":"Ramazan Bayramı", "2027-4-16":"Kurban Bayramı", "2027-8-12":"Mevlid Kandili",
+    "2028-0-26":"Miraç Kandili", "2028-1-11":"Berat Kandili", "2028-1-23":"Kadir Gecesi",
+    "2028-1-29":"Ramazan Bayramı", "2028-4-4":"Kurban Bayramı", "2028-7-31":"Mevlid Kandili",
+    "2029-0-15":"Miraç Kandili", "2029-0-31":"Berat Kandili", "2029-1-12":"Kadir Gecesi",
+    "2029-1-18":"Ramazan Bayramı", "2029-3-24":"Kurban Bayramı", "2029-7-20":"Mevlid Kandili",
+    "2030-0-5":"Miraç Kandili", "2030-0-21":"Berat Kandili", "2030-1-1":"Kadir Gecesi",
+    "2030-1-7":"Ramazan Bayramı", "2030-3-14":"Kurban Bayramı", "2030-7-9":"Mevlid Kandili"
 };
 
 const defColors = { day: '#f72585', night: '#4cc9f0', off: '#adb5bd' };
@@ -256,82 +309,48 @@ function applyColors() {
 }
 
 function saveColors() {
-    uColors = { day: document.getElementById('in-day').value, night: document.getElementById('in-night').value, off: document.getElementById('in-off').value };
-    localStorage.setItem('uColors', JSON.stringify(uColors)); applyColors(); draw();
+    uColors = {
+        day: document.getElementById('in-day').value,
+        night: document.getElementById('in-night').value,
+        off: document.getElementById('in-off').value
+    };
+    localStorage.setItem('uColors', JSON.stringify(uColors));
+    applyColors(); draw();
 }
 
-function resetColors() { uColors = {...defColors}; localStorage.setItem('uColors', JSON.stringify(uColors)); applyColors(); draw(); }
+function resetColors() {
+    uColors = {...defColors};
+    localStorage.setItem('uColors', JSON.stringify(uColors));
+    applyColors(); draw();
+}
 
 function openPopup(id) { document.getElementById(id).style.display = 'flex'; }
 function closePopup(id) { document.getElementById(id).style.display = 'none'; }
-function closeIntro() { if(document.getElementById('hide-intro').checked) localStorage.setItem('introClosed', 'true'); document.getElementById('intro-box').style.display = 'none'; }
+function closeIntro() {
+    if(document.getElementById('hide-intro').checked) localStorage.setItem('introClosed', 'true');
+    document.getElementById('intro-box').style.display = 'none';
+}
 
 function getV(date) {
     const ref = new Date(2026, 2, 11);
     const diff = Math.floor((date - ref) / 86400000);
     const cycle = (diff % 4 + 4) % 4;
-    return [['off','off','day','night'],['off','day','night','off'],['day','night','off','off'],['night','off','off','day']][cycle];
+    return [
+        ['off','off','day','night'],
+        ['off','day','night','off'],
+        ['day','night','off','off'],
+        ['night','off','off','day']
+    ][cycle];
 }
 
 function setVardiya(v) {
     currentV = v; localStorage.setItem('vSelection', v);
     document.querySelectorAll('.vardiya-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('btn-v'+v).classList.add('active'); draw();
+    document.getElementById('btn-v'+v).classList.add('active');
+    draw();
 }
 
 function draw() {
     const cal = document.getElementById('calendar'); cal.innerHTML = '';
     const first = (new Date(curYear, curMonth, 1).getDay() + 6) % 7;
-    const daysCount = new Date(curYear, curMonth + 1, 0).getDate();
-    const curMonthName = new Date(curYear, curMonth).toLocaleDateString('tr-TR',{month:'long'});
-    document.getElementById('monthTitle').innerText = (curMonthName + " " + curYear).toUpperCase();
-    
-    let stats = {day:0, night:0, off:0};
-    let foundSpecials = [];
-    for(let i=0; i<first; i++) cal.appendChild(document.createElement('div'));
-    for(let i=1; i<=daysCount; i++) {
-        const d = new Date(curYear, curMonth, i);
-        const type = getV(d)[currentV-1];
-        stats[type]++;
-        const div = document.createElement('div');
-        div.className = 'day ' + (type==='day'?'work-day':type==='night'?'work-night':'');
-        if(d.toDateString() === new Date().toDateString()) div.classList.add('today');
-        div.innerText = i; cal.appendChild(div);
-        
-        let holidayKey = curMonth + "-" + i;
-        let holidayYearKey = curYear + "-" + curMonth + "-" + i;
-        let holidayName = tatiller[holidayKey] || tatiller[holidayYearKey];
-        if(holidayName) foundSpecials.push(`<div class="special-day-item"><b>${i} ${curMonthName}:</b> ${holidayName}</div>`);
-    }
-    document.getElementById('c-day').innerText = stats.day;
-    document.getElementById('c-night').innerText = stats.night;
-    document.getElementById('c-off').innerText = stats.off;
-    const sCont = document.getElementById('special-days-content');
-    if(foundSpecials.length > 0) { document.getElementById('special-days-list').style.display='block'; sCont.innerHTML = foundSpecials.join(''); }
-    else { document.getElementById('special-days-list').style.display='none'; }
-}
-
-function changeMonth(n) { curMonth += n; if(curMonth>11){curMonth=0;curYear++} if(curMonth<0){curMonth=11;curYear--} draw(); }
-
-function hesaplaIzin() {
-    const startVal = document.getElementById('izin-start').value;
-    const gun = parseInt(document.getElementById('izin-sure').value);
-    if(!startVal) return alert("Tarih seç!");
-    let curr = new Date(startVal);
-    let count = 0;
-    while(count < gun) {
-        let isSun = curr.getDay() === 0;
-        let isHol = tatiller[curr.getMonth()+'-'+curr.getDate()] || tatiller[curr.getFullYear()+'-'+curr.getMonth()+'-'+curr.getDate()];
-        if(!isSun && !isHol) count++;
-        if(count < gun) curr.setDate(curr.getDate() + 1);
-    }
-    let donus = new Date(curr);
-    do { donus.setDate(donus.getDate() + 1); } 
-    while(donus.getDay() === 0 || tatiller[donus.getMonth()+'-'+donus.getDate()] || tatiller[donus.getFullYear()+'-'+donus.getMonth()+'-'+donus.getDate()]);
-    document.getElementById('izin-sonuc').innerHTML = `Bitiş: ${curr.toLocaleDateString('tr-TR')}<br>İş Başı: ${donus.toLocaleDateString('tr-TR')}`;
-}
-
-setInterval(() => {
-    const n = new Date();
-    document.getElementById('time').innerText = n.toLocaleTimeString('tr-TR',{hour:'2-digit', minute:'2-digit'});
-    document.getElem
+    const daysCount = new Date(curYe
