@@ -1,24 +1,25 @@
 {
-  "name": "Vardiya Takip Sistemi",
-  "short_name": "Vardiya",
+  "name": "Vardiya Master Pro",
+  "short_name": "VardiyaPro",
+  "description": "Vardiya takip ve yönetim uygulaması - KORSAV",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f8f9fc",
+  "background_color": "#f0f2f5",
   "theme_color": "#4895ef",
-  "description": "Profesyonel Vardiya ve İzin Takip Sistemi",
+  "orientation": "portrait",
+  "lang": "tr",
   "icons": [
     {
-      "src": "vardiya.png",
+      "src": "https://api.iconify.design/noto:calendar.svg?width=192&height=192",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     },
     {
-      "src": "vardiya.png",
+      "src": "https://api.iconify.design/noto:calendar.svg?width=512&height=512",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ]
 }
-

@@ -353,4 +353,86 @@ function setVardiya(v) {
 function draw() {
     const cal = document.getElementById('calendar'); cal.innerHTML = '';
     const first = (new Date(curYear, curMonth, 1).getDay() + 6) % 7;
-    const daysCount = new Date(curYe
+    const daysCount = new Date(curYear, curMonth + 1, 0).getDate();
+    const curMonthName = new Date(curYear, curMonth).toLocaleDateString('tr-TR',{month:'long'});
+    document.getElementById('monthTitle').innerText = (curMonthName + " " + curYear).toUpperCase();
+
+    let stats = {day:0, night:0, off:0};
+    let foundSpecials = [];
+    for(let i=0; i<first; i++) cal.appendChild(document.createElement('div'));
+    for(let i=1; i<=daysCount; i++) {
+        const d = new Date(curYear, curMonth, i);
+        const type = getV(d)[currentV-1];
+        stats[type]++;
+        const div = document.createElement('div');
+        div.className = 'day ' + (type==='day'?'work-day':type==='night'?'work-night':'');
+        if(d.toDateString() === new Date().toDateString()) div.classList.add('today');
+        div.innerText = i; cal.appendChild(div);
+
+        let holidayKey = curMonth + "-" + i;
+        let holidayYearKey = curYear + "-" + curMonth + "-" + i;
+        let holidayName = tatiller[holidayKey] || tatiller[holidayYearKey];
+        if(holidayName) foundSpecials.push(`<div class="special-day-item"><b>${i} ${curMonthName}:</b> ${holidayName}</div>`);
+    }
+    document.getElementById('c-day').innerText = stats.day;
+    document.getElementById('c-night').innerText = stats.night;
+    document.getElementById('c-off').innerText = stats.off;
+    const sCont = document.getElementById('special-days-content');
+    if(foundSpecials.length > 0) {
+        document.getElementById('special-days-list').style.display='block';
+        sCont.innerHTML = foundSpecials.join('');
+    } else {
+        document.getElementById('special-days-list').style.display='none';
+    }
+}
+
+function changeMonth(n) {
+    curMonth += n;
+    if(curMonth>11){curMonth=0;curYear++}
+    if(curMonth<0){curMonth=11;curYear--}
+    draw();
+}
+
+function hesaplaIzin() {
+    const startVal = document.getElementById('izin-start').value;
+    const gun = parseInt(document.getElementById('izin-sure').value);
+    if(!startVal) return alert("Tarih seç!");
+    let curr = new Date(startVal);
+    let count = 0;
+    while(count < gun) {
+        let isSun = curr.getDay() === 0;
+        let isHol = tatiller[curr.getMonth()+'-'+curr.getDate()] || tatiller[curr.getFullYear()+'-'+curr.getMonth()+'-'+curr.getDate()];
+        if(!isSun && !isHol) count++;
+        if(count < gun) curr.setDate(curr.getDate() + 1);
+    }
+    let donus = new Date(curr);
+    do {
+        donus.setDate(donus.getDate() + 1);
+    } while(
+        donus.getDay() === 0 ||
+        tatiller[donus.getMonth()+'-'+donus.getDate()] ||
+        tatiller[donus.getFullYear()+'-'+donus.getMonth()+'-'+donus.getDate()]
+    );
+    document.getElementById('izin-sonuc').innerHTML =
+        `Bitiş: ${curr.toLocaleDateString('tr-TR')}<br>İş Başı: ${donus.toLocaleDateString('tr-TR')}`;
+}
+
+setInterval(() => {
+    const n = new Date();
+    document.getElementById('time').innerText = n.toLocaleTimeString('tr-TR',{hour:'2-digit', minute:'2-digit'});
+    document.getElementById('date').innerText = n.toLocaleDateString('tr-TR',{weekday:'long', day:'numeric', month:'long'});
+}, 1000);
+
+window.onload = () => {
+    applyColors();
+    if(!localStorage.getItem('introClosed')) document.getElementById('intro-box').style.display = 'block';
+    setVardiya(currentV);
+    const v = getV(new Date());
+    v.forEach((t, i) => {
+        if(t==='day') document.getElementById('cur-day').innerText = "V"+(i+1);
+        if(t==='night') document.getElementById('cur-night').innerText = "V"+(i+1);
+    });
+};
+</script>
+</body>
+</html>
