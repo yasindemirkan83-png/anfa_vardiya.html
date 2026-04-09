@@ -15,6 +15,7 @@
         *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
         body{ font-family:'Poppins', sans-serif; background: var(--p-bg); color: var(--p-text); display:flex; flex-direction:column; align-items:center; max-width:500px; margin:auto; min-height:100vh; }
 
+        /* Header */
         .header{ background: linear-gradient(135deg, #4cc9f0 0%, #4895ef 100%); padding:20px; border-radius:0 0 30px 30px; width:100%; box-shadow: 0 8px 20px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
         .header-top { display: flex; justify-content: space-between; align-items: center; }
         #time { font-size: 1.8rem; color: white; font-weight: 700; line-height: 1; }
@@ -23,6 +24,10 @@
         
         .main-content{ width:100%; padding: 15px; display:flex; flex-direction:column; gap: 15px; }
         .section{ background: var(--p-card); padding:20px; border-radius:25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+
+        /* PWA Yükle Butonu - ANA EKRAN */
+        #pwa-main-btn { display:none; background: #2b2d42; color: white; padding: 15px; border-radius: 20px; text-align: center; font-weight: 700; border: none; cursor: pointer; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-5px);} 60% {transform: translateY(-3px);} }
 
         .v-row { display: flex; gap: 8px; }
         .vardiya-btn { flex: 1; background: #e9ecef; border: none; border-radius: 12px; padding: 12px 0; font-weight: 700; cursor: pointer; color: #6c757d; }
@@ -34,6 +39,7 @@
         .work-night{ background: var(--p-night) !important; color:white !important; }
         .today { border: 2.5px solid var(--p-text) !important; color: var(--p-text); }
 
+        /* Popups */
         .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:2000; align-items:center; justify-content:center; backdrop-filter: blur(8px); }
         .popup { background: #f8f9fc; width: 92%; max-height: 85%; border-radius: 30px; padding: 25px 20px; text-align: center; overflow-y: auto; position: relative; }
         .close-btn { position: absolute; top: 15px; right: 20px; font-size: 1.8rem; cursor: pointer; color: #adb5bd; }
@@ -44,7 +50,6 @@
         .info-card span { font-size: 0.75rem; color: #555; }
 
         .fancy-text { font-family: 'Caveat', cursive; color: var(--p-accent); }
-        .pwa-btn { background: #2b2d42 !important; color: white !important; display: none; } /* Başta gizli */
     </style>
 </head>
 <body>
@@ -61,6 +66,15 @@
 </div>
 
 <div class="main-content">
+    <div id="intro-box" class="section" style="display: none; border-left: 8px solid var(--p-header);">
+        <h4 style="color:var(--p-header)">Değerli Mesai Arkadaşımız,</h4>
+        <p style="font-size:0.85rem; margin:10px 0; line-height:1.4;">Uygulama hiçbir kişisel veriyi kaydetmez. ANFA personeli için özel geliştirilmiştir.</p>
+        <label style="font-size:0.75rem; color:#888;"><input type="checkbox" id="hide-intro"> Bir daha gösterme</label>
+        <button onclick="closeIntro()" style="width:100%; margin-top:15px; padding:15px; background:var(--p-header); color:white; border:none; border-radius:15px; font-weight:bold;">SİSTEME GİRİŞ YAP</button>
+    </div>
+
+    <button id="pwa-main-btn" onclick="installApp()">📲 UYGULAMAYI TELEFONA YÜKLE</button>
+
     <div class="v-row">
         <button class="vardiya-btn" id="btn-v1" onclick="setVardiya(1)">V1</button>
         <button class="vardiya-btn" id="btn-v2" onclick="setVardiya(2)">V2</button>
@@ -76,93 +90,94 @@
         </div>
         <div class="calendar-grid" id="calendar"></div>
     </div>
-
-    <div id="special-days-list" class="section" style="display:none;">
-        <div style="font-weight:700; color:var(--p-header); margin-bottom:8px; font-size:0.85rem;">✨ Bu Ayki Önemli Günler</div>
-        <div id="special-days-content"></div>
-    </div>
 </div>
 
 <div class="overlay" id="pop-settings">
     <div class="popup">
         <span class="close-btn" onclick="closePopup('pop-settings')">×</span>
-        <h3 style="margin-bottom:20px;">İŞLEMLER</h3>
-        
-        <button id="pwa-install-btn" class="sub-menu-btn pwa-btn" onclick="installApp()">📲 Uygulamayı Telefona Yükle <span>➔</span></button>
-        
+        <h3 style="margin-bottom:20px;">MENÜ</h3>
         <button class="sub-menu-btn" onclick="openPopup('pop-izin')">📊 İzin Hesapla <span>➔</span></button>
         <button class="sub-menu-btn" onclick="openPopup('pop-haklar')">📜 KORSAV Hakları <span>➔</span></button>
         <button class="sub-menu-btn" onclick="openPopup('pop-renk')">🎨 Renk Ayarları <span>➔</span></button>
-        <button class="sub-menu-btn" onclick="openPopup('pop-about')">ℹ️ İletişim & Hakkında <span>➔</span></button>
+        <button class="sub-menu-btn" onclick="openPopup('pop-about')">ℹ️ Hakkında <span>➔</span></button>
     </div>
 </div>
 
-<div class="overlay" id="pop-haklar">
+<div class="overlay" id="pop-izin">
     <div class="popup">
-        <span class="close-btn" onclick="closePopup('pop-haklar')">×</span>
-        <h3 style="margin-bottom:15px;">KORSAV TİS HAKLARI</h3>
-        <div style="text-align:left;">
-            <div class="info-card"><b>💍 Evlilik İzni</b><span>10 Gün ücretli.</span></div>
-            <div class="info-card"><b>👶 Doğum İzni</b><span>Eşi doğum yapan babaya 7 gün ücretli.</span></div>
-            <div class="info-card"><b>🏥 Vefat İzni</b><span>Eş, çocuk, anne-baba: 7 gün / Kardeş: 5 gün.</span></div>
-            <div class="info-card"><b>🏠 Taşınma İzni</b><span>Yılda 1 kez 3 gün ücretli.</span></div>
-            <div class="info-card"><b>📅 Yıllık İzin</b><span>1-5 yıl: 14 / 5-15 yıl: 20 / 15+ yıl: 26 iş günü.</span></div>
-        </div>
-    </div>
-</div>
-
-<div class="overlay" id="pop-renk">
-    <div class="popup">
-        <span class="close-btn" onclick="closePopup('pop-renk')">×</span>
-        <h3>RENK AYARLARI</h3>
-        <div style="display:flex; flex-direction:column; gap:10px; margin-top:20px; text-align:left;">
-            <div style="display:flex; justify-content:space-between; align-items:center; background:white; padding:10px; border-radius:12px;"><span>Gündüz Vardiyası</span> <input type="color" id="in-day" onchange="saveColors()"></div>
-            <div style="display:flex; justify-content:space-between; align-items:center; background:white; padding:10px; border-radius:12px;"><span>Gece Vardiyası</span> <input type="color" id="in-night" onchange="saveColors()"></div>
-            <div style="display:flex; justify-content:space-between; align-items:center; background:white; padding:10px; border-radius:12px;"><span>İzinli Günler</span> <input type="color" id="in-off" onchange="saveColors()"></div>
-            <button onclick="resetColors()" style="color:var(--p-header); background:none; border:none; text-decoration:underline; font-weight:bold; margin-top:10px;">Varsayılana Dön</button>
-        </div>
-    </div>
-</div>
-
-<div class="overlay" id="pop-about">
-    <div class="popup">
-        <span class="close-btn" onclick="closePopup('pop-about')">×</span>
-        <div class="fancy-text" style="font-size:1.4rem;">Geliştiren</div>
-        <div class="fancy-text" style="font-size:2.4rem; color:var(--p-text)">Yasin Demirgan</div>
-        <p style="font-size:0.75rem; color:#888;">ANFA Güvenlik & KORSAV Uyumlu<br>Yasin Demirgan Tarafından Geliştirilmiştir.</p>
-        <div style="display:flex; justify-content:center; gap:15px; margin-top: 20px;">
-            <a href="tel:05375120777" style="background:#4895ef; padding:10px; border-radius:50%; color:white; text-decoration:none;">📞</a>
-            <a href="https://wa.me/905375120777" style="background:#25D366; padding:10px; border-radius:50%; color:white; text-decoration:none;">💬</a>
-            <a href="mailto:yasindemirkan83@gmail.com" style="background:#ea4335; padding:10px; border-radius:50%; color:white; text-decoration:none;">✉️</a>
-        </div>
+        <span class="close-btn" onclick="closePopup('pop-izin')">×</span>
+        <h3>İzin Hesaplayıcı</h3>
+        <p style="font-size:0.75rem; color:#666; margin:10px 0;">Pazar ve Resmi Tatiller dahil edilmez.</p>
+        <input type="date" id="izin-start" style="width:100%; padding:15px; border-radius:15px; border:1px solid #ddd; margin-bottom:10px;">
+        <input type="number" id="izin-sure" placeholder="Gün Sayısı" value="14" style="width:100%; padding:15px; border-radius:15px; border:1px solid #ddd; margin-bottom:15px;">
+        <button onclick="hesaplaIzin()" style="width:100%; padding:18px; background:var(--p-header); color:white; border:none; border-radius:15px; font-weight:bold;">HESAPLA</button>
+        <div id="izin-sonuc" style="margin-top:20px; padding:15px; background:white; border-radius:15px; display:none; border:1px solid #eee; text-align:left;"></div>
     </div>
 </div>
 
 <script>
-// PWA Yükleme Mantığı
 let deferredPrompt;
-const installBtn = document.getElementById('pwa-install-btn');
+const pwaBtn = document.getElementById('pwa-main-btn');
 
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    installBtn.style.display = 'flex'; // Tarayıcı destekliyorsa butonu göster
+    // Eğer intro kapalıysa butonu hemen göster
+    if(localStorage.getItem('introClosed')) pwaBtn.style.display = 'block';
 });
 
 async function installApp() {
     if (!deferredPrompt) return;
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') {
-        installBtn.style.display = 'none';
-    }
+    if (outcome === 'accepted') pwaBtn.style.display = 'none';
     deferredPrompt = null;
 }
 
-// Takvim ve Vardiya Mantığı
-let curYear = 2026, curMonth = new Date().getMonth();
-let currentV = parseInt(localStorage.getItem('vSelection')) || 1;
+function closeIntro() {
+    if(document.getElementById('hide-intro').checked) localStorage.setItem('introClosed', 'true');
+    document.getElementById('intro-box').style.display = 'none';
+    if(deferredPrompt) pwaBtn.style.display = 'block';
+}
 
+// İzin Hesaplama (KESİN ÇÖZÜM)
+function hesaplaIzin() {
+    const startVal = document.getElementById('izin-start').value;
+    const gun = parseInt(document.getElementById('izin-sure').value);
+    if(!startVal || isNaN(gun)) return alert("Tarih ve gün gir!");
+
+    let curr = new Date(startVal);
+    let count = 0;
+    
+    // İzin günlerini say (Pazar ve Tatilleri atla)
+    while(count < gun) {
+        let isSun = curr.getDay() === 0;
+        let hKey = curr.getMonth() + "-" + curr.getDate();
+        let hYearKey = curr.getFullYear() + "-" + curr.getMonth() + "-" + curr.getDate();
+        let isHol = tatiller[hKey] || tatiller[hYearKey];
+
+        if(!isSun && !isHol) {
+            count++;
+        }
+        if(count < gun) curr.setDate(curr.getDate() + 1);
+    }
+
+    // Dönüş tarihi (Bitişten sonraki ilk iş günü)
+    let donus = new Date(curr);
+    donus.setDate(donus.getDate() + 1);
+    while(donus.getDay() === 0 || tatiller[donus.getMonth() + "-" + donus.getDate()] || tatiller[donus.getFullYear() + "-" + donus.getMonth() + "-" + donus.getDate()]) {
+        donus.setDate(donus.getDate() + 1);
+    }
+
+    const res = document.getElementById('izin-sonuc');
+    res.style.display = 'block';
+    res.innerHTML = `
+        <b style="color:var(--p-day)">İzin Bitiş:</b> ${curr.toLocaleDateString('tr-TR', {weekday:'long', day:'numeric', month:'long'})}<br>
+        <b style="color:var(--p-header)">İş Başı:</b> ${donus.toLocaleDateString('tr-TR', {weekday:'long', day:'numeric', month:'long'})}
+    `;
+}
+
+// Takvim Verileri (2026-2030)
 const tatiller = {
     "0-1":"Yılbaşı", "3-23":"23 Nisan", "4-1":"1 Mayıs", "4-19":"19 Mayıs", "6-15":"15 Temmuz", "7-30":"30 Ağustos", "9-29":"29 Ekim",
     "2026-2-20":"Ramazan Bayramı", "2026-4-27":"Kurban Bayramı", "2027-2-10":"Ramazan Bayramı", "2027-4-16":"Kurban Bayramı",
@@ -170,29 +185,9 @@ const tatiller = {
     "2030-1-7":"Ramazan Bayramı", "2030-3-14":"Kurban Bayramı"
 };
 
-const defColors = { day: '#f72585', night: '#4cc9f0', off: '#adb5bd' };
-let uColors = JSON.parse(localStorage.getItem('uColors')) || {...defColors};
-
-function applyColors() {
-    document.documentElement.style.setProperty('--p-day', uColors.day);
-    document.documentElement.style.setProperty('--p-night', uColors.night);
-    document.documentElement.style.setProperty('--p-off', uColors.off);
-    if(document.getElementById('in-day')){
-        document.getElementById('in-day').value = uColors.day;
-        document.getElementById('in-night').value = uColors.night;
-        document.getElementById('in-off').value = uColors.off;
-    }
-}
-
-function saveColors() {
-    uColors = { day: document.getElementById('in-day').value, night: document.getElementById('in-night').value, off: document.getElementById('in-off').value };
-    localStorage.setItem('uColors', JSON.stringify(uColors)); applyColors(); draw();
-}
-
-function resetColors() { uColors = {...defColors}; localStorage.setItem('uColors', JSON.stringify(uColors)); applyColors(); draw(); }
-
-function openPopup(id) { document.getElementById(id).style.display = 'flex'; }
-function closePopup(id) { document.getElementById(id).style.display = 'none'; }
+// Takvim ve Vardiya Çizim Kodları...
+let curYear = 2026, curMonth = new Date().getMonth();
+let currentV = parseInt(localStorage.getItem('vSelection')) || 1;
 
 function getV(date) {
     const ref = new Date(2026, 2, 11);
@@ -212,8 +207,6 @@ function draw() {
     const first = (new Date(curYear, curMonth, 1).getDay() + 6) % 7;
     const daysCount = new Date(curYear, curMonth + 1, 0).getDate();
     document.getElementById('monthTitle').innerText = new Date(curYear, curMonth).toLocaleDateString('tr-TR',{month:'long', year:'numeric'}).toUpperCase();
-    
-    let specials = [];
     for(let i=0; i<first; i++) cal.appendChild(document.createElement('div'));
     for(let i=1; i<=daysCount; i++) {
         const d = new Date(curYear, curMonth, i);
@@ -222,17 +215,12 @@ function draw() {
         div.className = 'day ' + (type==='day'?'work-day':type==='night'?'work-night':'');
         if(d.toDateString() === new Date().toDateString()) div.classList.add('today');
         div.innerText = i; cal.appendChild(div);
-        
-        let hKey = curMonth + "-" + i;
-        let hYearKey = curYear + "-" + curMonth + "-" + i;
-        if(tatiller[hKey] || tatiller[hYearKey]) specials.push(`<b>${i} ${new Date(curYear, curMonth).toLocaleDateString('tr-TR',{month:'long'})}:</b> ${tatiller[hKey] || tatiller[hYearKey]}`);
     }
-    const sList = document.getElementById('special-days-list');
-    if(specials.length > 0) { sList.style.display = 'block'; document.getElementById('special-days-content').innerHTML = specials.map(s => `<div style="font-size:0.75rem; padding:4px 0;">${s}</div>`).join(''); }
-    else { sList.style.display = 'none'; }
 }
 
 function changeMonth(n) { curMonth += n; if(curMonth>11){curMonth=0;curYear++} if(curMonth<0){curMonth=11;curYear--} draw(); }
+function openPopup(id) { document.getElementById(id).style.display = 'flex'; }
+function closePopup(id) { document.getElementById(id).style.display = 'none'; }
 
 setInterval(() => {
     const n = new Date();
@@ -241,7 +229,11 @@ setInterval(() => {
 }, 1000);
 
 window.onload = () => {
-    applyColors();
+    if(!localStorage.getItem('introClosed')) {
+        document.getElementById('intro-box').style.display = 'block';
+    } else if(deferredPrompt) {
+        pwaBtn.style.display = 'block';
+    }
     setVardiya(currentV);
 };
 </script>
