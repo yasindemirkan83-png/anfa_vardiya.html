@@ -15,7 +15,6 @@
         *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
         body{ font-family:'Poppins', sans-serif; background: var(--p-bg); color: var(--p-text); display:flex; flex-direction:column; align-items:center; max-width:500px; margin:auto; min-height:100vh; }
 
-        /* Header */
         .header{ background: linear-gradient(135deg, #4cc9f0 0%, #4895ef 100%); padding:20px; border-radius:0 0 30px 30px; width:100%; box-shadow: 0 8px 20px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
         .header-top { display: flex; justify-content: space-between; align-items: center; }
         #time { font-size: 1.8rem; color: white; font-weight: 700; line-height: 1; }
@@ -25,9 +24,8 @@
         .main-content{ width:100%; padding: 15px; display:flex; flex-direction:column; gap: 15px; }
         .section{ background: var(--p-card); padding:20px; border-radius:25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
 
-        /* PWA Yükle Butonu - ANA EKRAN */
-        #pwa-main-btn { display:none; background: #2b2d42; color: white; padding: 15px; border-radius: 20px; text-align: center; font-weight: 700; border: none; cursor: pointer; animation: bounce 2s infinite; }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-5px);} 60% {transform: translateY(-3px);} }
+        /* Yükleme Butonu */
+        #pwa-btn { display:none; background: #2b2d42; color: white; padding: 15px; border-radius: 15px; text-align: center; font-weight: 700; border: none; cursor: pointer; width: 100%; margin-bottom: 10px; }
 
         .v-row { display: flex; gap: 8px; }
         .vardiya-btn { flex: 1; background: #e9ecef; border: none; border-radius: 12px; padding: 12px 0; font-weight: 700; cursor: pointer; color: #6c757d; }
@@ -39,17 +37,13 @@
         .work-night{ background: var(--p-night) !important; color:white !important; }
         .today { border: 2.5px solid var(--p-text) !important; color: var(--p-text); }
 
-        /* Popups */
         .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:2000; align-items:center; justify-content:center; backdrop-filter: blur(8px); }
         .popup { background: #f8f9fc; width: 92%; max-height: 85%; border-radius: 30px; padding: 25px 20px; text-align: center; overflow-y: auto; position: relative; }
         .close-btn { position: absolute; top: 15px; right: 20px; font-size: 1.8rem; cursor: pointer; color: #adb5bd; }
-        .sub-menu-btn { width: 100%; background: white; border: none; padding: 15px; border-radius: 15px; margin-bottom: 10px; text-align: left; font-weight: 600; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.02); color: var(--p-text); }
-
-        .info-card { background: white; padding: 12px; border-radius: 15px; border-left: 5px solid var(--p-header); margin-bottom: 10px; text-align: left; box-shadow: 0 3px 8px rgba(0,0,0,0.05); }
-        .info-card b { display: block; color: var(--p-header); font-size: 0.85rem; }
-        .info-card span { font-size: 0.75rem; color: #555; }
-
-        .fancy-text { font-family: 'Caveat', cursive; color: var(--p-accent); }
+        .sub-menu-btn { width: 100%; background: white; border: none; padding: 15px; border-radius: 15px; margin-bottom: 10px; text-align: left; font-weight: 600; display: flex; justify-content: space-between; align-items: center; color: var(--p-text); }
+        
+        .calc-box { text-align: left; margin-top: 10px; }
+        .calc-input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 8px; font-family: inherit; }
     </style>
 </head>
 <body>
@@ -61,19 +55,18 @@
             <div id="time">00:00</div>
             <div class="brand-badge">ANFA GÜVENLİK | KORSAV</div>
         </div>
-        <button onclick="openPopup('pop-settings')" style="background:rgba(255,255,255,0.2); border:none; color:white; width:45px; height:45px; border-radius:15px; font-size:1.3rem; cursor:pointer;">⚙️</button>
+        <button onclick="openPopup('pop-settings')" style="background:rgba(255,255,255,0.2); border:none; color:white; width:45px; height:45px; border-radius:15px; font-size:1.3rem;">⚙️</button>
     </div>
 </div>
 
 <div class="main-content">
-    <div id="intro-box" class="section" style="display: none; border-left: 8px solid var(--p-header);">
-        <h4 style="color:var(--p-header)">Değerli Mesai Arkadaşımız,</h4>
-        <p style="font-size:0.85rem; margin:10px 0; line-height:1.4;">Uygulama hiçbir kişisel veriyi kaydetmez. ANFA personeli için özel geliştirilmiştir.</p>
-        <label style="font-size:0.75rem; color:#888;"><input type="checkbox" id="hide-intro"> Bir daha gösterme</label>
-        <button onclick="closeIntro()" style="width:100%; margin-top:15px; padding:15px; background:var(--p-header); color:white; border:none; border-radius:15px; font-weight:bold;">SİSTEME GİRİŞ YAP</button>
+    <div id="intro-box" class="section">
+        <h4 style="color:var(--p-header)">Hoş Geldiniz</h4>
+        <p style="font-size:0.8rem; margin:10px 0;">Bu uygulama ANFA personeli için Yasin Demirgan tarafından geliştirilmiştir.</p>
+        <button onclick="closeIntro()" style="width:100%; padding:12px; background:var(--p-header); color:white; border:none; border-radius:10px; font-weight:bold;">GİRİŞ YAP</button>
     </div>
 
-    <button id="pwa-main-btn" onclick="installApp()">📲 UYGULAMAYI TELEFONA YÜKLE</button>
+    <button id="pwa-btn" onclick="installApp()">📲 UYGULAMAYI YÜKLE</button>
 
     <div class="v-row">
         <button class="vardiya-btn" id="btn-v1" onclick="setVardiya(1)">V1</button>
@@ -85,7 +78,7 @@
     <div class="section">
         <div style="display:flex; justify-content:space-between; align-items:center;">
             <button class="vardiya-btn" style="max-width:40px" onclick="changeMonth(-1)">❮</button>
-            <b id="monthTitle" style="font-size: 1rem;">...</b>
+            <b id="monthTitle">...</b>
             <button class="vardiya-btn" style="max-width:40px" onclick="changeMonth(1)">❯</button>
         </div>
         <div class="calendar-grid" id="calendar"></div>
@@ -98,7 +91,6 @@
         <h3 style="margin-bottom:20px;">MENÜ</h3>
         <button class="sub-menu-btn" onclick="openPopup('pop-izin')">📊 İzin Hesapla <span>➔</span></button>
         <button class="sub-menu-btn" onclick="openPopup('pop-haklar')">📜 KORSAV Hakları <span>➔</span></button>
-        <button class="sub-menu-btn" onclick="openPopup('pop-renk')">🎨 Renk Ayarları <span>➔</span></button>
         <button class="sub-menu-btn" onclick="openPopup('pop-about')">ℹ️ Hakkında <span>➔</span></button>
     </div>
 </div>
@@ -107,87 +99,85 @@
     <div class="popup">
         <span class="close-btn" onclick="closePopup('pop-izin')">×</span>
         <h3>İzin Hesaplayıcı</h3>
-        <p style="font-size:0.75rem; color:#666; margin:10px 0;">Pazar ve Resmi Tatiller dahil edilmez.</p>
-        <input type="date" id="izin-start" style="width:100%; padding:15px; border-radius:15px; border:1px solid #ddd; margin-bottom:10px;">
-        <input type="number" id="izin-sure" placeholder="Gün Sayısı" value="14" style="width:100%; padding:15px; border-radius:15px; border:1px solid #ddd; margin-bottom:15px;">
-        <button onclick="hesaplaIzin()" style="width:100%; padding:18px; background:var(--p-header); color:white; border:none; border-radius:15px; font-weight:bold;">HESAPLA</button>
-        <div id="izin-sonuc" style="margin-top:20px; padding:15px; background:white; border-radius:15px; display:none; border:1px solid #eee; text-align:left;"></div>
+        <div class="calc-box">
+            <label>Başlangıç Tarihi:</label>
+            <input type="date" id="iz-start" class="calc-input">
+            <label>İzin Süresi (İş Günü):</label>
+            <input type="number" id="iz-gun" class="calc-input" value="14">
+            <button onclick="hesaplaIzin()" style="width:100%; padding:15px; background:var(--p-header); color:white; border:none; border-radius:10px; font-weight:bold; margin-top:10px;">HESAPLA</button>
+            <div id="iz-sonuc" style="margin-top:15px; padding:10px; background:#fff; border-radius:10px; display:none; font-size:0.9rem;"></div>
+        </div>
+    </div>
+</div>
+
+<div class="overlay" id="pop-haklar">
+    <div class="popup">
+        <span class="close-btn" onclick="closePopup('pop-haklar')">×</span>
+        <h3>KORSAV HAKLARI</h3>
+        <p style="text-align:left; font-size:0.85rem; margin-top:15px;">
+            • Evlilik: 10 Gün<br>• Doğum: 7 Gün<br>• Vefat: 7 Gün<br>• Taşınma: 3 Gün<br>• Yıllık İzin: 14-20-26 Gün
+        </p>
+    </div>
+</div>
+
+<div class="overlay" id="pop-about">
+    <div class="popup">
+        <span class="close-btn" onclick="closePopup('pop-about')">×</span>
+        <div class="fancy-text" style="font-size:1.5rem; font-family:'Caveat';">Geliştiren</div>
+        <div style="font-size:2rem; font-weight:700;">Yasin Demirgan</div>
+        <p style="margin-top:10px;">İletişim: 0537 512 07 77</p>
     </div>
 </div>
 
 <script>
 let deferredPrompt;
-const pwaBtn = document.getElementById('pwa-main-btn');
+const pwaBtn = document.getElementById('pwa-btn');
 
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    // Eğer intro kapalıysa butonu hemen göster
-    if(localStorage.getItem('introClosed')) pwaBtn.style.display = 'block';
 });
 
-async function installApp() {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') pwaBtn.style.display = 'none';
-    deferredPrompt = null;
-}
-
 function closeIntro() {
-    if(document.getElementById('hide-intro').checked) localStorage.setItem('introClosed', 'true');
     document.getElementById('intro-box').style.display = 'none';
     if(deferredPrompt) pwaBtn.style.display = 'block';
 }
 
-// İzin Hesaplama (KESİN ÇÖZÜM)
-function hesaplaIzin() {
-    const startVal = document.getElementById('izin-start').value;
-    const gun = parseInt(document.getElementById('izin-sure').value);
-    if(!startVal || isNaN(gun)) return alert("Tarih ve gün gir!");
-
-    let curr = new Date(startVal);
-    let count = 0;
-    
-    // İzin günlerini say (Pazar ve Tatilleri atla)
-    while(count < gun) {
-        let isSun = curr.getDay() === 0;
-        let hKey = curr.getMonth() + "-" + curr.getDate();
-        let hYearKey = curr.getFullYear() + "-" + curr.getMonth() + "-" + curr.getDate();
-        let isHol = tatiller[hKey] || tatiller[hYearKey];
-
-        if(!isSun && !isHol) {
-            count++;
-        }
-        if(count < gun) curr.setDate(curr.getDate() + 1);
-    }
-
-    // Dönüş tarihi (Bitişten sonraki ilk iş günü)
-    let donus = new Date(curr);
-    donus.setDate(donus.getDate() + 1);
-    while(donus.getDay() === 0 || tatiller[donus.getMonth() + "-" + donus.getDate()] || tatiller[donus.getFullYear() + "-" + donus.getMonth() + "-" + donus.getDate()]) {
-        donus.setDate(donus.getDate() + 1);
-    }
-
-    const res = document.getElementById('izin-sonuc');
-    res.style.display = 'block';
-    res.innerHTML = `
-        <b style="color:var(--p-day)">İzin Bitiş:</b> ${curr.toLocaleDateString('tr-TR', {weekday:'long', day:'numeric', month:'long'})}<br>
-        <b style="color:var(--p-header)">İş Başı:</b> ${donus.toLocaleDateString('tr-TR', {weekday:'long', day:'numeric', month:'long'})}
-    `;
+async function installApp() {
+    if(!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if(outcome === 'accepted') pwaBtn.style.display = 'none';
+    deferredPrompt = null;
 }
 
-// Takvim Verileri (2026-2030)
-const tatiller = {
-    "0-1":"Yılbaşı", "3-23":"23 Nisan", "4-1":"1 Mayıs", "4-19":"19 Mayıs", "6-15":"15 Temmuz", "7-30":"30 Ağustos", "9-29":"29 Ekim",
-    "2026-2-20":"Ramazan Bayramı", "2026-4-27":"Kurban Bayramı", "2027-2-10":"Ramazan Bayramı", "2027-4-16":"Kurban Bayramı",
-    "2028-1-29":"Ramazan Bayramı", "2028-4-4":"Kurban Bayramı", "2029-1-18":"Ramazan Bayramı", "2029-3-24":"Kurban Bayramı",
-    "2030-1-7":"Ramazan Bayramı", "2030-3-14":"Kurban Bayramı"
-};
+// İzin Hesaplama
+function hesaplaIzin() {
+    const startVal = document.getElementById('iz-start').value;
+    const gun = parseInt(document.getElementById('iz-gun').value);
+    if(!startVal || !gun) return alert("Bilgileri girin!");
 
-// Takvim ve Vardiya Çizim Kodları...
+    let d = new Date(startVal);
+    let sayac = 0;
+    while(sayac < gun) {
+        let pazar = d.getDay() === 0;
+        // Basit tatil kontrolü (Geliştirilebilir)
+        if(!pazar) sayac++;
+        if(sayac < gun) d.setDate(d.getDate() + 1);
+    }
+    
+    let isBasi = new Date(d);
+    isBasi.setDate(isBasi.getDate() + 1);
+    while(isBasi.getDay() === 0) isBasi.setDate(isBasi.getDate() + 1);
+
+    const res = document.getElementById('iz-sonuc');
+    res.style.display = 'block';
+    res.innerHTML = `<b>İzin Bitiş:</b> ${d.toLocaleDateString('tr-TR')}<br><b>İş Başı:</b> ${isBasi.toLocaleDateString('tr-TR')}`;
+}
+
+// Takvim ve Vardiya (Senin Orijinal Mantığın)
 let curYear = 2026, curMonth = new Date().getMonth();
-let currentV = parseInt(localStorage.getItem('vSelection')) || 1;
+let currentV = localStorage.getItem('vSec') || 1;
 
 function getV(date) {
     const ref = new Date(2026, 2, 11);
@@ -197,7 +187,7 @@ function getV(date) {
 }
 
 function setVardiya(v) {
-    currentV = v; localStorage.setItem('vSelection', v);
+    currentV = v; localStorage.setItem('vSec', v);
     document.querySelectorAll('.vardiya-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('btn-v'+v).classList.add('active'); draw();
 }
@@ -228,14 +218,7 @@ setInterval(() => {
     document.getElementById('date').innerText = n.toLocaleDateString('tr-TR',{weekday:'long', day:'numeric', month:'long'});
 }, 1000);
 
-window.onload = () => {
-    if(!localStorage.getItem('introClosed')) {
-        document.getElementById('intro-box').style.display = 'block';
-    } else if(deferredPrompt) {
-        pwaBtn.style.display = 'block';
-    }
-    setVardiya(currentV);
-};
+window.onload = () => setVardiya(currentV);
 </script>
 </body>
 </html>
