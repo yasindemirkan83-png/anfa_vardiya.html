@@ -3,160 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vardiya Takip Sistemi Pro</title>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4895ef">
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>Vardiya Master Pro | KORSAV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root{
-            --p-bg: #f8f9fc; --p-header: #4895ef; --p-accent: #7209b7;
-            --p-day: #f72585; --p-night: #4cc9f0; --p-off: #e0e1dd;
-            --p-text: #2b2d42;
+            --p-bg: #f0f2f5; --p-header: #4895ef; --p-accent: #7209b7;
+            --p-day: #f72585; --p-night: #4cc9f0; --p-off: #adb5bd;
+            --p-text: #2b2d42; --p-card: #ffffff;
         }
-        *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
-        body{ margin:0; font-family:'Poppins', sans-serif; background: var(--p-bg); color: var(--p-text); display:flex; flex-direction:column; align-items:center; max-width:500px; margin:auto; min-height:100vh; overflow-x: hidden; }
+        *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+        body{ font-family:'Poppins', sans-serif; background: var(--p-bg); color: var(--p-text); display:flex; flex-direction:column; align-items:center; max-width:500px; margin:auto; min-height:100vh; }
 
-        /* Header */
-        .header{ background: linear-gradient(135deg, #4cc9f0, #4895ef); padding:15px; border-radius:0 0 25px 25px; width:100%; box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        /* Header Tasarımı */
+        .header{ background: linear-gradient(135deg, #4cc9f0 0%, #4895ef 100%); padding:20px; border-radius:0 0 30px 30px; width:100%; box-shadow: 0 8px 20px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
         .header-top { display: flex; justify-content: space-between; align-items: center; }
         #time { font-size: 1.8rem; color: white; font-weight: 700; }
-        #date { font-size: 0.75rem; color: white; opacity: 0.9; }
-        .current-status-bar { display: flex; justify-content: space-around; background: rgba(255, 255, 255, 0.2); margin-top: 10px; padding: 8px; border-radius: 12px; color: white; font-size: 0.8rem; font-weight: 600; }
-        .status-item span { background: white; color: var(--p-header); padding: 2px 8px; border-radius: 6px; margin-left: 5px; }
+        #date { font-size: 0.8rem; color: white; opacity: 0.9; }
+        .current-status-bar { display: flex; justify-content: space-around; background: rgba(255, 255, 255, 0.2); margin-top: 15px; padding: 10px; border-radius: 15px; color: white; font-size: 0.8rem; font-weight: 600; }
 
-        /* Sections */
-        .main-content{ flex:1; width:100%; padding: 10px 0; display:flex; flex-direction:column; align-items:center; }
-        .section{ background: white; padding:15px; border-radius:20px; margin-bottom:12px; width:92%; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
+        /* Ana İçerik */
+        .main-content{ width:100%; padding: 15px; display:flex; flex-direction:column; gap: 15px; }
+        .section{ background: var(--p-card); padding:20px; border-radius:25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
 
-        /* Buttons & Calendar */
-        .vardiya-btn { flex: 1; background: #f1f3f5; border: none; border-radius: 12px; padding: 12px 0; font-weight: 600; cursor: pointer; color: #adb5bd; transition: 0.3s; }
-        .vardiya-btn.active { background: var(--p-header); color: white; box-shadow: 0 4px 10px rgba(72, 149, 239, 0.3); }
-        .calendar-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:5px; margin-top:10px; }
-        .day{ border-radius:10px; padding:12px 0; font-size:.85rem; text-align:center; font-weight: 600; background: #f8f9fa; color: #adb5bd; }
+        /* Vardiya Butonları */
+        .v-row { display: flex; gap: 8px; }
+        .vardiya-btn { flex: 1; background: #e9ecef; border: none; border-radius: 12px; padding: 12px 0; font-weight: 700; cursor: pointer; color: #6c757d; transition: 0.3s; }
+        .vardiya-btn.active { background: var(--p-header); color: white; box-shadow: 0 4px 12px rgba(72,149,239,0.3); }
+
+        /* Takvim */
+        .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .cal-btn { border: none; background: #f0f2f5; width: 35px; height: 35px; border-radius: 10px; cursor: pointer; color: var(--p-header); font-weight: bold; }
+        .calendar-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:5px; }
+        .day{ border-radius:8px; padding:10px 0; font-size:.8rem; text-align:center; font-weight: 600; background: #f8f9fa; color: #adb5bd; }
         .work-day{ background: var(--p-day) !important; color:white !important; }
         .work-night{ background: var(--p-night) !important; color:white !important; }
-        .today { border: 2px solid var(--p-text) !important; color: var(--p-text); font-weight: 800; }
+        .today { border: 2px solid var(--p-text) !important; color: var(--p-text); }
 
-        /* Popups */
-        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:2000; align-items:center; justify-content:center; backdrop-filter: blur(5px); }
-        .popup { background: white; width: 92%; max-height: 85%; border-radius: 30px; padding: 25px; text-align: center; overflow-y: auto; position: relative; }
-        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; color: #ccc; }
-        .sub-menu-btn { width: 100%; background: #f8f9fc; border: 1px solid #eee; padding: 15px; border-radius: 15px; margin-bottom: 10px; text-align: left; font-weight: 600; color: var(--p-header); display: flex; justify-content: space-between; }
+        /* Önemli Günler Listesi */
+        #special-days-list { margin-top: 15px; padding-top: 10px; border-top: 1px solid #eee; }
+        .special-day-item { background: #fff9f9; padding: 6px 10px; border-radius: 8px; margin-bottom: 5px; border-left: 3px solid var(--p-day); font-size: 0.75rem; color: #333; }
 
-        /* Accordion */
-        .acc-btn { width:100%; background:#f1f3f5; border:none; padding:12px; border-radius:10px; margin-top:8px; font-weight:600; color:var(--p-text); text-align:left; cursor:pointer; display:flex; justify-content:space-between; align-items: center; }
-        .acc-content { display:none; padding:12px; text-align:left; font-size:0.85rem; line-height:1.8; border-radius:0 0 10px 10px; background:#fff5f5; color:#d00000; border-top:1px solid #fceaea; }
+        /* Karşılama Kutusu */
+        #intro-box { background: white; padding: 20px; border-radius: 20px; border-left: 6px solid var(--p-header); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        #intro-box h4 { color: var(--p-header); font-size: 1rem; margin-bottom: 8px; }
+        #intro-box p { font-size: 0.8rem; line-height: 1.4; margin-bottom: 10px; color: #444; }
 
-        /* Intro & Others */
-        #intro-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:white; z-index:10000; display:none; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:30px; }
-        .intro-dot { width:8px; height:8px; background:#ddd; border-radius:50%; transition: 0.3s; }
-        .intro-dot.active { width:24px; background:var(--p-header); border-radius:10px; }
-        .handwritten { font-family: 'Caveat', cursive; font-size: 1.5rem; color: #444; line-height: 1.3; }
-        .color-row { display: flex; align-items: center; justify-content: space-between; padding: 10px; background: #f8f9fc; border-radius: 15px; margin-bottom: 8px; border:1px solid #eee; }
-        .ads-box { width: 92%; margin: 10px 0; background: #ebf2fa; border: 1px dashed #4895ef; border-radius: 15px; display: flex; align-items: center; justify-content: center; min-height: 80px; color: #4895ef; font-size: 0.7rem; }
+        /* Popuplar */
+        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:2000; align-items:center; justify-content:center; backdrop-filter: blur(8px); }
+        .popup { background: #f8f9fc; width: 92%; max-height: 85%; border-radius: 30px; padding: 25px 20px; text-align: center; overflow-y: auto; position: relative; }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 1.8rem; cursor: pointer; color: #adb5bd; }
+        .sub-menu-btn { width: 100%; background: white; border: none; padding: 15px; border-radius: 15px; margin-bottom: 10px; text-align: left; font-weight: 600; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.02); color: var(--p-text); }
 
-        #install-banner { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; background: #2b2d42; color: white; padding: 15px; border-radius: 18px; display: none; justify-content: space-between; align-items: center; z-index: 9999; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        #install-btn { background: var(--p-day); border: none; color: white; padding: 10px 20px; border-radius: 12px; font-weight: 700; }
+        /* Kartlar */
+        .info-card { background: white; padding: 12px; border-radius: 15px; border-left: 5px solid var(--p-header); margin-bottom: 10px; text-align: left; box-shadow: 0 3px 8px rgba(0,0,0,0.05); }
+        .info-card b { display: block; color: var(--p-header); font-size: 0.85rem; margin-bottom: 2px; }
+        .info-card span { font-size: 0.75rem; color: #555; }
+
+        .fancy-text { font-family: 'Caveat', cursive; color: var(--p-accent); }
+        .ad-space { width: 100%; background: #e9ecef; border: 2px dashed #dee2e6; padding: 15px; text-align: center; color: #adb5bd; font-size: 0.75rem; border-radius: 20px; }
+        
+        input[type="color"] { border:none; width:35px; height:35px; border-radius:8px; cursor:pointer; background:none; vertical-align: middle; }
     </style>
 </head>
 <body>
 
-<div id="intro-overlay">
-    <div id="intro-img" style="font-size:80px; margin-bottom:20px;">🌟</div>
-    <h2 id="intro-title" style="color:var(--p-header);">Hoş Geldin!</h2>
-    <p id="intro-text" style="color:#666; margin-bottom:40px;">Yepyeni arayüz ve kişiselleştirilebilir renklerle vardiya takibi artık çok daha keyifli.</p>
-    <div style="display:flex; gap:8px; margin-bottom:40px;">
-        <div class="intro-dot active"></div><div class="intro-dot"></div><div class="intro-dot"></div>
-    </div>
-    <button onclick="nextIntro()" style="width:100%; padding:18px; background:var(--p-header); color:white; border:none; border-radius:20px; font-weight:700;">BAŞLA</button>
-</div>
-
 <div class="header">
-  <div class="header-top">
-    <div><div id="date">Yükleniyor...</div><div id="time">00:00</div></div>
-    <button style="background:none;border:none;color:white;font-size:1.8rem;cursor:pointer;" onclick="openPopup('pop-settings')">⚙️</button>
-  </div>
-  <div class="current-status-bar">
-    <div class="status-item">☀️ Gündüz: <span id="cur-day">-</span></div>
-    <div class="status-item">🌙 Gece: <span id="cur-night">-</span></div>
-  </div>
+    <div class="header-top">
+        <div><div id="date">Yükleniyor...</div><div id="time">00:00</div></div>
+        <button onclick="openPopup('pop-settings')" style="background:rgba(255,255,255,0.2); border:none; color:white; width:40px; height:40px; border-radius:12px; font-size:1.2rem; cursor:pointer;">⚙️</button>
+    </div>
+    <div class="current-status-bar">
+        <div>☀️ Gündüz: <span id="cur-day">-</span></div>
+        <div>🌙 Gece: <span id="cur-night">-</span></div>
+    </div>
 </div>
 
 <div class="main-content">
-  <div class="ads-box">REKLAM ALANI</div>
-
-  <div class="section" style="display:flex; gap:8px;">
-      <button class="vardiya-btn" onclick="setVardiya(1)" id="btn-v1">V1</button>
-      <button class="vardiya-btn" onclick="setVardiya(2)" id="btn-v2">V2</button>
-      <button class="vardiya-btn" onclick="setVardiya(3)" id="btn-v3">V3</button>
-      <button class="vardiya-btn" onclick="setVardiya(4)" id="btn-v4">V4</button>
-  </div>
-
-  <div class="section">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
-      <button onclick="changeMonth(-1)" style="border:none;background:none;font-size:1.5rem;color:var(--p-header);">❮</button>
-      <span id="monthTitle" style="font-weight:700; color:var(--p-header);">MART 2026</span>
-      <button onclick="nextMonth()" style="border:none;background:none;font-size:1.5rem;color:var(--p-header);">❯</button>
-    </div>
-    <div class="calendar-grid" id="calendar"></div>
-    <div style="display:flex; justify-content:space-around; margin-top:20px; border-top:1px solid #eee; padding-top:15px; text-align:center;">
-        <div><b id="c-day" style="color:var(--p-day); font-size:1.2rem;">0</b><br><small>Gündüz</small></div>
-        <div><b id="c-night" style="color:var(--p-night); font-size:1.2rem;">0</b><br><small>Gece</small></div>
-        <div><b id="c-off" style="color:#adb5bd; font-size:1.2rem;">0</b><br><small>İzin</small></div>
+    <div id="intro-box" style="display: none;">
+        <h4>Kişisel Verileriniz Bizim İçin Önemlidir</h4>
+        <p>Uygulama hiçbir kişisel veriyi kaydetmez veya dışarıya veri aktarmaz. Çalışma arkadaşlarımızın hayatını kolaylaştırmak amacıyla geliştirilmiştir.</p>
+        <label style="font-size:0.75rem; color:#888;"><input type="checkbox" id="hide-intro"> Bir daha gösterme</label>
+        <button onclick="closeIntro()" style="width:100%; margin-top:10px; padding:12px; background:var(--p-header); color:white; border:none; border-radius:15px; font-weight:bold;">ANLADIM</button>
     </div>
 
-    <div id="special-day-container" style="display:none; margin-top: 15px;">
-        <button class="acc-btn" onclick="toggleAcc('acc-this-month')" style="background:#fff5f5; color:#d00000; font-size:0.85rem;">
-           <span>✨ Bu Ayki Özel Günler</span> <span id="acc-icon">▼</span>
-        </button>
-        <div id="acc-this-month" class="acc-content"></div>
+    <div class="v-row">
+        <button class="vardiya-btn" id="btn-v1" onclick="setVardiya(1)">V1</button>
+        <button class="vardiya-btn" id="btn-v2" onclick="setVardiya(2)">V2</button>
+        <button class="vardiya-btn" id="btn-v3" onclick="setVardiya(3)">V3</button>
+        <button class="vardiya-btn" id="btn-v4" onclick="setVardiya(4)">V4</button>
     </div>
-  </div>
-  
-  <div class="ads-box" style="min-height:100px;">REKLAM ALANI</div>
+
+    <div class="section">
+        <div class="cal-header">
+            <button class="cal-btn" onclick="changeMonth(-1)">❮</button>
+            <b id="monthTitle">...</b>
+            <button class="cal-btn" onclick="changeMonth(1)">❯</button>
+        </div>
+        <div class="calendar-grid" id="calendar"></div>
+        <div style="display:flex; justify-content:space-around; margin-top:20px; font-size:0.8rem; font-weight:bold;">
+            <div style="text-align:center">☀️ Gündüz<br><span id="c-day" style="color:var(--p-day); font-size:1.1rem;">0</span></div>
+            <div style="text-align:center">🌙 Gece<br><span id="c-night" style="color:var(--p-night); font-size:1.1rem;">0</span></div>
+            <div style="text-align:center">🏠 İzin<br><span id="c-off" style="color:#adb5bd; font-size:1.1rem;">0</span></div>
+        </div>
+        <div id="special-days-list">
+            <div style="font-weight:700; color:var(--p-header); margin-bottom:8px; font-size:0.8rem;">✨ Önemli Günler</div>
+            <div id="special-days-content"></div>
+        </div>
+    </div>
+
+    <div class="ad-space">REKLAM ALANI</div>
 </div>
-
-<div id="install-banner"><span>Uygulamayı indir!</span><button id="install-btn">YÜKLE</button></div>
 
 <div class="overlay" id="pop-settings">
     <div class="popup">
         <span class="close-btn" onclick="closePopup('pop-settings')">×</span>
-        <h3 style="color:var(--p-header);">Ayarlar</h3>
-        <div class="sub-menu-btn" onclick="openPopup('pop-colors')">🎨 Renkleri Kişiselleştir <span>➔</span></div>
-        <div class="sub-menu-btn" onclick="openPopup('pop-dates')">🗓️ Tüm Yılın Tatilleri <span>➔</span></div>
-        <div class="sub-menu-btn" onclick="openPopup('pop-about')">ℹ️ Hakkında <span>➔</span></div>
-        <button onclick="alert('Bildirimler Aktif!')" style="width:100%; padding:15px; background:#d00000; color:white; border:none; border-radius:15px; font-weight:700; margin-top:10px;">🔔 BİLDİRİMLERİ AÇ</button>
-        <div style="margin:20px 0;"><img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://yasindemirkan83-png.github.io/anfa_vardiya.html" style="border-radius:10px; border:1px solid #eee;"></div>
-        <div style="display:flex; justify-content:center; gap:25px; font-size:1.6rem;">
-            <a href="tel:05375120777" style="text-decoration:none;">📞</a>
-            <a href="https://wa.me/905375120777" style="text-decoration:none;">💬</a>
-            <a href="mailto:yasindemirkan83@gmail.com" style="text-decoration:none;">✉️</a>
+        <h3 style="margin-bottom:20px;">MENÜ</h3>
+        <button class="sub-menu-btn" onclick="openPopup('pop-izin')">📊 İzin Hesapla <span>➔</span></button>
+        <button class="sub-menu-btn" onclick="openPopup('pop-haklar')">📜  Haklar <span>➔</span></button>
+        <button class="sub-menu-btn" onclick="openPopup('pop-renk')">🎨 Renk Ayarları <span>➔</span></button>
+        <button class="sub-menu-btn" onclick="openPopup('pop-about')">ℹ️ İletişim & Hakkında <span>➔</span></button>
+    </div>
+</div>
+
+<div class="overlay" id="pop-haklar">
+    <div class="popup">
+        <span class="close-btn" onclick="closePopup('pop-haklar')">×</span>
+        <h3 style="margin-bottom:15px;">HAKLAR</h3>
+        <div style="text-align:left;">
+            <div class="info-card"><b>💍 Evlilik İzni</b><span>Kendisinin evlenmesi durumunda 10 gün ücretli izin.</span></div>
+            <div class="info-card"><b>👶 Doğum İzni</b><span>Eşinin doğum yapması durumunda 7 gün ücretli izin.</span></div>
+            <div class="info-card"><b>🏥 Vefat İzni</b><span>Eş, çocuk, anne-baba ölümünde 7 gün; kardeş ölümünde 5 gün.</span></div>
+            <div class="info-card"><b>🏠 Taşınma İzni</b><span>Yılda 1 defa olmak üzere 3 gün ücretli izin.</span></div>
+            <div class="info-card"><b>📅 Yıllık İzinler</b><span>1-5 yıl: 14 / 5-15 yıl: 20 / 15+ yıl: 26 iş günü.</span></div>
+            <div class="info-card"><b>🚑 Refakat İzni</b><span>Eş, çocuk, anne-babanın ağır hastalığında belgelenmek şartıyla ücretli izin.</span></div>
+            <div class="info-card"><b>🎓 Sınav İzni</b><span>Eğitime devam edenlere sınav günlerinde ücretli izin verilir.</span></div>
         </div>
     </div>
 </div>
 
-<div class="overlay" id="pop-colors">
+<div class="overlay" id="pop-renk">
     <div class="popup">
-        <span class="close-btn" onclick="closePopup('pop-colors')">×</span>
-        <h3 style="color:var(--p-header);">Renk Seçimi</h3>
-        <div class="color-row"><span>☀️ Gündüz Çalışma</span><input type="color" id="in-day" onchange="saveColors()"></div>
-        <div class="color-row"><span>🌙 Gece Çalışma</span><input type="color" id="in-night" onchange="saveColors()"></div>
-        <div class="color-row"><span>🏠 İzin Günü</span><input type="color" id="in-off" onchange="saveColors()"></div>
-        <button onclick="resetColors()" style="background:none; border:none; color:var(--p-header); text-decoration:underline; margin-top:15px; font-weight:600;">Sıfırla</button>
-    </div>
-</div>
-
-<div class="overlay" id="pop-dates">
-    <div class="popup">
-        <span class="close-btn" onclick="closePopup('pop-dates')">×</span>
-        <h3 style="color:var(--p-header);">2026 Tatil Takvimi</h3>
-        <button class="acc-btn" onclick="toggleAcc('acc-dini')">🕋 Dini Bayramlar & Arefeler <span>▼</span></button>
-        <div id="acc-dini" class="acc-content" style="background:#fafafa; color:inherit;">
-            • 19 Mart: Ramazan Bayramı Arefesi<br>• 20 Mart: Ramazan Bayramı 1. Gün<br>• 21 Mart: Ramazan Bayramı 2. Gün<br>• 22 Mart: Ramazan Bayramı 3. Gün<br>• 26 Mayıs: Kurban Bayramı Arefesi<br>• 27 Mayıs: Kurban Bayramı 1. Gün<br>• 28 Mayıs: Kurban Bayramı 2. Gün<br>• 29 Mayıs: Kurban Bayramı 3. Gün<br>• 30 Mayıs: Kurban Bayramı 4. Gün
-        </div>
-        <button class="acc-btn" onclick="toggleAcc('acc-resmi')">🇹🇷 Resmi Tatiller <span>▼</span></button>
-        <div id="acc-resmi" class="acc-content" style="background:#fafafa; color:inherit;">
-            • 1 Ocak: Yılbaşı<br>• 23 Nisan: Ulusal Egemenlik<br>• 1 Mayıs: Emek ve Dayanışma<br>• 19 Mayıs: Gençlik ve Spor<br>• 15 Temmuz: Demokrasi Günü<br>• 30 Ağustos: Zafer Bayramı<br>• 29 Ekim: Cumhuriyet Bayramı
+        <span class="close-btn" onclick="closePopup('pop-renk')">×</span>
+        <h3>RENK AYARLARI</h3>
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:20px; text-align:left;">
+            <div style="display:flex; justify-content:space-between; align-items:center; background:white; padding:10px; border-radius:12px;"><span>Gündüz Vardiyası</span> <input type="color" id="in-day" onchange="saveColors()"></div>
+            <div style="display:flex; justify-content:space-between; align-items:center; background:white; padding:10px; border-radius:12px;"><span>Gece Vardiyası</span> <input type="color" id="in-night" onchange="saveColors()"></div>
+            <div style="display:flex; justify-content:space-between; align-items:center; background:white; padding:10px; border-radius:12px;"><span>İzinli Günler</span> <input type="color" id="in-off" onchange="saveColors()"></div>
+            <button onclick="resetColors()" style="color:var(--p-header); background:none; border:none; text-decoration:underline; font-weight:bold; margin-top:10px;">Varsayılana Dön</button>
         </div>
     </div>
 </div>
@@ -164,61 +157,67 @@
 <div class="overlay" id="pop-about">
     <div class="popup">
         <span class="close-btn" onclick="closePopup('pop-about')">×</span>
-        <h3 style="color:var(--p-header);">Hakkında</h3>
-        <div class="handwritten">
-            Vardiya Takip Sistemi personel çalışma günlerinin planlamasını kolaylaştırmak için geliştirilmiştir. Veriler kullanıcı tarayıcı önbelleğinde saklanır.
+        <div class="fancy-text" style="font-size:1.4rem;">Geliştirici</div>
+        <div class="fancy-text" style="font-size:2.4rem; color:var(--p-text)">Yasin Demirgan</div>
+        <p style="font-size:0.75rem; color:#888;"> <br>Yasin Demirgan Tarafından Geliştirilmiştir.</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=tel:05375120777" style="width:130px; margin:15px; border-radius:15px;">
+        <div style="display:flex; justify-content:center; gap:15px;">
+            <a href="tel:05375120777" style="background:#4895ef; padding:10px; border-radius:50%; color:white; text-decoration:none;">📞</a>
+            <a href="https://wa.me/905375120777" style="background:#25D366; padding:10px; border-radius:50%; color:white; text-decoration:none;">💬</a>
+            <a href="mailto:yasindemirkan83@gmail.com" style="background:#ea4335; padding:10px; border-radius:50%; color:white; text-decoration:none;">✉️</a>
         </div>
     </div>
 </div>
 
-<script>
-/** 🛠️ CORE MANTIK **/
-let currentV = parseInt(localStorage.getItem('vSelection')) || 1;
-let curYear = 2026, curMonth = new Date().getMonth();
+<div class="overlay" id="pop-izin">
+    <div class="popup">
+        <span class="close-btn" onclick="closePopup('pop-izin')">×</span>
+        <h3>İzin Hesaplayıcı</h3>
+        <input type="date" id="izin-start" style="width:100%; padding:12px; margin:15px 0; border-radius:10px; border:1px solid #ddd;">
+        <input type="number" id="izin-sure" placeholder="İzin Günü" value="14" style="width:100%; padding:12px; margin-bottom:15px; border-radius:10px; border:1px solid #ddd;">
+        <button onclick="hesaplaIzin()" style="width:100%; padding:15px; background:var(--p-header); color:white; border:none; border-radius:15px; font-weight:bold;">HESAPLA</button>
+        <div id="izin-sonuc" style="margin-top:15px; font-size:0.9rem; font-weight:bold; color:var(--p-day);"></div>
+    </div>
+</div>
 
-const tatiller = { 
-    "0-1":"Yılbaşı", "0-15":"Regaip Kandili", "1-13":"Miraç Kandili", "2-2":"Berat Kandili", "3-14":"Kadir Gecesi",
-    "2-18":"Ramazan Başlangıcı", "2-19":"Ramazan Bayramı Arefesi", "2-20":"Ramazan Bayramı 1. Gün", "2-21":"Ramazan Bayramı 2. Gün", "2-22":"Ramazan Bayramı 3. Gün",
-    "3-23":"23 Nisan", "4-1":"1 Mayıs", "4-19":"19 Mayıs", "4-26":"Kurban Bayramı Arefesi", "4-27":"Kurban Bayramı 1. Gün", "4-28":"Kurban Bayramı 2. Gün", "4-29":"Kurban Bayramı 3. Gün", "4-30":"Kurban Bayramı 4. Gün",
-    "6-15":"15 Temmuz", "7-30":"30 Ağustos", "8-22":"Mevlid Kandili", "9-29":"29 Ekim Cumhuriyet Bayramı" 
+<script>
+let curYear = 2026, curMonth = new Date().getMonth();
+let currentV = parseInt(localStorage.getItem('vSelection')) || 1;
+
+const tatiller = {
+    "0-1":"Yılbaşı", "3-23":"23 Nisan", "4-1":"1 Mayıs", "4-19":"19 Mayıs", "6-15":"15 Temmuz", "7-30":"30 Ağustos", "9-29":"29 Ekim",
+    // 2026-2030 Otomatik Veriler
+    "2026-0-15":"Regaip Kandili", "2026-1-13":"Miraç Kandili", "2026-2-2":"Berat Kandili", "2026-2-14":"Kadir Gecesi", "2026-2-20":"Ramazan Bayramı", "2026-4-27":"Kurban Bayramı", "2026-8-22":"Mevlid Kandili",
+    "2027-0-4":"Regaip Kandili", "2027-1-2":"Miraç Kandili", "2027-1-22":"Berat Kandili", "2027-2-4":"Kadir Gecesi", "2027-2-10":"Ramazan Bayramı", "2027-4-16":"Kurban Bayramı", "2027-8-12":"Mevlid Kandili",
+    "2028-0-26":"Miraç Kandili", "2028-1-11":"Berat Kandili", "2028-1-23":"Kadir Gecesi", "2028-1-29":"Ramazan Bayramı", "2028-4-4":"Kurban Bayramı", "2028-7-31":"Mevlid Kandili",
+    "2029-0-15":"Miraç Kandili", "2029-0-31":"Berat Kandili", "2029-1-12":"Kadir Gecesi", "2029-1-18":"Ramazan Bayramı", "2029-3-24":"Kurban Bayramı", "2029-7-20":"Mevlid Kandili",
+    "2030-0-5":"Miraç Kandili", "2030-0-21":"Berat Kandili", "2030-1-1":"Kadir Gecesi", "2030-1-7":"Ramazan Bayramı", "2030-3-14":"Kurban Bayramı", "2030-7-9":"Mevlid Kandili"
 };
 
-const defColors = { day: '#f72585', night: '#4cc9f0', off: '#e0e1dd' };
+const defColors = { day: '#f72585', night: '#4cc9f0', off: '#adb5bd' };
 let uColors = JSON.parse(localStorage.getItem('uColors')) || {...defColors};
 
 function applyColors() {
     document.documentElement.style.setProperty('--p-day', uColors.day);
     document.documentElement.style.setProperty('--p-night', uColors.night);
     document.documentElement.style.setProperty('--p-off', uColors.off);
-    if(document.getElementById('in-day')){
+    if(document.getElementById('in-day')) {
         document.getElementById('in-day').value = uColors.day;
         document.getElementById('in-night').value = uColors.night;
         document.getElementById('in-off').value = uColors.off;
     }
 }
+
 function saveColors() {
     uColors = { day: document.getElementById('in-day').value, night: document.getElementById('in-night').value, off: document.getElementById('in-off').value };
-    localStorage.setItem('uColors', JSON.stringify(uColors));
-    applyColors(); draw();
+    localStorage.setItem('uColors', JSON.stringify(uColors)); applyColors(); draw();
 }
+
 function resetColors() { uColors = {...defColors}; localStorage.setItem('uColors', JSON.stringify(uColors)); applyColors(); draw(); }
 
-// Intro
-let iStep = 0;
-const iData = [
-    {img:"🌟", title:"Hoş Geldin!", text:"Yepyeni arayüz ve kişiselleştirilebilir renklerle vardiya takibi artık çok daha keyifli."},
-    {img:"🎨", title:"Renkleri Seç", text:"Ayarlardan Gündüz, Gece ve İzin günlerinin renklerini kendine göre belirleyebilirsin."},
-    {img:"📱", title:"Hemen Yükle", text:"Uygulamayı ana ekrana ekleyerek internet olmasa bile her an kullanabilirsin."}
-];
-function nextIntro() {
-    iStep++;
-    if(iStep >= iData.length) { document.getElementById('intro-overlay').style.display='none'; localStorage.setItem('introOk', '1'); return; }
-    document.getElementById('intro-img').innerText = iData[iStep].img;
-    document.getElementById('intro-title').innerText = iData[iStep].title;
-    document.getElementById('intro-text').innerText = iData[iStep].text;
-    let dots = document.querySelectorAll('.intro-dot');
-    dots.forEach((d,idx) => d.classList.toggle('active', idx===iStep));
-}
+function openPopup(id) { document.getElementById(id).style.display = 'flex'; }
+function closePopup(id) { document.getElementById(id).style.display = 'none'; }
+function closeIntro() { if(document.getElementById('hide-intro').checked) localStorage.setItem('introClosed', 'true'); document.getElementById('intro-box').style.display = 'none'; }
 
 function getV(date) {
     const ref = new Date(2026, 2, 11);
@@ -230,44 +229,60 @@ function getV(date) {
 function setVardiya(v) {
     currentV = v; localStorage.setItem('vSelection', v);
     document.querySelectorAll('.vardiya-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('btn-v'+v).classList.add('active');
-    draw();
+    document.getElementById('btn-v'+v).classList.add('active'); draw();
 }
 
 function draw() {
     const cal = document.getElementById('calendar'); cal.innerHTML = '';
     const first = (new Date(curYear, curMonth, 1).getDay() + 6) % 7;
-    const days = new Date(curYear, curMonth + 1, 0).getDate();
-    const monthName = new Date(curYear, curMonth).toLocaleDateString('tr-TR',{month:'long'});
-    document.getElementById('monthTitle').innerText = monthName.toUpperCase() + " " + curYear;
+    const daysCount = new Date(curYear, curMonth + 1, 0).getDate();
+    const curMonthName = new Date(curYear, curMonth).toLocaleDateString('tr-TR',{month:'long'});
+    document.getElementById('monthTitle').innerText = (curMonthName + " " + curYear).toUpperCase();
     
-    let c = {day:0, night:0, off:0}, tList = [];
+    let stats = {day:0, night:0, off:0};
+    let foundSpecials = [];
     for(let i=0; i<first; i++) cal.appendChild(document.createElement('div'));
-    for(let i=1; i<=days; i++) {
+    for(let i=1; i<=daysCount; i++) {
         const d = new Date(curYear, curMonth, i);
         const type = getV(d)[currentV-1];
-        c[type]++;
+        stats[type]++;
         const div = document.createElement('div');
         div.className = 'day ' + (type==='day'?'work-day':type==='night'?'work-night':'');
         if(d.toDateString() === new Date().toDateString()) div.classList.add('today');
         div.innerText = i; cal.appendChild(div);
-        if(tatiller[curMonth+'-'+i]) tList.push(`• <b>${i} ${monthName}:</b> ${tatiller[curMonth+'-'+i]}`);
+        
+        let holidayKey = curMonth + "-" + i;
+        let holidayYearKey = curYear + "-" + curMonth + "-" + i;
+        let holidayName = tatiller[holidayKey] || tatiller[holidayYearKey];
+        if(holidayName) foundSpecials.push(`<div class="special-day-item"><b>${i} ${curMonthName}:</b> ${holidayName}</div>`);
     }
-    document.getElementById('c-day').innerText = c.day;
-    document.getElementById('c-night').innerText = c.night;
-    document.getElementById('c-off').innerText = c.off;
-
-    const sContainer = document.getElementById('special-day-container');
-    const sContent = document.getElementById('acc-this-month');
-    if(tList.length > 0) { sContainer.style.display = 'block'; sContent.innerHTML = tList.join('<br>'); } 
-    else { sContainer.style.display = 'none'; }
+    document.getElementById('c-day').innerText = stats.day;
+    document.getElementById('c-night').innerText = stats.night;
+    document.getElementById('c-off').innerText = stats.off;
+    const sCont = document.getElementById('special-days-content');
+    if(foundSpecials.length > 0) { document.getElementById('special-days-list').style.display='block'; sCont.innerHTML = foundSpecials.join(''); }
+    else { document.getElementById('special-days-list').style.display='none'; }
 }
 
 function changeMonth(n) { curMonth += n; if(curMonth>11){curMonth=0;curYear++} if(curMonth<0){curMonth=11;curYear--} draw(); }
-function nextMonth() { changeMonth(1); } // Eksik olan fonksiyon eklendi
-function openPopup(id) { document.getElementById(id).style.display='flex'; }
-function closePopup(id) { document.getElementById(id).style.display='none'; }
-function toggleAcc(id) { let el = document.getElementById(id); el.style.display = (el.style.display !== 'block') ? 'block' : 'none'; }
+
+function hesaplaIzin() {
+    const startVal = document.getElementById('izin-start').value;
+    const gun = parseInt(document.getElementById('izin-sure').value);
+    if(!startVal) return alert("Tarih seç!");
+    let curr = new Date(startVal);
+    let count = 0;
+    while(count < gun) {
+        let isSun = curr.getDay() === 0;
+        let isHol = tatiller[curr.getMonth()+'-'+curr.getDate()] || tatiller[curr.getFullYear()+'-'+curr.getMonth()+'-'+curr.getDate()];
+        if(!isSun && !isHol) count++;
+        if(count < gun) curr.setDate(curr.getDate() + 1);
+    }
+    let donus = new Date(curr);
+    do { donus.setDate(donus.getDate() + 1); } 
+    while(donus.getDay() === 0 || tatiller[donus.getMonth()+'-'+donus.getDate()] || tatiller[donus.getFullYear()+'-'+donus.getMonth()+'-'+donus.getDate()]);
+    document.getElementById('izin-sonuc').innerHTML = `Bitiş: ${curr.toLocaleDateString('tr-TR')}<br>İş Başı: ${donus.toLocaleDateString('tr-TR')}`;
+}
 
 setInterval(() => {
     const n = new Date();
@@ -275,39 +290,13 @@ setInterval(() => {
     document.getElementById('date').innerText = n.toLocaleDateString('tr-TR',{weekday:'long', day:'numeric', month:'long'});
 }, 1000);
 
-function updateStatus() {
-    const v = getV(new Date());
-    let g="-", n="-";
-    v.forEach((type, idx) => { if(type==='day') g="V"+(idx+1); if(type==='night') n="V"+(idx+1); });
-    document.getElementById('cur-day').innerText = g;
-    document.getElementById('cur-night').innerText = n;
-}
-
-// PWA YÜKLEME MANTIĞI
-let defPrompt;
-window.addEventListener('beforeinstallprompt', (e) => { 
-    e.preventDefault(); 
-    defPrompt = e; 
-    document.getElementById('install-banner').style.display = 'flex'; 
-});
-document.getElementById('install-btn').onclick = () => { 
-    if(defPrompt){ 
-        defPrompt.prompt(); 
-        document.getElementById('install-banner').style.display = 'none'; 
-    } 
-};
-
-// SERVICE WORKER KAYDI (YÜKLEME İÇİN ŞART)
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').then(() => console.log("SW Kayıtlı"));
-}
-
 window.onload = () => {
-    if(!localStorage.getItem('introOk')) document.getElementById('intro-overlay').style.display='flex';
-    applyColors();
+    applyColors(); if(!localStorage.getItem('introClosed')) document.getElementById('intro-box').style.display = 'block';
     setVardiya(currentV);
-    updateStatus();
+    const v = getV(new Date());
+    v.forEach((t, i) => { if(t==='day') document.getElementById('cur-day').innerText="V"+(i+1); if(t==='night') document.getElementById('cur-night').innerText="V"+(i+1); });
 };
 </script>
 </body>
 </html>
+
